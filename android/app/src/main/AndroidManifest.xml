@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kurztrip.kurztrip_ma">
    <application
-        android:label="kurztrip_ma"
+        android:label="Kurztrip"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         >
