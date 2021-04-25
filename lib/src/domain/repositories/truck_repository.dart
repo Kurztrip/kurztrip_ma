@@ -1,4 +1,4 @@
-import 'package:kurztrip_ma/src/domain/truck/Truck.dart';
+import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
 
 abstract class TruckRepository {
   Future<Truck> get(int id);

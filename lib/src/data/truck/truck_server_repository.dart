@@ -1,9 +1,9 @@
 import 'package:graphql/client.dart';
 import 'package:kurztrip_ma/src/data/client_config.dart';
-import 'package:kurztrip_ma/src/domain/truck/Truck.dart';
-import 'package:kurztrip_ma/src/domain/truck/truck_repository.dart';
+import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
+import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 
-class TruckserverRepository implements TruckRepository {
+class TruckServerRepository implements TruckRepository {
   Truck truck = Truck.createEmpty();
   final String getTruck = r'''
     query getTruck($id: Int!) {
