@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kurztrip_ma/services_provider.dart';
+import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
+import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -43,8 +46,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  int _id = 0;
+  int _warehouse = 0;
+  TruckRepository _rep;
+  Future<void> _getTruck() async {
+    Truck truck = await _rep.get(10);
+    setState(() {
+      _id = truck.id;
+      _warehouse = truck.warehouse;
+    });
+  }
 
   void _incrementCounter() {
+    _getTruck();
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
@@ -57,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _rep = getIt();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -96,6 +111,9 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            Text('id: $_id'),
+            Divider(),
+            Text('warehouse: $_warehouse'),
           ],
         ),
       ),

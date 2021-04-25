@@ -6,19 +6,22 @@ import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 class TruckServerRepository implements TruckRepository {
   Truck truck = Truck.createEmpty();
   final String getTruck = r'''
-    query getTruck($id: Int!) {
-      id
-      registration
-      status
-      weight_capacity
-      volume_capacity
-      fuel_type
-      fuel_capacity
-      fuel_by_kilometer
-      fuel
-      warehouse
+    query getTruck($id: Int!){
+      getAnalyseTruck(id: $id) {
+        id
+        warehouse 
+      }
     }
   ''';
+//        registration
+  //     status
+  //     weight_capacity
+  //     volume_capacity
+  //     fuel_type
+  //     fuel_capacity
+  //     fuel_by_kilometer
+  //     fuel
+  //
   @override
   Future<Truck> get(int id) async {
     final QueryOptions options = QueryOptions(
@@ -31,7 +34,8 @@ class TruckServerRepository implements TruckRepository {
     if (result.hasException) {
       throw result.exception;
     }
-    return Truck(id: result.data['id']);
+    final truckResult = result.data['getAnalyseTruck'];
+    return Truck(id: truckResult['id'], warehouse: truckResult['warehouse']);
     // return Future.delayed(const Duration(milliseconds: 100), () => truck);
   }
 

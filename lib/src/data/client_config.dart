@@ -2,7 +2,7 @@ import 'package:graphql/client.dart';
 
 GraphQLClient getGraphQLClient() {
   final _httpLink = HttpLink(
-    'https://api.github.com/graphql',
+    'http://192.168.1.14:4000/graphql',
   );
 
   // final _authLink = AuthLink(
