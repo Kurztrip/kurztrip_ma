@@ -4,5 +4,5 @@ import 'package:kurztrip_ma/src/presentation/app.dart';
 
 void main() {
   init();
-  runApp(MyApp());
+  runApp(MobileApp());
 }
