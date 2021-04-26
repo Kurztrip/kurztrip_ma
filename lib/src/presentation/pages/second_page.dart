@@ -6,7 +6,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/second_page_bloc/second_page_e
 import 'package:kurztrip_ma/src/presentation/bloc/second_page_bloc/second_page_state.dart';
 
 class SecondPage extends StatelessWidget {
-  SecondPageBloc bloc = getIt<SecondPageBloc>();
+  final SecondPageBloc bloc = getIt<SecondPageBloc>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -28,6 +28,7 @@ class SecondPage extends StatelessWidget {
             ),
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: state.properties[0],
+              selectedItemColor: getPageColor(state.properties[0]),
               onTap: (index) =>
                   context.read<SecondPageBloc>().add(TabSelected(index: index)),
               items: [
@@ -57,7 +58,7 @@ Widget getItemView(int index) {
     case 0:
       {
         return Text(
-          'You are in home!',
+          'You are home!',
           style: TextStyle(fontSize: 30.0, color: Colors.white),
         );
       }

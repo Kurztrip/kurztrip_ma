@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/pages.dart';
 
-class MyApp extends StatelessWidget {
+class MobileApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
