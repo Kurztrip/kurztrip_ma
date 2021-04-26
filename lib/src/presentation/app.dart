@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
+import 'package:kurztrip_ma/src/presentation/pages/homepage.dart';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,7 +20,44 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primaryColor: Color.fromRGBO(85, 73, 166, 1),
+        colorScheme: ColorScheme(
+          primary: Color(0xFF5549A6),
+          primaryVariant: Color(0xFF3E3C73),
+          secondary: Color(0xFF4BC6B9),
+          secondaryVariant: Color(0xFF00958A),
+          background: Color(0xFF1E1E1E),
+          onPrimary: Color(0xFFFFFBFA),
+          onSecondary: Color(0xFFFFFBFA),
+          onBackground: Color(0xFFFFFBFA),
+          brightness: Brightness.dark,
+          error: Colors.red,
+          onError: Color(0xFFFFFBFA),
+          surface: Color(0xFF1E1E1E),
+          onSurface: Color(0xFFFFFBFA),
+        ),
+        primaryColor: Color(0xFF5549A6),
+        accentColor: Color(0xFF4BC6B9),
+        scaffoldBackgroundColor: Color(0xFF1E1E1E),
+        backgroundColor: Color(0xFF1E1E1E),
+        fontFamily: 'WorkSans',
+        brightness:Brightness.dark,
+        textTheme: TextTheme(
+          subtitle1: TextStyle(
+            fontSize: 20,
+            // color: Color(0xFFFFFBFA),
+              color: Color(0xFFFFFFFF),
+            fontWeight: FontWeight.w600
+          ),
+          subtitle2: TextStyle(
+              fontSize: 16,
+              // color: Color(0xFFFFFBFA),
+              color: Color(0xFFFFFFFF),
+              fontWeight: FontWeight.w600
+          ),
+          bodyText1: TextStyle(
+            fontSize: 16
+          )
+        )
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -79,11 +117,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -114,14 +147,22 @@ class _MyHomePageState extends State<MyHomePage> {
             Text('id: $_id'),
             Divider(),
             Text('warehouse: $_warehouse'),
+            ElevatedButton(onPressed: _incrementCounter, child: Text('Obtener camion'))
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _homePage,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+  void _homePage(){
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (BuildContext context) {
+        return HomePage();
+      })
     );
   }
 }
