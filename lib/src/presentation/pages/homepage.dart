@@ -133,7 +133,7 @@ class _HomepageState extends State<Homepage> {
 
   void _showSignUp() {}
   void _submit() {
-    Navigator.pushNamed(context, '/first');
+    Navigator.pushNamed(context, '/main_page');
   }
 
   void _backHome(BuildContext context) {

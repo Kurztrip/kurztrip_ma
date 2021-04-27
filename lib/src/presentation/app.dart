@@ -41,15 +41,15 @@ class MobileApp extends StatelessWidget {
                   color: Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w600),
               bodyText1: TextStyle(fontSize: 16))),
-      initialRoute: '/main_page',
+      initialRoute: '/',
       routes: {
         '/': (context) => Homepage(),
+        '/main_page': (context) => MainPage(),
         '/first': (context) => FirstPage(),
         '/second': (context) => SecondPage(),
         '/test': (context) => MyHomePage(
               title: "test Homepage",
             ),
-        '/main_page': (context) => MainPage(),
       },
     );
   }
