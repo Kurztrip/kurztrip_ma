@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_state.dart';
+import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 
 import '../../../services_provider.dart';
 
@@ -14,27 +15,31 @@ class MainPage extends StatelessWidget {
       create: (_) => bloc,
       child: BlocBuilder<MainPageBloc, MainPageState>(
         builder: (context, state) {
+          final index = _getIndex(state);
           return Scaffold(
-            body: Center(
-              child: Text('Hello World'),
+            appBar: AppBar(
+              title: Text("Pagina Principal"),
             ),
-            floatingActionButton: FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () {},
-              shape: StadiumBorder(
-                  side: BorderSide(
-                      color: Theme.of(context).colorScheme.background,
-                      width: 6)),
+            body: _getItemView(index),
+            floatingActionButton: Visibility(
+              visible: _getIndex(state) != 3,
+              child: FloatingActionButton(
+                child: Icon(Icons.add),
+                onPressed: () {},
+                shape: StadiumBorder(
+                    side: BorderSide(
+                        color: Theme.of(context).colorScheme.background,
+                        width: 6)),
+              ),
             ),
-            floatingActionButtonLocation: _getIndex(state) == 3
-                ? FloatingActionButtonLocation.endFloat
-                : FloatingActionButtonLocation.centerDocked,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               backgroundColor: Theme.of(context).colorScheme.primary,
               selectedItemColor: Theme.of(context).colorScheme.secondary,
               unselectedItemColor: Theme.of(context).colorScheme.background,
-              currentIndex: _getIndex(state),
+              currentIndex: index,
               onTap: (index) =>
                   context.read<MainPageBloc>().add(TabSelected(index: index)),
               items: [
@@ -65,4 +70,40 @@ class MainPage extends StatelessWidget {
 
 int _getIndex(MainPageState state) {
   return state is PackageTab ? 0 : state.properties[0];
+}
+
+Widget _getItemView(int index) {
+  switch (index) {
+    case 0:
+      {
+        return ItemListTest();
+      }
+    case 1:
+      {
+        return Center(
+          child: Text(
+            'Paquetes!',
+            style: TextStyle(fontSize: 30.0, color: Colors.white),
+          ),
+        );
+      }
+    case 2:
+      {
+        return Center(
+          child: Text(
+            'Rutas!',
+            style: TextStyle(fontSize: 30.0, color: Colors.white),
+          ),
+        );
+      }
+    case 3:
+      {
+        return Center(
+          child: Text(
+            'This is your profile!',
+            style: TextStyle(fontSize: 30.0, color: Colors.white),
+          ),
+        );
+      }
+  }
 }
