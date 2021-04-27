@@ -5,13 +5,15 @@ class RoundedInputField extends StatelessWidget {
   final IconData icon;
   final ValueChanged<String> onChanged;
   final Color iconColor;
-  const RoundedInputField({
-    Key key,
-    this.hintText,
-    this.icon = Icons.person,
-    this.onChanged,
-    @required this.iconColor
-  }) : super(key: key);
+  final bool obscureText;
+  const RoundedInputField(
+      {Key key,
+      this.hintText,
+      this.icon = Icons.person,
+      this.onChanged,
+      @required this.iconColor,
+      this.obscureText = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +27,20 @@ class RoundedInputField extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
       ),
       child: TextField(
-      onChanged: onChanged,
-      cursorColor: Theme.of(context).primaryColor,
-      decoration: InputDecoration(
-        icon: Icon(
-          icon,
-          color: iconColor,
+        onChanged: onChanged,
+        cursorColor: Theme.of(context).primaryColor,
+        decoration: InputDecoration(
+          icon: Icon(
+            icon,
+            color: iconColor,
+          ),
+          hintText: hintText,
+          hintStyle: Theme.of(context).textTheme.bodyText1,
+          labelStyle: Theme.of(context).textTheme.bodyText1,
+          border: InputBorder.none,
         ),
-        hintText: hintText,
-        hintStyle: Theme.of(context).textTheme.bodyText1,
-        border: InputBorder.none,
+        obscureText: obscureText,
       ),
-    ),
     );
-
   }
 }
-
