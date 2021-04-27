@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
-
-import '../../../services_provider.dart';
+import 'package:kurztrip_ma/services_provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
