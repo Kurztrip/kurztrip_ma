@@ -4,8 +4,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_state.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
-
-import '../../../services_provider.dart';
+import 'package:kurztrip_ma/services_provider.dart';
 
 class MainPage extends StatelessWidget {
   final MainPageBloc bloc = getIt<MainPageBloc>();
@@ -20,47 +19,58 @@ class MainPage extends StatelessWidget {
             appBar: AppBar(
               title: Text("Pagina Principal"),
             ),
-            body: _getItemView(index),
-            floatingActionButton: Visibility(
-              visible: _getIndex(state) != 3,
-              child: FloatingActionButton(
-                child: Icon(Icons.add),
-                onPressed: () {},
-                shape: StadiumBorder(
-                    side: BorderSide(
-                        color: Theme.of(context).colorScheme.background,
-                        width: 6)),
-              ),
-            ),
+            floatingActionButton: _getIndex(state) == 3
+                ? null
+                : Visibility(
+                    visible: _getIndex(state) != 3,
+                    child: FloatingActionButton(
+                      child: Icon(Icons.add),
+                      onPressed: () {},
+                      // shape: StadiumBorder(
+                      //     side: BorderSide(
+                      //         color: Theme.of(context).colorScheme.background,
+                      //         width: 6)),
+                    ),
+                  ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              selectedItemColor: Theme.of(context).colorScheme.secondary,
-              unselectedItemColor: Theme.of(context).colorScheme.background,
-              currentIndex: index,
-              onTap: (index) =>
-                  context.read<MainPageBloc>().add(TabSelected(index: index)),
-              items: [
-                BottomNavigationBarItem(
-                  icon: new Icon(Icons.airport_shuttle_outlined),
-                  label: 'Camiones',
+            bottomNavigationBar: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.09,
+              child: BottomAppBar(
+                shape: const CircularNotchedRectangle(),
+                color: Theme.of(context).colorScheme.primary,
+                clipBehavior: Clip.antiAlias,
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  selectedItemColor: Theme.of(context).colorScheme.secondary,
+                  unselectedItemColor: Theme.of(context).colorScheme.background,
+                  currentIndex: index,
+                  onTap: (index) => context
+                      .read<MainPageBloc>()
+                      .add(TabSelected(index: index)),
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: new Icon(Icons.airport_shuttle_outlined),
+                      label: 'Camiones',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: new Icon(Icons.inbox_rounded),
+                      label: 'Paquetes',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.alt_route),
+                      label: 'Rutas',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.person),
+                      label: 'Cuenta',
+                    ),
+                  ],
                 ),
-                BottomNavigationBarItem(
-                  icon: new Icon(Icons.inbox_rounded),
-                  label: 'Paquetes',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.alt_route),
-                  label: 'Rutas',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: 'Cuenta',
-                ),
-              ],
+              ),
             ),
+            body: _getItemView(index),
           );
         },
       ),
