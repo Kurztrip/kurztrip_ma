@@ -23,6 +23,17 @@ class _HomepageState extends State<Homepage> {
   }
 
   @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight
+    ]);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     HomepageBloc homepageBloc = getIt();
@@ -151,6 +162,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   void _submit() {
+    Navigator.pushNamed(context, '/main_page');
     if(_globalKey.currentState.validate())
     Navigator.push(context, _createRoute(FirstPage()));
   }

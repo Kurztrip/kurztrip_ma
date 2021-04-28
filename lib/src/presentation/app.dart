@@ -52,11 +52,12 @@ class MobileApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Homepage(),
+        '/main_page': (context) => MainPage(),
         '/first': (context) => FirstPage(),
         '/second': (context) => SecondPage(),
         '/test': (context) => MyHomePage(
               title: "test Homepage",
-            )
+            ),
       },
     );
   }
