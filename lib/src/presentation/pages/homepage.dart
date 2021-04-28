@@ -81,11 +81,17 @@ class _HomepageState extends State<Homepage> {
                               hintText: 'Usuario',
                               iconColor:
                                   Theme.of(context).colorScheme.onBackground,
+                              onChanged: (value) => context
+                                  .read<HomepageBloc>()
+                                  .add(UpdateUser(value)),
                             ),
                             RoundedPasswordField(
                               hintText: 'Contraseña',
                               iconColor:
                                   Theme.of(context).colorScheme.onBackground,
+                              onChanged: (value) => context
+                                  .read<HomepageBloc>()
+                                  .add(UpdatePassword(value)),
                             ),
                           ]),
                         ),

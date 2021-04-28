@@ -15,11 +15,16 @@ class SignInState extends HomepageState {
   final String user;
   final String password;
 
-  SignInState({this.user, this.password}):super([]);
-  SignInState copyWith({String user, String password}){
+  SignInState({this.user, this.password}) : super([user, password]);
+  SignInState copyWith({String user, String password}) {
     return SignInState(
-        user:user!=null?user:this.user,
-        password:password!=null?password:this.password);
+        user: user != null ? user : this.user,
+        password: password != null ? password : this.password);
   }
 }
-class Home extends HomepageState{}
+
+class Home extends HomepageState {
+  final String home;
+
+  Home({this.home = "home"}) : super([home]);
+}

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_state.dart';
+import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 
@@ -21,16 +22,9 @@ class MainPage extends StatelessWidget {
             ),
             floatingActionButton: _getIndex(state) == 3
                 ? null
-                : Visibility(
-                    visible: _getIndex(state) != 3,
-                    child: FloatingActionButton(
-                      child: Icon(Icons.add),
-                      onPressed: () {},
-                      // shape: StadiumBorder(
-                      //     side: BorderSide(
-                      //         color: Theme.of(context).colorScheme.background,
-                      //         width: 6)),
-                    ),
+                : FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () {},
                   ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
@@ -51,15 +45,15 @@ class MainPage extends StatelessWidget {
                       .add(TabSelected(index: index)),
                   items: [
                     BottomNavigationBarItem(
-                      icon: new Icon(Icons.airport_shuttle_outlined),
+                      icon: new Icon(KurztripIcons.frontal_truck),
                       label: 'Camiones',
                     ),
                     BottomNavigationBarItem(
-                      icon: new Icon(Icons.inbox_rounded),
+                      icon: new Icon(KurztripIcons.paquetes),
                       label: 'Paquetes',
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.alt_route),
+                      icon: Icon(KurztripIcons.ruta),
                       label: 'Rutas',
                     ),
                     BottomNavigationBarItem(

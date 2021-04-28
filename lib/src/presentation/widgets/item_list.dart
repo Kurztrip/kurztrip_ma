@@ -40,7 +40,7 @@ class ItemListTest extends StatefulWidget {
 }
 
 class _ItemListTestState extends State<ItemListTest> {
-  // final List<ExpandableItem> _data = generatePackages(10);
+  Future<List<ExpandableItem>> list = generatePackages(3);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _ItemListTestState extends State<ItemListTest> {
 
   Widget _buildPanel() {
     return FutureBuilder(
-        future: generatePackages(3),
+        future: list,
         builder: (context, snapshot) {
           Widget child;
           if (snapshot.data == null)

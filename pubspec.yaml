@@ -38,6 +38,9 @@ flutter:
         - asset: assets/fonts/WorkSans-Regular.ttf
         - asset: assets/fonts/WorkSans-SemiBold.ttf
           weight: 600
+    - family:  KurztripIcons
+      fonts:
+       - asset: assets/icons/KurztripIcons.ttf
   assets:
     - assets/
   uses-material-design: true

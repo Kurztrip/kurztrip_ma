@@ -7,10 +7,14 @@ class HomepageBloc extends Bloc<HomepageEvent, HomepageState> {
 
   @override
   Stream<HomepageState> mapEventToState(HomepageEvent event) async* {
-    if(event is SignInButtonPressed){
+    if (event is SignInButtonPressed) {
       yield SignInState();
-    }else if(event is BackToHome){
+    } else if (event is BackToHome) {
       yield Home();
+    } else if (event is UpdateUser) {
+      yield (state as SignInState).copyWith(user: event.user);
+    } else if (event is UpdatePassword) {
+      yield (state as SignInState).copyWith(password: event.password);
     }
   }
 }
