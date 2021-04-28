@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 
-class RoundedInputField extends StatelessWidget {
+class RoundedPasswordField extends StatefulWidget {
   final String hintText;
-  final IconData icon;
   final ValueChanged<String> onChanged;
   final Color iconColor;
-  final bool obscureText;
   final String Function(String) validator;
-  final TextInputType textInputType;
-  const RoundedInputField(
-      {Key key,
-      this.hintText,
-      this.icon = Icons.person,
-      this.onChanged,
-      @required this.iconColor,
-        this.textInputType=TextInputType.text,
-      this.validator = defaultValidator,
-      this.obscureText = false})
+
+  RoundedPasswordField({Key key,
+    this.hintText,
+    this.onChanged,
+    @required this.iconColor,
+    this.validator = defaultValidator,})
       : super(key: key);
+
   static String defaultValidator(value) =>
       value == null || value.isEmpty ? 'Este campo es obligatorio' : null;
+
+  @override
+  _RoundedPasswordFieldState createState() => _RoundedPasswordFieldState();
+}
+
+class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
+  bool obscureText=true;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -33,25 +35,31 @@ class RoundedInputField extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
       ),
       child: TextFormField(
-          keyboardType: textInputType,
-          onChanged: onChanged,
+          keyboardType: TextInputType.visiblePassword,
+          onChanged: widget.onChanged,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          cursorColor: iconColor,
-          validator: validator,
+          cursorColor: widget.iconColor,
+          validator: widget.validator,
           decoration: InputDecoration(
             icon: Icon(
-              icon,
-              color: iconColor,
+              Icons.lock,
+              color: widget.iconColor,
             ),
-            hintText: hintText,
+            hintText: "contraseña",
             hintStyle: Theme.of(context).textTheme.bodyText1.apply(),
             // errorStyle: Theme.of(context).textTheme.bodyText1.apply(),
             border: InputBorder.none,
+            suffixIcon: IconButton(
+              icon:Icon(
+                obscureText?Icons.visibility:Icons.visibility_off,
+                color: widget.iconColor.withAlpha(125),
+              ),
+              onPressed: ()=>setState(()=>obscureText=!obscureText),
+            )
           ),
           obscureText: obscureText,
           onEditingComplete: () {
             node.nextFocus();
           }),
     );
-  }
-}
+  }}

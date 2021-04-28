@@ -12,12 +12,14 @@ abstract class HomepageState extends Equatable {
 }
 
 class SignInState extends HomepageState {
-  // String user;
-  // String password;
+  final String user;
+  final String password;
 
-  SignInState():super([]);
-}
-class SignUpState extends HomepageState {
-  SignUpState() : super([]);
+  SignInState({this.user, this.password}):super([]);
+  SignInState copyWith({String user, String password}){
+    return SignInState(
+        user:user!=null?user:this.user,
+        password:password!=null?password:this.password);
+  }
 }
 class Home extends HomepageState{}

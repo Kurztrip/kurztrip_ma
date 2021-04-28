@@ -13,6 +13,4 @@ abstract class HomepageEvent extends Equatable {
 
 class SignInButtonPressed extends HomepageEvent {}
 class SignIn extends HomepageEvent {}
-class SignUpButtonPressed extends HomepageEvent {}
-class SignUp extends HomepageEvent {}
 class BackToHome extends HomepageEvent {}
