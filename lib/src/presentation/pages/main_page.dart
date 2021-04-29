@@ -17,9 +17,6 @@ class MainPage extends StatelessWidget {
         builder: (context, state) {
           final index = _getIndex(state);
           return Scaffold(
-            appBar: AppBar(
-              title: Text("Pagina Principal"),
-            ),
             floatingActionButton: _getIndex(state) == 3
                 ? null
                 : FloatingActionButton(
@@ -64,7 +61,11 @@ class MainPage extends StatelessWidget {
                 ),
               ),
             ),
-            body: _getItemView(index),
+            body: Padding(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.05),
+              child: _getItemView(index),
+            ),
           );
         },
       ),
