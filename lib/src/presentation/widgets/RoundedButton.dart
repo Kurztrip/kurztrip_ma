@@ -4,10 +4,14 @@ import 'package:flutter/widgets.dart';
 class RoundedButton extends StatelessWidget {
   final Function onPressed;
   final String text;
+  final double verticalPadding;
+  final double horizontalPadding;
   const RoundedButton({
     Key key,
     @required this.onPressed,
     @required this.text,
+    this.verticalPadding = 5.0,
+    this.horizontalPadding = 60.0,
   }) : super(key: key);
 
   @override
@@ -25,8 +29,8 @@ class RoundedButton extends StatelessWidget {
         backgroundColor: MaterialStateProperty.all<Color>(
             Theme.of(context).colorScheme.primaryVariant),
         elevation: MaterialStateProperty.all<double>(5.0),
-        padding: MaterialStateProperty.all<EdgeInsets>(
-            EdgeInsets.symmetric(horizontal: 60, vertical: 5)),
+        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(
+            horizontal: horizontalPadding, vertical: verticalPadding)),
       ),
     );
   }

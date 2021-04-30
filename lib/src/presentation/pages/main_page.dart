@@ -21,7 +21,7 @@ class MainPage extends StatelessWidget {
                 ? null
                 : FloatingActionButton(
                     child: Icon(Icons.add),
-                    onPressed: () {},
+                    onPressed: () => _floatingActionButton(state, context),
                   ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
@@ -34,8 +34,9 @@ class MainPage extends StatelessWidget {
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
                   backgroundColor: Theme.of(context).colorScheme.primary,
-                  selectedItemColor: Theme.of(context).colorScheme.secondary,
-                  unselectedItemColor: Theme.of(context).colorScheme.background,
+                  selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+                  unselectedItemColor:
+                      Theme.of(context).colorScheme.onPrimary.withAlpha(130),
                   currentIndex: index,
                   onTap: (index) => context
                       .read<MainPageBloc>()
@@ -71,44 +72,67 @@ class MainPage extends StatelessWidget {
       ),
     );
   }
-}
 
-int _getIndex(MainPageState state) {
-  return state is PackageTab ? 0 : state.properties[0];
-}
+  void _floatingActionButton(MainPageState state, BuildContext context) {
+    int index = _getIndex(state);
+    switch (index) {
+      case 0:
+        {
+          Navigator.of(context).pushNamed('/truck_form');
+          break;
+        }
+      case 1:
+        {
+          break;
+        }
+      case 2:
+        {
+          break;
+        }
+      default:
+        {
+          break;
+        }
+    }
+  }
 
-Widget _getItemView(int index) {
-  switch (index) {
-    case 0:
-      {
-        return ItemListTest();
-      }
-    case 1:
-      {
-        return Center(
-          child: Text(
-            'Paquetes!',
-            style: TextStyle(fontSize: 30.0, color: Colors.white),
-          ),
-        );
-      }
-    case 2:
-      {
-        return Center(
-          child: Text(
-            'Rutas!',
-            style: TextStyle(fontSize: 30.0, color: Colors.white),
-          ),
-        );
-      }
-    case 3:
-      {
-        return Center(
-          child: Text(
-            'This is your profile!',
-            style: TextStyle(fontSize: 30.0, color: Colors.white),
-          ),
-        );
-      }
+  int _getIndex(MainPageState state) {
+    return state is PackageTab ? 0 : state.properties[0];
+  }
+
+  Widget _getItemView(int index) {
+    switch (index) {
+      case 0:
+        {
+          return ItemListTest();
+        }
+      case 1:
+        {
+          return Center(
+            child: Text(
+              'Paquetes!',
+              style: TextStyle(fontSize: 30.0, color: Colors.white),
+            ),
+          );
+        }
+      case 2:
+        {
+          return Center(
+            child: Text(
+              'Rutas!',
+              style: TextStyle(fontSize: 30.0, color: Colors.white),
+            ),
+          );
+        }
+      default:
+        {
+          return Center(
+            child: Text(
+              'This is your profile!',
+              style: TextStyle(fontSize: 30.0, color: Colors.white),
+            ),
+          );
+        }
+    }
   }
 }

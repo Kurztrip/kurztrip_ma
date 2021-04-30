@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedButton.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedDropdown.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
@@ -46,16 +47,19 @@ class _SignUpPageState extends State<SignUpPage> {
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: 'Nombre',
+                          icon: KurztripIcons.id_card,
                           textInputType: TextInputType.name,
                           onChanged: (value) => bloc.add(UpdateName(value)),
                         ),
                         RoundedInputField(
+                          icon: KurztripIcons.id_card,
                           iconColor: Theme.of(context).accentColor,
                           hintText: 'Apellido',
                           onChanged: (value) => bloc.add(UpdateLastName(value)),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
+                          icon: Icons.email,
                           hintText: "Email",
                           textInputType: TextInputType.emailAddress,
                           validator: (value) {
@@ -72,6 +76,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: "Celular",
+                          icon: Icons.phone,
                           textInputType: TextInputType.phone,
                           onChanged: (value) =>
                               bloc.add(UpdateCellphone(value)),
@@ -79,8 +84,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         RoundedDropdown(
                           hint: "Elije tu rol",
                           iconColor: Theme.of(context).accentColor,
-                          value:(state as SignupShowing).rol,
-                          items: <String>['Administrador', 'Conductor'],
+                          value: (state as SignupShowing).rol,
+                          items: <String, IconData>{
+                            'Administrador': Icons.supervisor_account,
+                            'Conductor': Icons.directions_bus
+                          },
                           onChanged: (value) => bloc.add(UpdateRol(value)),
                         ),
                         RoundedInputField(

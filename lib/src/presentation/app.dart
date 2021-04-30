@@ -53,6 +53,7 @@ class MobileApp extends StatelessWidget {
       routes: {
         '/': (context) => Homepage(),
         '/main_page': (context) => MainPage(),
+        '/truck_form': (context) => TruckForm(),
         '/first': (context) => FirstPage(),
         '/second': (context) => SecondPage(),
         '/test': (context) => MyHomePage(

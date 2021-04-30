@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class ExpandableItem {
@@ -23,11 +25,11 @@ Future<List<ExpandableItem>> generatePackages(int numberOfItems) async {
               title: 'Camión $index',
               subtitle: 'DISPONIBLE',
               expandedValue: {
-                'Capacidad de Carga:': '500kg',
-                'Capacidad de Volumen:': '3m^3',
-                'Combustible Disponible: ': '30%',
-                'Tipo de Combustible:': 'Gasolina',
-                'Centro de Acopio:': 'Álamos'
+                'Capacidad de Carga:': ['500', 'Kg'],
+                'Capacidad de Volumen:': ['3', 'm3'],
+                'Combustible Disponible: ': ['30', '%'],
+                'Tipo de Combustible:': ['Gasolina'],
+                'Centro de Acopio:': ['Álamos']
               },
             );
           }));
@@ -58,133 +60,170 @@ class _ItemListTestState extends State<ItemListTest> {
               key: ValueKey(0),
             );
           else
-            child = Container(
-              height: MediaQuery.of(context).size.height,
-              child: SingleChildScrollView(
+            child = RefreshIndicator(
                 key: ValueKey(1),
-                child: ExpansionPanelList(
-                  expansionCallback: (int index, bool isExpanded) {
-                    setState(() {
-                      snapshot.data[index].isExpanded = !isExpanded;
-                    });
-                  },
-                  children:
-                      snapshot.data.map<ExpansionPanel>((ExpandableItem item) {
-                    return ExpansionPanel(
-                      backgroundColor: Theme.of(context).colorScheme.background,
-                      headerBuilder: (BuildContext context, bool isExpanded) {
-                        return ListTile(
-                          title: Text(item.title),
-                          subtitle: Text(
-                            item.subtitle,
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary),
-                          ),
-                        );
-                      },
-                      body: ListTile(
-                        subtitle: Column(
-                          children: [
-                            Column(
-                              children: item.expandedValue.entries
-                                  .map((e) => Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(e.key),
-                                          Text(e.value.toString()),
-                                        ],
-                                      ))
-                                  .toList(),
-                            ),
-                            Row(
-                              children: [
-                                TextButton(
-                                  onPressed: () {
-                                    // hacer push a la pagina de editar
-                                  },
-                                  child: Text(
-                                    'EDITAR',
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    // hacer push a la pagina de ver ruta
-                                  },
-                                  child: Text(
-                                    'VER RUTA',
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        trailing: FloatingActionButton(
-                          mini: true,
-                          child: Icon(Icons.delete),
-                          onPressed: () {
-                            return showDialog(
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                      title: Text(
-                                        'Eliminar ${item.title}',
-                                        style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary),
-                                      ),
-                                      content: Text('Estas seguro?'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context,
-                                                    rootNavigator: true)
-                                                .pop();
-                                          },
-                                          child: Text(
-                                            'CANCELAR',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            // agregar evento al bloc de eliminar objeto.
-                                            setState(() {
-                                              snapshot.data.removeWhere(
-                                                  (ExpandableItem
-                                                          currentItem) =>
-                                                      item == currentItem);
-                                            });
-                                            Navigator.of(context,
-                                                    rootNavigator: true)
-                                                .pop();
-                                          },
-                                          child: Text(
-                                            'ACEPTAR',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                        ),
-                                      ],
-                                    ));
+                onRefresh: () async {
+                  setState(() {
+                    list = generatePackages(6);
+                  });
+                },
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    return SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: ConstrainedBox(
+                        constraints:
+                            BoxConstraints(minHeight: constraints.maxHeight),
+                        child: ExpansionPanelList(
+                          expansionCallback: (int index, bool isExpanded) {
+                            setState(() {
+                              snapshot.data[index].isExpanded = !isExpanded;
+                            });
                           },
+                          children: snapshot.data
+                              .map<ExpansionPanel>((ExpandableItem item) {
+                            return ExpansionPanel(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.background,
+                              headerBuilder:
+                                  (BuildContext context, bool isExpanded) {
+                                return ListTile(
+                                  title: Text(item.title),
+                                  subtitle: Text(
+                                    item.subtitle,
+                                    style: TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary),
+                                  ),
+                                );
+                              },
+                              body: ListTile(
+                                subtitle: Column(
+                                  children: [
+                                    Column(
+                                      children: item.expandedValue.entries
+                                          .map((e) => Row(
+                                                children: [
+                                                  Text(e.key),
+                                                  Spacer(),
+                                                  Text(e.value[0].toString()),
+                                                  e.value.length == 1
+                                                      ? Container()
+                                                      : Text(
+                                                          e.value[1].toString(),
+                                                          style: TextStyle(
+                                                              fontFeatures: [
+                                                                FontFeature
+                                                                    .enable(
+                                                                        'sups')
+                                                              ]),
+                                                        ),
+                                                ],
+                                              ))
+                                          .toList(),
+                                    ),
+                                    Row(
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            // hacer push a la pagina de editar
+                                          },
+                                          child: Text(
+                                            'EDITAR',
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            // hacer push a la pagina de ver ruta
+                                          },
+                                          child: Text(
+                                            'VER RUTA',
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .secondary),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        IconButton(
+                                          icon: Icon(Icons.delete),
+                                          onPressed: () {
+                                            return showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        AlertDialog(
+                                                          title: Text(
+                                                            'Eliminar ${item.title}',
+                                                            style: TextStyle(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .secondary),
+                                                          ),
+                                                          content: Text(
+                                                              'Estas seguro?'),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context,
+                                                                        rootNavigator:
+                                                                            true)
+                                                                    .pop();
+                                                              },
+                                                              child: Text(
+                                                                'CANCELAR',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                // agregar evento al bloc de eliminar objeto.
+                                                                setState(() {
+                                                                  snapshot.data.removeWhere(
+                                                                      (ExpandableItem
+                                                                              currentItem) =>
+                                                                          item ==
+                                                                          currentItem);
+                                                                });
+                                                                Navigator.of(
+                                                                        context,
+                                                                        rootNavigator:
+                                                                            true)
+                                                                    .pop();
+                                                              },
+                                                              child: Text(
+                                                                'ACEPTAR',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ));
+                                          },
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              isExpanded: item.isExpanded,
+                            );
+                          }).toList(),
                         ),
                       ),
-                      isExpanded: item.isExpanded,
                     );
-                  }).toList(),
-                ),
-              ),
-            );
+                  },
+                ));
           return AnimatedSwitcher(child: child, duration: Duration(seconds: 1));
         });
   }

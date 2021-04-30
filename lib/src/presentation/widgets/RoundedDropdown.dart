@@ -4,11 +4,19 @@ class RoundedDropdown extends StatelessWidget {
   final String value;
   final String hint;
   final Function(String) onChanged;
-  final List<String> items;
+  final Map<String, IconData> items;
   final IconData icon;
   final Color iconColor;
 
-  const RoundedDropdown({Key key, this.value, this.hint, this.onChanged, this.items, this.icon=Icons.person, @required this.iconColor}) : super(key: key);
+  const RoundedDropdown(
+      {Key key,
+      this.value,
+      this.hint,
+      this.onChanged,
+      this.items,
+      this.icon = Icons.person,
+      @required this.iconColor})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -20,38 +28,49 @@ class RoundedDropdown extends StatelessWidget {
         color: Theme.of(context).colorScheme.onBackground.withAlpha(30),
         borderRadius: BorderRadius.circular(29),
       ),
-      child: DropdownButton(
-        isExpanded: true,
-        hint: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Icon(icon,color: iconColor,),
-            ),
-            Text(
-              hint,
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ],
-        ),
-        value:value,
-        items: items
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Icon(icon,color: iconColor,),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButtonFormField(
+          decoration: InputDecoration(
+              enabledBorder: InputBorder.none, errorBorder: InputBorder.none),
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          validator: (value) => value == null ? 'Seleccione una opción' : null,
+          isExpanded: true,
+          hint: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: Icon(
+                  icon,
+                  color: iconColor,
                 ),
-                Text(value),
-              ],
-            ),
-          );
-        }).toList(),
-        underline: Container(),
-        onChanged: onChanged,
+              ),
+              Text(
+                hint,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          ),
+          value: value,
+          items: items.entries.map<DropdownMenuItem<String>>((entry) {
+            return DropdownMenuItem<String>(
+              value: entry.key,
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Icon(
+                      entry.value == null ? Icons.person : entry.value,
+                      color: iconColor,
+                    ),
+                  ),
+                  Text(entry.key),
+                ],
+              ),
+            );
+          }).toList(),
+          // underline: Container(),
+          onChanged: onChanged,
+        ),
       ),
     );
   }
