@@ -10,6 +10,7 @@ import 'package:kurztrip_ma/services_provider.dart';
 
 class MainPage extends StatelessWidget {
   final MainPageBloc bloc = getIt<MainPageBloc>();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -21,27 +22,44 @@ class MainPage extends StatelessWidget {
             floatingActionButton: _getIndex(state) == 3
                 ? null
                 : FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () => _floatingActionButton(state, context),
-                  ),
+              child: Icon(Icons.add),
+              onPressed: () => _floatingActionButton(state, context),
+            ),
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
+            FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.09,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.09,
               child: BottomAppBar(
                 shape: const CircularNotchedRectangle(),
-                color: Theme.of(context).colorScheme.primary,
+                color: Theme
+                    .of(context)
+                    .colorScheme
+                    .primary,
                 clipBehavior: Clip.antiAlias,
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+                  backgroundColor: Theme
+                      .of(context)
+                      .colorScheme
+                      .primary,
+                  selectedItemColor: Theme
+                      .of(context)
+                      .colorScheme
+                      .onPrimary,
                   unselectedItemColor:
-                      Theme.of(context).colorScheme.onPrimary.withAlpha(130),
+                  Theme
+                      .of(context)
+                      .colorScheme
+                      .onPrimary
+                      .withAlpha(130),
                   currentIndex: index,
-                  onTap: (index) => context
-                      .read<MainPageBloc>()
-                      .add(TabSelected(index: index)),
+                  onTap: (index) =>
+                      context
+                          .read<MainPageBloc>()
+                          .add(TabSelected(index: index)),
                   items: [
                     BottomNavigationBarItem(
                       icon: new Icon(KurztripIcons.frontal_truck),
@@ -65,7 +83,10 @@ class MainPage extends StatelessWidget {
             ),
             body: Padding(
               padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.05),
+                  top: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.05),
               child: _getItemView(index),
             ),
           );
@@ -99,56 +120,57 @@ class MainPage extends StatelessWidget {
 
   int _getIndex(MainPageState state) {
     if (state is TruckTab) {
+      return 0;
+    }
+    if (state is PackageTab) {
+      return 1;
+    }
+    if (state is RouteTab) {
+      return 2;
+    }
+    if (state is AccountTab) {
+      return 3;
+    }
     return 0;
   }
-  if (state is PackageTab) {
-    return 1;
-  }
-  if (state is RouteTab) {
-    return 2;
-  }
-  if (state is AccountTab) {
-    return 3;
-  }
-  return 0;
-  }
 
-Widget _getItemView(int index) {
-  switch (index) {
-    case 0:
-      {
-        return ItemListTest();
-      }
-    case 1:
-      {
-        return Center(
-          child: Text(
-            'Paquetes!',
-            style: TextStyle(fontSize: 30.0, color: Colors.white),
-          ),
-        );
-      }
-    case 2:
-      {
-        return Center(
-          child: Text(
-            'Rutas!',
-            style: TextStyle(fontSize: 30.0, color: Colors.white),
-          ),
-        );
-      }
-    case 3:
-      {
-        return AccountPage();
-      }
-    default:
-      {
-        return Center(
-          child: Text(
-            'Se presentó un error!',
-            style: TextStyle(fontSize: 30.0, color: Colors.white),
-          ),
-        );
-      }
+  Widget _getItemView(int index) {
+    switch (index) {
+      case 0:
+        {
+          return ItemListTest();
+        }
+      case 1:
+        {
+          return Center(
+            child: Text(
+              'Paquetes!',
+              style: TextStyle(fontSize: 30.0, color: Colors.white),
+            ),
+          );
+        }
+      case 2:
+        {
+          return Center(
+            child: Text(
+              'Rutas!',
+              style: TextStyle(fontSize: 30.0, color: Colors.white),
+            ),
+          );
+        }
+      case 3:
+        {
+          return AccountPage();
+        }
+      default:
+        {
+          return Center(
+            child: Text(
+              'Se presentó un error!',
+              style: TextStyle(fontSize: 30.0, color: Colors.white),
+            ),
+          );
+        }
+    }
   }
 }
