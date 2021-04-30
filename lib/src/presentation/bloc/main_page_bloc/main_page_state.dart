@@ -11,12 +11,15 @@ abstract class MainPageState extends Equatable {
   List<Object> get props => properties;
 }
 
-class PackageTab extends MainPageState {
-  final List<String> packageList;
-  PackageTab({@required this.packageList}) : super(packageList);
-}
+class TruckTab extends MainPageState {}
 
-class Showing extends MainPageState {
-  final int index;
-  Showing({@required this.index}) : super([index]);
+class PackageTab extends MainPageState {}
+
+class RouteTab extends MainPageState {}
+
+class AccountTab extends MainPageState {}
+
+class ErrorState extends MainPageState {
+  final String message;
+  ErrorState({this.message = 'error'}) : super([message]);
 }

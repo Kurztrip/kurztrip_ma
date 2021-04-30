@@ -4,6 +4,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_state.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
+import 'package:kurztrip_ma/src/presentation/widgets/account.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 
@@ -97,42 +98,57 @@ class MainPage extends StatelessWidget {
   }
 
   int _getIndex(MainPageState state) {
-    return state is PackageTab ? 0 : state.properties[0];
+    if (state is TruckTab) {
+    return 0;
+  }
+  if (state is PackageTab) {
+    return 1;
+  }
+  if (state is RouteTab) {
+    return 2;
+  }
+  if (state is AccountTab) {
+    return 3;
+  }
+  return 0;
   }
 
-  Widget _getItemView(int index) {
-    switch (index) {
-      case 0:
-        {
-          return ItemListTest();
-        }
-      case 1:
-        {
-          return Center(
-            child: Text(
-              'Paquetes!',
-              style: TextStyle(fontSize: 30.0, color: Colors.white),
-            ),
-          );
-        }
-      case 2:
-        {
-          return Center(
-            child: Text(
-              'Rutas!',
-              style: TextStyle(fontSize: 30.0, color: Colors.white),
-            ),
-          );
-        }
-      default:
-        {
-          return Center(
-            child: Text(
-              'This is your profile!',
-              style: TextStyle(fontSize: 30.0, color: Colors.white),
-            ),
-          );
-        }
-    }
+Widget _getItemView(int index) {
+  switch (index) {
+    case 0:
+      {
+        return ItemListTest();
+      }
+    case 1:
+      {
+        return Center(
+          child: Text(
+            'Paquetes!',
+            style: TextStyle(fontSize: 30.0, color: Colors.white),
+          ),
+        );
+      }
+    case 2:
+      {
+        return Center(
+          child: Text(
+            'Rutas!',
+            style: TextStyle(fontSize: 30.0, color: Colors.white),
+          ),
+        );
+      }
+    case 3:
+      {
+        return AccountPage();
+      }
+    default:
+      {
+        return Center(
+          child: Text(
+            'Se presentó un error!',
+            style: TextStyle(fontSize: 30.0, color: Colors.white),
+          ),
+        );
+      }
   }
 }
