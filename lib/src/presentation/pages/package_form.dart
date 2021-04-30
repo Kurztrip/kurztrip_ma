@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
-import 'package:kurztrip_ma/src/presentation/bloc/truck_form/truckform_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedButton.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
 
-class TruckForm extends StatefulWidget {
+class PackageForm extends StatefulWidget {
   @override
-  _TruckFormState createState() => _TruckFormState();
+  _PackageFormState createState() => _PackageFormState();
 }
 
-class _TruckFormState extends State<TruckForm> {
-  final TruckformBloc bloc = getIt();
+class _PackageFormState extends State<PackageForm> {
+  final PackageformBloc bloc = getIt();
   final _globalKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: BlocProvider<TruckformBloc>(
+      body: BlocProvider<PackageformBloc>(
         create: (context) => bloc,
-        child: BlocBuilder<TruckformBloc, TruckformState>(
+        child: BlocBuilder<PackageformBloc, PackageformState>(
             builder: (context, snapshot) {
           return SingleChildScrollView(
             child: Container(
@@ -32,52 +32,42 @@ class _TruckFormState extends State<TruckForm> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
-                      child: Text('Añadir camión',
+                      child: Text('Añadir paquete',
                           style: Theme.of(context).textTheme.headline2),
                     ),
                     RoundedInputField(
                       iconColor: Theme.of(context).accentColor,
-                      hintText: 'Placa',
-                      icon: Icons.directions_bus,
-                      onChanged: (value) => bloc.add(UpdateRegister(value)),
+                      hintText: 'Destino',
+                      icon: KurztripIcons.map,
+                      onChanged: (value) => bloc.add(UpdateAddress(value)),
                     ),
                     RoundedInputField(
                       iconColor: Theme.of(context).accentColor,
-                      hintText: 'Capacidad de carga',
+                      hintText: 'Destinatario',
+                      icon: KurztripIcons.id_card,
+                      onChanged: (value) => bloc.add(UpdateReceiver(value)),
+                    ),
+                    RoundedInputField(
+                      iconColor: Theme.of(context).accentColor,
+                      hintText: 'D.I del destinatario',
+                      icon: KurztripIcons.di,
+                      onChanged: (value) => bloc.add(UpdateReceiverId(value)),
+                    ),
+                    RoundedInputField(
+                      iconColor: Theme.of(context).accentColor,
+                      hintText: 'Peso',
                       icon: KurztripIcons.weight,
                       textInputType: TextInputType.number,
                       onChanged: (value) =>
-                          bloc.add(UpdateWeightCapacity(double.parse(value))),
+                          bloc.add(UpdateWeight(double.parse(value))),
                     ),
                     RoundedInputField(
                       iconColor: Theme.of(context).accentColor,
-                      hintText: 'Capacidad de volumen',
-                      icon: KurztripIcons.size,
+                      hintText: 'Volumen',
+                      icon: KurztripIcons.size_1,
                       textInputType: TextInputType.number,
                       onChanged: (value) =>
-                          bloc.add(UpdateVolumeCapacity(double.parse(value))),
-                    ),
-                    RoundedInputField(
-                      iconColor: Theme.of(context).accentColor,
-                      hintText: 'Capacidad de combustible',
-                      icon: KurztripIcons.capacity,
-                      textInputType: TextInputType.number,
-                      onChanged: (value) =>
-                          bloc.add(UpdateFuelCapacity(double.parse(value))),
-                    ),
-                    RoundedInputField(
-                      iconColor: Theme.of(context).accentColor,
-                      hintText: 'Tipo de combustible',
-                      icon: KurztripIcons.fuel,
-                      onChanged: (value) => bloc.add(UpdateFuelType(value)),
-                    ),
-                    RoundedInputField(
-                      iconColor: Theme.of(context).accentColor,
-                      hintText: 'Combustible/Km',
-                      icon: KurztripIcons.growth,
-                      textInputType: TextInputType.number,
-                      onChanged: (value) =>
-                          bloc.add(UpdateFuelPerKilometer(double.parse(value))),
+                          bloc.add(UpdateVolume(double.parse(value))),
                     ),
                     RoundedInputField(
                       iconColor: Theme.of(context).accentColor,

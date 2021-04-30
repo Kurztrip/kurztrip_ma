@@ -36,11 +36,21 @@ class AccountPage extends StatelessWidget {
         ),
         Divider(),
         ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0))),
+            ),
             onPressed: () {
               // agregar evento al bloc de editar información
             },
             child: Text('Editar Información')),
         OutlinedButton.icon(
+          style: ButtonStyle(
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0))),
+          ),
           onPressed: () {
             return showDialog(
                 context: context,

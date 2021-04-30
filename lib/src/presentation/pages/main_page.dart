@@ -22,44 +22,27 @@ class MainPage extends StatelessWidget {
             floatingActionButton: _getIndex(state) == 3
                 ? null
                 : FloatingActionButton(
-              child: Icon(Icons.add),
-              onPressed: () => _floatingActionButton(state, context),
-            ),
+                    child: Icon(Icons.add),
+                    onPressed: () => _floatingActionButton(state, context),
+                  ),
             floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerDocked,
+                FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: SizedBox(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.09,
+              height: MediaQuery.of(context).size.height * 0.09,
               child: BottomAppBar(
                 shape: const CircularNotchedRectangle(),
-                color: Theme
-                    .of(context)
-                    .colorScheme
-                    .primary,
+                color: Theme.of(context).colorScheme.primary,
                 clipBehavior: Clip.antiAlias,
                 child: BottomNavigationBar(
                   type: BottomNavigationBarType.fixed,
-                  backgroundColor: Theme
-                      .of(context)
-                      .colorScheme
-                      .primary,
-                  selectedItemColor: Theme
-                      .of(context)
-                      .colorScheme
-                      .onPrimary,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  selectedItemColor: Theme.of(context).colorScheme.onPrimary,
                   unselectedItemColor:
-                  Theme
-                      .of(context)
-                      .colorScheme
-                      .onPrimary
-                      .withAlpha(130),
+                      Theme.of(context).colorScheme.onPrimary.withAlpha(130),
                   currentIndex: index,
-                  onTap: (index) =>
-                      context
-                          .read<MainPageBloc>()
-                          .add(TabSelected(index: index)),
+                  onTap: (index) => context
+                      .read<MainPageBloc>()
+                      .add(TabSelected(index: index)),
                   items: [
                     BottomNavigationBarItem(
                       icon: new Icon(KurztripIcons.frontal_truck),
@@ -83,10 +66,7 @@ class MainPage extends StatelessWidget {
             ),
             body: Padding(
               padding: EdgeInsets.only(
-                  top: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.05),
+                  top: MediaQuery.of(context).size.height * 0.05),
               child: _getItemView(index),
             ),
           );
@@ -105,6 +85,7 @@ class MainPage extends StatelessWidget {
         }
       case 1:
         {
+          Navigator.of(context).pushNamed('/package_form');
           break;
         }
       case 2:

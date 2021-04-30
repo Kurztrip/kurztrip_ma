@@ -33,6 +33,17 @@ class TruckformBloc extends Bloc<TruckformEvent, TruckformState> {
     } else if (event is UpdateWeightCapacity) {
       yield (state as TruckformShowing)
           .copyWith(weightCapacity: event.weightCapacity);
+    } else if (event is TruckformAutofill) {
+      yield TruckformShowing(
+          update: true,
+          register: event.register,
+          volumeCapacity: event.volumeCapacity,
+          weightCapacity: event.weightCapacity,
+          fuelCapacity: event.fuelCapacity,
+          fuelType: event.fuelType,
+          fuelPerKilometer: event.fuelPerKilometer,
+          warehouse: event.warehouse,
+          state: event.state);
     }
   }
 }

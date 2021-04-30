@@ -115,7 +115,10 @@ class _SignUpPageState extends State<SignUpPage> {
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: RoundedButton(
-                              onPressed: _submit, text: 'Completar\nregistro'),
+                              horizontalPadding: 30,
+                              verticalPadding: 10,
+                              onPressed: _submit,
+                              text: 'Crear cuenta'),
                         )
                       ],
                     ),

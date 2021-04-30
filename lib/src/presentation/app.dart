@@ -54,6 +54,7 @@ class MobileApp extends StatelessWidget {
         '/': (context) => Homepage(),
         '/main_page': (context) => MainPage(),
         '/truck_form': (context) => TruckForm(),
+        '/package_form': (context) => PackageForm(),
         '/first': (context) => FirstPage(),
         '/second': (context) => SecondPage(),
         '/test': (context) => MyHomePage(

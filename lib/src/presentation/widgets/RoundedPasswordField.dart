@@ -6,12 +6,13 @@ class RoundedPasswordField extends StatefulWidget {
   final Color iconColor;
   final String Function(String) validator;
 
-  RoundedPasswordField({Key key,
+  RoundedPasswordField({
+    Key key,
     this.hintText,
     this.onChanged,
     @required this.iconColor,
-    this.validator = defaultValidator,})
-      : super(key: key);
+    this.validator = defaultValidator,
+  }) : super(key: key);
 
   static String defaultValidator(value) =>
       value == null || value.isEmpty ? 'Este campo es obligatorio' : null;
@@ -21,7 +22,7 @@ class RoundedPasswordField extends StatefulWidget {
 }
 
 class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
-  bool obscureText=true;
+  bool obscureText = true;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -41,25 +42,32 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
           cursorColor: widget.iconColor,
           validator: widget.validator,
           decoration: InputDecoration(
-            icon: Icon(
-              Icons.lock,
-              color: widget.iconColor,
-            ),
-            hintText: "contraseña",
-            hintStyle: Theme.of(context).textTheme.bodyText1.apply(),
-            // errorStyle: Theme.of(context).textTheme.bodyText1.apply(),
-            border: InputBorder.none,
-            suffixIcon: IconButton(
-              icon:Icon(
-                obscureText?Icons.visibility:Icons.visibility_off,
-                color: widget.iconColor.withAlpha(125),
+              icon: Icon(
+                Icons.lock,
+                color: widget.iconColor,
               ),
-              onPressed: ()=>setState(()=>obscureText=!obscureText),
-            )
-          ),
+              hintText: "Contraseña",
+              hintStyle: Theme.of(context).textTheme.bodyText1.apply(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onBackground
+                      .withAlpha(180)),
+              errorStyle: Theme.of(context)
+                  .textTheme
+                  .bodyText2
+                  .apply(color: Theme.of(context).colorScheme.error),
+              border: InputBorder.none,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  obscureText ? Icons.visibility : Icons.visibility_off,
+                  color: widget.iconColor.withAlpha(125),
+                ),
+                onPressed: () => setState(() => obscureText = !obscureText),
+              )),
           obscureText: obscureText,
           onEditingComplete: () {
             node.nextFocus();
           }),
     );
-  }}
+  }
+}

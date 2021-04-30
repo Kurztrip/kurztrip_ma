@@ -8,6 +8,7 @@ abstract class TruckformState extends Equatable {
 }
 
 class TruckformShowing extends TruckformState {
+  final bool update;
   final String register;
   final double volumeCapacity;
   final double weightCapacity;
@@ -17,16 +18,17 @@ class TruckformShowing extends TruckformState {
   final int warehouse;
   final String state;
 
-  TruckformShowing(
-      {this.register,
-      this.volumeCapacity,
-      this.weightCapacity,
-      this.fuelCapacity,
-      this.fuelType,
-      this.fuelPerKilometer,
-      this.warehouse,
-      this.state})
-      : super([
+  TruckformShowing({
+    this.update,
+    this.register,
+    this.volumeCapacity,
+    this.weightCapacity,
+    this.fuelCapacity,
+    this.fuelType,
+    this.fuelPerKilometer,
+    this.warehouse,
+    this.state,
+  }) : super([
           register,
           volumeCapacity,
           weightCapacity,
@@ -36,26 +38,29 @@ class TruckformShowing extends TruckformState {
           warehouse,
           state
         ]);
-  TruckformShowing copyWith(
-      {String register,
-      double volumeCapacity,
-      double weightCapacity,
-      double fuelCapacity,
-      String fuelType,
-      double fuelPerKilometer,
-      int warehouse,
-      String state}) {
+  TruckformShowing copyWith({
+    String register,
+    double volumeCapacity,
+    double weightCapacity,
+    double fuelCapacity,
+    String fuelType,
+    double fuelPerKilometer,
+    int warehouse,
+    String state,
+  }) {
     return TruckformShowing(
-        register: register != null ? register : this.register,
-        volumeCapacity:
-            volumeCapacity != null ? volumeCapacity : this.volumeCapacity,
-        weightCapacity:
-            weightCapacity != null ? weightCapacity : this.weightCapacity,
-        fuelCapacity: fuelCapacity != null ? fuelCapacity : this.fuelCapacity,
-        fuelType: fuelType != null ? fuelType : this.fuelType,
-        fuelPerKilometer:
-            fuelPerKilometer != null ? fuelPerKilometer : this.fuelPerKilometer,
-        warehouse: warehouse != null ? warehouse : this.warehouse,
-        state: state != null ? state : this.state);
+      update: this.update,
+      register: register != null ? register : this.register,
+      volumeCapacity:
+          volumeCapacity != null ? volumeCapacity : this.volumeCapacity,
+      weightCapacity:
+          weightCapacity != null ? weightCapacity : this.weightCapacity,
+      fuelCapacity: fuelCapacity != null ? fuelCapacity : this.fuelCapacity,
+      fuelType: fuelType != null ? fuelType : this.fuelType,
+      fuelPerKilometer:
+          fuelPerKilometer != null ? fuelPerKilometer : this.fuelPerKilometer,
+      warehouse: warehouse != null ? warehouse : this.warehouse,
+      state: state != null ? state : this.state,
+    );
   }
 }

@@ -50,7 +50,6 @@ class RoundedInputField extends StatelessWidget {
             hintStyle: Theme.of(context).textTheme.bodyText1.apply(
                 color:
                     Theme.of(context).colorScheme.onBackground.withAlpha(180)),
-            contentPadding: EdgeInsets.only(bottom: 0),
             errorStyle: Theme.of(context)
                 .textTheme
                 .bodyText2

@@ -46,7 +46,11 @@ class RoundedDropdown extends StatelessWidget {
               ),
               Text(
                 hint,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: Theme.of(context).textTheme.bodyText1.apply(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .onBackground
+                        .withAlpha(180)),
               ),
             ],
           ),
@@ -68,7 +72,6 @@ class RoundedDropdown extends StatelessWidget {
               ),
             );
           }).toList(),
-          // underline: Container(),
           onChanged: onChanged,
         ),
       ),
