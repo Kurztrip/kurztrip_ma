@@ -62,10 +62,10 @@ class AccountPage extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // agregar evento al bloc de cerrar sesión.
-                            Navigator.of(context, rootNavigator: true)
-                                .popUntil((route) => !route.navigator.canPop());
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                '/', (Route<dynamic> route) => false);
                           },
                           child: Text(
                             'ACEPTAR',
