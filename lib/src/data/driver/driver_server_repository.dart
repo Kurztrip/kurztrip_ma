@@ -11,7 +11,7 @@ class DriverServerRepository implements LocationsRepository{
     query getLocations(){
       getAllLocations{
         id
-        truckId
+        truck_id
         longitude
         latitude
       }
@@ -19,10 +19,10 @@ class DriverServerRepository implements LocationsRepository{
   ''';
 
   final String getLocation = r'''
-    query getOneLocation(id: Int!){
+    query getOneLocation($id: Int!){
       getLocation(id: $id){
         id
-        truckId
+        truck_id
         longitude
         latitude
       }
@@ -31,23 +31,21 @@ class DriverServerRepository implements LocationsRepository{
 
 
   final String createLocation = r'''
-    mutation createOneLocation(location: LocationInput!){
-      createLocation(location: $location){
-      }
+    mutation createOneLocation($location: LocationInput!){
+      createLocation(location: $location)
     }
   ''';
 
   final String updateLocation = r'''
-    mutation updateOneLocation(id: Int!, location: LocationInput!){
-      updateLocation(id: $id, location: $location){
-      }
+    mutation updateOneLocation($id: Int!, $location: LocationInput!){
+      updateLocation(id: $id, location: $location)
     }
   ''';
 
   final String deleteLocation = r'''
-    mutation deleteOneLocation(id: Int!){
-      createLocation(id: $id){
-      }
+    mutation deleteOneLocation($id: Int!){
+      deleteLocation(id: $id)
+      
     }
   ''';
 
@@ -60,7 +58,9 @@ class DriverServerRepository implements LocationsRepository{
     if(result.hasException){
       throw result.exception;
     }
-    List locations = result.data['getAllLocations'];
+    List<Locations> locations = result.data['getAllLocations'].map<Locations>((LocationsResult) =>
+        Locations(id: int.parse(LocationsResult['id'].toString()), truck_id: int.parse(LocationsResult['truck_id'].toString()), latitude: double.parse(LocationsResult['latitude'].toString()), longitude: double.parse(LocationsResult['longitude'].toString()))
+    ).toList();
     return locations;
 
   }
@@ -78,7 +78,7 @@ class DriverServerRepository implements LocationsRepository{
     throw result.exception;
   }
   final locationResult = result.data['getLocation'];
-  return Locations(id: int.parse(locationResult['id'].toString()), truckId: int.parse(locationResult['truckId'].toString()), latitude: double.parse(locationResult['latitude'].toString()), longitude: double.parse(locationResult['longitude'].toString()));
+  return Locations(id: int.parse(locationResult['id'].toString()), truck_id: int.parse(locationResult['truck_id'].toString()), latitude: double.parse(locationResult['latitude'].toString()), longitude: double.parse(locationResult['longitude'].toString()));
   }
 
   @override
@@ -87,7 +87,7 @@ class DriverServerRepository implements LocationsRepository{
     document: gql(createLocation),
     variables: <String, dynamic>{
       'location':{
-        'truckId': locations.truckId,
+        'truck_id': locations.truck_id,
         'latitude': locations.latitude,
         'longitude': locations.longitude
       }
@@ -107,7 +107,7 @@ class DriverServerRepository implements LocationsRepository{
       variables: <String, dynamic>{
         'id': id,
         'location':{
-          'truckId': locations.truckId,
+          'truck_id': locations.truck_id,
           'latitude': locations.latitude,
           'longitude': locations.longitude
         }
