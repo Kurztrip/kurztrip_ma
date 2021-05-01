@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 class Package{
   const Package({
-    @required this.id,
+    this.id,
     @required this.weight,
     @required this.volume,
     @required this.longitude,

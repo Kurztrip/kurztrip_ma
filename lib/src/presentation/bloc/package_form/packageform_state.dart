@@ -6,8 +6,10 @@ abstract class PackageformState extends Equatable {
   @override
   List<Object> get props => [properties];
 }
-
+class PackageformLoading extends PackageformState{}
+class PackageformSuccess extends PackageformState{}
 class PackageformShowing extends PackageformState {
+  final String error;
   final String address;
   final String receiver;
   final String receiverID;
@@ -17,6 +19,7 @@ class PackageformShowing extends PackageformState {
   final bool update;
 
   PackageformShowing({
+    this.error,
     this.address,
     this.receiver,
     this.receiverID,
@@ -24,7 +27,7 @@ class PackageformShowing extends PackageformState {
     this.volume,
     this.warehouse,
     this.update,
-  }) : super([address, receiver, receiverID, weight, volume, warehouse]);
+  }) : super([error, address, receiver, receiverID, weight, volume, warehouse]);
   PackageformShowing copyWith({
     String address,
     String receiver,
@@ -32,6 +35,7 @@ class PackageformShowing extends PackageformState {
     double weight,
     double volume,
     int warehouse,
+    String error,
   }) {
     return PackageformShowing(
       address: address != null ? address : this.address,
@@ -41,6 +45,7 @@ class PackageformShowing extends PackageformState {
       volume: volume != null ? volume : this.volume,
       warehouse: warehouse != null ? warehouse : this.warehouse,
       update: this.update,
+      error: error!=null?error:null
     );
   }
 }
