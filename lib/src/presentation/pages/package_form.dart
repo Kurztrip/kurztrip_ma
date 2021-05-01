@@ -21,7 +21,7 @@ class _PackageFormState extends State<PackageForm> {
       body: BlocProvider<PackageformBloc>(
         create: (context) => bloc,
         child: BlocBuilder<PackageformBloc, PackageformState>(
-            builder: (context, snapshot) {
+            builder: (context, state) {
           return SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width,
@@ -81,7 +81,9 @@ class _PackageFormState extends State<PackageForm> {
                       padding: const EdgeInsets.all(8.0),
                       child: RoundedButton(
                         onPressed: () {
-                          _globalKey.currentState.validate();
+                          if (_globalKey.currentState.validate()) {
+                            bloc.add(Submit());
+                          }
                         },
                         text: 'GUARDAR',
                         verticalPadding: 10,

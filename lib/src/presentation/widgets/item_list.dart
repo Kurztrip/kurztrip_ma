@@ -1,48 +1,24 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:kurztrip_ma/src/presentation/widgets/expandable_item.dart';
 
-class ExpandableItem {
-  ExpandableItem({
-    @required this.expandedValue,
-    @required this.title,
-    this.subtitle,
-    this.isExpanded = false,
-  });
+typedef ListGetter = Future<List<ExpandableItem>> Function();
 
-  String title;
-  String subtitle;
-  Map<String, dynamic> expandedValue;
-  bool isExpanded;
-}
-
-//Este metodo es temporal para llenar la lista de objetos
-Future<List<ExpandableItem>> generatePackages(int numberOfItems) async {
-  return Future.delayed(
-      Duration(milliseconds: 500),
-      () => List<ExpandableItem>.generate(numberOfItems, (int index) {
-            return ExpandableItem(
-              title: 'Camión $index',
-              subtitle: 'DISPONIBLE',
-              expandedValue: {
-                'Capacidad de Carga:': ['500', 'Kg'],
-                'Capacidad de Volumen:': ['3', 'm3'],
-                'Combustible Disponible: ': ['30', '%'],
-                'Tipo de Combustible:': ['Gasolina'],
-                'Centro de Acopio:': ['Álamos']
-              },
-            );
-          }));
-}
-
-class ItemListTest extends StatefulWidget {
-  const ItemListTest({Key key}) : super(key: key);
+class ItemList extends StatefulWidget {
+  const ItemList({Key key, @required this.getList}) : super(key: key);
+  final ListGetter getList;
   @override
-  _ItemListTestState createState() => _ItemListTestState();
+  _ItemListState createState() => _ItemListState();
 }
 
-class _ItemListTestState extends State<ItemListTest> {
-  Future<List<ExpandableItem>> list = generatePackages(3);
+class _ItemListState extends State<ItemList> {
+  Future<List<ExpandableItem>> list;
+  @override
+  void initState() {
+    list = widget.getList();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +40,7 @@ class _ItemListTestState extends State<ItemListTest> {
                 key: ValueKey(1),
                 onRefresh: () async {
                   setState(() {
-                    list = generatePackages(6);
+                    list = widget.getList();
                   });
                 },
                 child: LayoutBuilder(

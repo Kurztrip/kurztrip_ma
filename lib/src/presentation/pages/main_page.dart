@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_state.dart';
@@ -7,6 +8,8 @@ import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/account.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 import 'package:kurztrip_ma/services_provider.dart';
+import 'package:kurztrip_ma/src/presentation/widgets/packages_list.dart';
+import 'package:kurztrip_ma/src/presentation/widgets/trucks_list.dart';
 
 class MainPage extends StatelessWidget {
   final MainPageBloc bloc = getIt<MainPageBloc>();
@@ -119,25 +122,17 @@ class MainPage extends StatelessWidget {
     switch (index) {
       case 0:
         {
-          return ItemListTest();
+          return TrucksList();
         }
       case 1:
         {
-          return Center(
-            child: Text(
-              'Paquetes!',
-              style: TextStyle(fontSize: 30.0, color: Colors.white),
-            ),
-          );
+          return PackagesList();
         }
       case 2:
         {
-          return Center(
-            child: Text(
-              'Rutas!',
-              style: TextStyle(fontSize: 30.0, color: Colors.white),
-            ),
-          );
+          return GoogleMap(
+              initialCameraPosition:
+                  CameraPosition(target: const LatLng(85, 80), zoom: 11.0));
         }
       case 3:
         {
