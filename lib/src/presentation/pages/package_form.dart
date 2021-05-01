@@ -22,6 +22,16 @@ class _PackageFormState extends State<PackageForm> {
         create: (context) => bloc,
         child: BlocBuilder<PackageformBloc, PackageformState>(
             builder: (context, state) {
+          if (state is PackageformLoading) {
+            return const Center(
+              child: const CircularProgressIndicator(),
+              key: ValueKey(0),
+            );
+          } else if (state is PackageformSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('paquete creado correctamente')));
+            Navigator.of(context).pop();
+          }
           return SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width,

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
+import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/core/error/faliures.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/create_package_use_case.dart';
@@ -12,7 +13,7 @@ part 'packageform_state.dart';
 
 class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
   PackageformBloc() : super(PackageformShowing());
-  CreatePackageUseCase useCase=CreatePackageUseCase();
+  CreatePackageUseCase useCase = getIt();
   @override
   Stream<PackageformState> mapEventToState(
     PackageformEvent event,
@@ -40,9 +41,9 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
         warehouse: event.warehouse,
         update: true,
       );
-    }else if(event is Submit){
-      PackageformShowing current=state as PackageformShowing;
-      Package package =Package(
+    } else if (event is Submit) {
+      PackageformShowing current = state as PackageformShowing;
+      Package package = Package(
         address: current.address,
         receiver: current.receiver,
         idReceiver: current.receiverID,
@@ -53,14 +54,12 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
         latitude: null,
       );
       yield PackageformLoading();
-      Either<Failure,Package> result =await useCase(Params(package));
-      yield* result.fold(
-          (failure)async*{
-            yield current.copyWith(error:failure.error);
-          },(package)async*{
-            yield PackageformSuccess();
-          }
-      );
+      Either<Failure, Package> result = await useCase(Params(package));
+      yield* result.fold((failure) async* {
+        yield current.copyWith(error: failure.error);
+      }, (package) async* {
+        yield PackageformSuccess();
+      });
     }
   }
 }

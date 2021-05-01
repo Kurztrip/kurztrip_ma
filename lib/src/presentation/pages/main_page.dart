@@ -6,7 +6,6 @@ import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_event
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_state.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/account.dart';
-import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/packages_list.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/trucks_list.dart';
