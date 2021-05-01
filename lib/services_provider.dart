@@ -1,6 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:kurztrip_ma/src/data/truck/truck_server_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
+import 'package:kurztrip_ma/src/data/package/package_server_repository.dart';
+import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/first_page_bloc/first_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/homepage/homepage_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
@@ -40,4 +42,5 @@ void registerUserService() {
   );
   //Repositories
   getIt.registerLazySingleton<TruckRepository>(() => TruckServerRepository());
+  getIt.registerLazySingleton<PackageRepository>(() => PackageServerRepository());
 }
