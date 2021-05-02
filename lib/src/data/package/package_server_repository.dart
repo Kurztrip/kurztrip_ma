@@ -128,7 +128,10 @@ Future<List<Package>> getAll() async{
   if(result.hasException){
     throw result.exception;
   }
-
+  List<Package> packages = result.data['getPackages'].map<Package>((packageResult) =>
+      Package(id: int.parse(packageResult['id'].toString()), storeId: int.parse(packageResult['storeId'].toString()), address: packageResult['address'].toString(), weight: double.parse(packageResult['weight'].toString()), volume: double.parse(packageResult['volume'].toString()), latitude: double.parse(packageResult['latitude'].toString()), longitude: double.parse(packageResult['longitude'].toString()), receiver: packageResult['receiver'].toString(), idReceiver: packageResult['idReceiver'].toString())
+  ).toList();
+  return packages;
 }
 
 @override
