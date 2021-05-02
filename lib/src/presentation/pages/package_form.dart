@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_webservice/geocoding.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
-import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedButton.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class PackageForm extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class PackageForm extends StatefulWidget {
 class _PackageFormState extends State<PackageForm> {
   final PackageformBloc bloc = getIt();
   final _globalKey = GlobalKey<FormState>();
+  Prediction prediction;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,91 +45,101 @@ class _PackageFormState extends State<PackageForm> {
               ),
               key: ValueKey(0),
             );
-          } else if (state is PackagelistError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Ha ocurrido un error al obtener los paquetes"),
-                  Icon(Icons.replay_outlined),
-                ],
-              ),
-              key: ValueKey(0),
-            );
-          }
-          return SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.center,
-              child: Form(
-                key: _globalKey,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: Text('Añadir paquete',
-                          style: Theme.of(context).textTheme.headline2),
-                    ),
-                    RoundedInputField(
-                      iconColor: Theme.of(context).accentColor,
-                      hintText: 'Destino',
-                      icon: KurztripIcons.map,
-                      onChanged: (value) => bloc.add(UpdateAddress(value)),
-                    ),
-                    RoundedInputField(
-                      iconColor: Theme.of(context).accentColor,
-                      hintText: 'Destinatario',
-                      icon: KurztripIcons.id_card,
-                      onChanged: (value) => bloc.add(UpdateReceiver(value)),
-                    ),
-                    RoundedInputField(
-                      iconColor: Theme.of(context).accentColor,
-                      hintText: 'D.I del destinatario',
-                      icon: KurztripIcons.di,
-                      onChanged: (value) => bloc.add(UpdateReceiverId(value)),
-                    ),
-                    RoundedInputField(
-                      iconColor: Theme.of(context).accentColor,
-                      hintText: 'Peso',
-                      icon: KurztripIcons.weight,
-                      textInputType: TextInputType.number,
-                      onChanged: (value) =>
-                          bloc.add(UpdateWeight(double.parse(value))),
-                    ),
-                    RoundedInputField(
-                      iconColor: Theme.of(context).accentColor,
-                      hintText: 'Volumen',
-                      icon: KurztripIcons.size_1,
-                      textInputType: TextInputType.number,
-                      onChanged: (value) =>
-                          bloc.add(UpdateVolume(double.parse(value))),
-                    ),
-                    RoundedInputField(
-                      iconColor: Theme.of(context).accentColor,
-                      hintText: 'Centro de acopio',
-                      icon: KurztripIcons.warehouse,
-                      textInputType: TextInputType.number,
-                      onChanged: (value) =>
-                          bloc.add(UpdateWarehouse(int.parse(value))),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RoundedButton(
-                        onPressed: () {
-                          if (_globalKey.currentState.validate()) {
-                            bloc.add(Submit());
-                          }
-                        },
-                        text: 'GUARDAR',
-                        verticalPadding: 10,
-                        horizontalPadding: 20,
+          } else if (state is PackageformShowing) {
+            return SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                alignment: Alignment.center,
+                child: Form(
+                  key: _globalKey,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30),
+                        child: Text('Añadir paquete',
+                            style: Theme.of(context).textTheme.headline2),
                       ),
-                    )
-                  ],
+                      state.error == null
+                          ? Container()
+                          : Text(
+                              state.error,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .apply(color: Colors.red),
+                            ),
+                      RoundedInputField(
+                        iconColor: Theme.of(context).accentColor,
+                        hintText: 'Destino',
+                        icon: KurztripIcons.map,
+                        onChanged: (value) => bloc.add(UpdateAddress(value)),
+                        onTap: (fieldContext) async {
+                          prediction = await PlacesAutocomplete.show(
+                              context: fieldContext, apiKey: mapsApiKey);
+                        },
+                      ),
+                      RoundedInputField(
+                        iconColor: Theme.of(context).accentColor,
+                        hintText: 'Destinatario',
+                        icon: KurztripIcons.id_card,
+                        onChanged: (value) => bloc.add(UpdateReceiver(value)),
+                      ),
+                      RoundedInputField(
+                        iconColor: Theme.of(context).accentColor,
+                        hintText: 'D.I del destinatario',
+                        icon: KurztripIcons.di,
+                        onChanged: (value) => bloc.add(UpdateReceiverId(value)),
+                      ),
+                      RoundedInputField(
+                        iconColor: Theme.of(context).accentColor,
+                        hintText: 'Peso',
+                        icon: KurztripIcons.weight,
+                        textInputType: TextInputType.number,
+                        onChanged: (value) =>
+                            bloc.add(UpdateWeight(double.parse(value))),
+                      ),
+                      RoundedInputField(
+                        iconColor: Theme.of(context).accentColor,
+                        hintText: 'Volumen',
+                        icon: KurztripIcons.size_1,
+                        textInputType: TextInputType.number,
+                        onChanged: (value) =>
+                            bloc.add(UpdateVolume(double.parse(value))),
+                      ),
+                      RoundedInputField(
+                        iconColor: Theme.of(context).accentColor,
+                        hintText: 'Centro de acopio',
+                        icon: KurztripIcons.warehouse,
+                        textInputType: TextInputType.number,
+                        onChanged: (value) =>
+                            bloc.add(UpdateWarehouse(int.parse(value))),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RoundedButton(
+                          onPressed: () async {
+                            if (_globalKey.currentState.validate()) {
+                              // GoogleMapsGeocoding geo =
+                              //     GoogleMapsGeocoding(apiKey: mapsApiKey);
+                              // GeocodingResponse response =
+                              //     await geo.searchByAddress(state.address);
+                              // print(response.results[0].geometry.location.lat);
+                              // print(response.results[0].geometry.location.lng);
+                              // bloc.add(Submit());
+                            }
+                          },
+                          text: 'GUARDAR',
+                          verticalPadding: 10,
+                          horizontalPadding: 20,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
+            );
+          }
+          return Container();
         }),
       ),
     );
