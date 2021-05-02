@@ -1,4 +1,3 @@
-//Este metodo es temporal para llenar la lista de objetos
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
@@ -20,13 +19,22 @@ class PackagesList extends StatelessWidget {
             child = ItemList(
               list: generatePackages(state.packages),
               key: ValueKey(1),
-              getList: () => bloc.add(GetAllPackages()),
+              getList: () async => bloc.add(GetAllPackages()),
               onDelete: (id) {},
               onEdit: (id) {},
             );
           } else if (state is PackagelistError) {
+            print(state.message);
             return Center(
-              child: Text(state.message),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Ha ocurrido un error al obtener los paquetes"),
+                  IconButton(
+                      icon: Icon(Icons.replay_outlined),
+                      onPressed: () => bloc.add(GetAllPackages()))
+                ],
+              ),
               key: ValueKey(0),
             );
           } else {
@@ -57,6 +65,6 @@ class PackagesList extends StatelessWidget {
           'centro de acopio': [package.storeId.toString()]
         },
       );
-    });
+    }).toList();
   }
 }

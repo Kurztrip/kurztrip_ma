@@ -107,7 +107,7 @@ class DriverServerRepository implements LocationsRepository{
       variables: <String, dynamic>{
         'id': id,
         'location':{
-          'truck_id': locations.truck_id,
+          // 'truck_id': locations.truck_id,
           'latitude': locations.latitude,
           'longitude': locations.longitude
         }

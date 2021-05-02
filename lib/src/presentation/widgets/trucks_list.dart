@@ -9,7 +9,9 @@ class TrucksList extends StatelessWidget {
   Widget build(BuildContext context) {
     return ItemList(
       list: [],
-      getList: () => {generateTrucks([])},
+      getList: () {
+        generateTrucks([]);
+      },
       onDelete: (i) {},
       onEdit: (i) {},
     );
@@ -29,6 +31,6 @@ class TrucksList extends StatelessWidget {
           'Centro de Acopio:': ['Álamos']
         },
       );
-    });
+    }).toList();
   }
 }

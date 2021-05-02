@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/expandable_item.dart';
 
-class ItemList extends StatelessWidget {
-  const ItemList({
+class ItemList extends StatefulWidget {
+  ItemList({
     Key key,
     @required this.getList,
     @required this.onEdit,
@@ -17,6 +17,13 @@ class ItemList extends StatelessWidget {
   final List<ExpandableItem> list;
 
   @override
+  _ItemListState createState() => _ItemListState(this.list);
+}
+
+class _ItemListState extends State<ItemList> {
+  List<ExpandableItem> list;
+  _ItemListState(this.list);
+  @override
   Widget build(BuildContext context) {
     return _buildPanel();
   }
@@ -24,7 +31,7 @@ class ItemList extends StatelessWidget {
   Widget _buildPanel() {
     return RefreshIndicator(
         key: ValueKey(1),
-        onRefresh: getList,
+        onRefresh: widget.getList,
         child: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
@@ -33,7 +40,9 @@ class ItemList extends StatelessWidget {
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: ExpansionPanelList(
                   expansionCallback: (int index, bool isExpanded) {
-                    list[index].isExpanded = !isExpanded;
+                    setState(() {
+                      list[index].isExpanded = !isExpanded;
+                    });
                   },
                   children: list.map<ExpansionPanel>((ExpandableItem item) {
                     return ExpansionPanel(
@@ -74,7 +83,7 @@ class ItemList extends StatelessWidget {
                             Row(
                               children: [
                                 TextButton(
-                                  onPressed: () => onEdit(item.id),
+                                  onPressed: () => widget.onEdit(item.id),
                                   child: Text(
                                     'EDITAR',
                                     style: TextStyle(
@@ -126,7 +135,7 @@ class ItemList extends StatelessWidget {
                                                 ),
                                                 TextButton(
                                                   onPressed: () {
-                                                    onDelete(item.id);
+                                                    widget.onDelete(item.id);
                                                     Navigator.of(context,
                                                             rootNavigator: true)
                                                         .pop();
