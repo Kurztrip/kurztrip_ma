@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedButton.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
@@ -22,6 +23,37 @@ class _PackageFormState extends State<PackageForm> {
         create: (context) => bloc,
         child: BlocBuilder<PackageformBloc, PackageformState>(
             builder: (context, state) {
+          if (state is PackageformLoading) {
+            return const Center(
+              child: const CircularProgressIndicator(),
+              key: ValueKey(0),
+            );
+          } else if (state is PackageformSuccess) {
+            Future.delayed(Duration(seconds: 2), () async {
+              Navigator.of(context).pop();
+            });
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("paquete creado correctamente"),
+                  Icon(Icons.check),
+                ],
+              ),
+              key: ValueKey(0),
+            );
+          } else if (state is PackagelistError) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Ha ocurrido un error al obtener los paquetes"),
+                  Icon(Icons.replay_outlined),
+                ],
+              ),
+              key: ValueKey(0),
+            );
+          }
           return SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width,

@@ -6,7 +6,6 @@ import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_event
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_state.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/account.dart';
-import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/packages_list.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/trucks_list.dart';
@@ -78,17 +77,19 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  void _floatingActionButton(MainPageState state, BuildContext context) {
+  void _floatingActionButton(MainPageState state, BuildContext context) async {
     int index = _getIndex(state);
     switch (index) {
       case 0:
         {
-          Navigator.of(context).pushNamed('/truck_form');
+          await Navigator.of(context).pushNamed('/truck_form');
+          context.read<MainPageBloc>().add(TabSelected(index: 0));
           break;
         }
       case 1:
         {
-          Navigator.of(context).pushNamed('/package_form');
+          await Navigator.of(context).pushNamed('/package_form');
+          context.read<MainPageBloc>().add(TabSelected(index: 1));
           break;
         }
       case 2:
