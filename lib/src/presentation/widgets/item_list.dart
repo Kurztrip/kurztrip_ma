@@ -31,7 +31,14 @@ class _ItemListState extends State<ItemList> {
   Widget _buildPanel() {
     return RefreshIndicator(
         key: ValueKey(1),
-        onRefresh: widget.getList,
+        onRefresh: () async {
+          widget.getList();
+          // Future.delayed(Duration(seconds: 1), () {
+          //   setState(() {
+          //     list = widget.list;
+          //   });
+          // });
+        },
         child: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(

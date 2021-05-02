@@ -10,8 +10,10 @@ GraphQLClient getGraphQLClient() {
   // );
   // Link _link = _authLink.concat(_httpLink);
   return GraphQLClient(
-    /// **NOTE** The default store is the InMemoryStore, which does NOT persist to disk
-    cache: GraphQLCache(),
-    link: _httpLink,
-  );
+
+      /// **NOTE** The default store is the InMemoryStore, which does NOT persist to disk
+      cache: GraphQLCache(),
+      link: _httpLink,
+      defaultPolicies:
+          DefaultPolicies(query: Policies(fetch: FetchPolicy.networkOnly)));
 }

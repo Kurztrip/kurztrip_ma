@@ -5,7 +5,7 @@ import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
 
 import '../client_config.dart';
 
-class PackageServerRepository implements PackageRepository{
+class PackageServerRepository implements PackageRepository {
   Package package = Package.createEmpty();
   final String getPackage = r'''
     query getOnePackage($id: Int!){
@@ -17,6 +17,8 @@ class PackageServerRepository implements PackageRepository{
         latitude
         longitude
         address
+        receiver
+        idReceiver
       }
     }
   ''';
@@ -31,6 +33,8 @@ class PackageServerRepository implements PackageRepository{
         latitude
         longitude
         address
+        receiver
+        idReceiver
       }
     }
   ''';
@@ -45,6 +49,8 @@ class PackageServerRepository implements PackageRepository{
         latitude
         longitude
         address
+        receiver
+        idReceiver
       }
     }
   ''';
@@ -59,6 +65,8 @@ class PackageServerRepository implements PackageRepository{
         latitude
         longitude
         address
+        receiver
+        idReceiver
       }
     }
   ''';
@@ -75,104 +83,127 @@ class PackageServerRepository implements PackageRepository{
 // longitude
 // address
 
-@override
-Future<Package> get(int id) async {
-  final QueryOptions options = QueryOptions(
-    document: gql(getPackage),
-    variables: <String, dynamic>{
-      'id': id
-    },
-  );
-  final result = await getGraphQLClient().query(options);
-  if(result.hasException) {
-    throw result.exception;
-  }
-  print(result.data);
-  final packageResult = result.data['getPackage'];
-  return Package(id: int.parse(packageResult['id'].toString()), storeId: int.parse(packageResult['storeId'].toString()), address: packageResult['address'].toString(), weight: double.parse(packageResult['weight'].toString()), volume: double.parse(packageResult['volume'].toString()), latitude: double.parse(packageResult['latitude'].toString()), longitude: double.parse(packageResult['longitude'].toString()), receiver: packageResult['receiver'].toString(), idReceiver: packageResult['idReceiver'].toString());
-}
-
-@override
-Future<Package> add(Package package) async {
-  final MutationOptions options = MutationOptions(
-    document: gql(createPackage),
-    variables: <String, dynamic>{
-      'new_package':{
-        'address': package.address,
-        'weight': package.weight,
-        'volume': package.volume,
-        'longitude': package.longitude,
-        'latitude': package.latitude,
-        'storeId': package.storeId,
-        'receiver': package.receiver,
-        'idReceiver': package.idReceiver
-      }
+  @override
+  Future<Package> get(int id) async {
+    final QueryOptions options = QueryOptions(
+      document: gql(getPackage),
+      variables: <String, dynamic>{'id': id},
+    );
+    final result = await getGraphQLClient().query(options);
+    if (result.hasException) {
+      throw result.exception;
     }
-  );
-  final result = await getGraphQLClient().mutate(options);
-  if(result.hasException){
-    throw result.exception;
+    print(result.data);
+    final packageResult = result.data['getPackage'];
+    return Package(
+        id: int.parse(packageResult['id'].toString()),
+        storeId: int.parse(packageResult['storeId'].toString()),
+        address: packageResult['address'].toString(),
+        weight: double.parse(packageResult['weight'].toString()),
+        volume: double.parse(packageResult['volume'].toString()),
+        latitude: double.parse(packageResult['latitude'].toString()),
+        longitude: double.parse(packageResult['longitude'].toString()),
+        receiver: packageResult['receiver'].toString(),
+        idReceiver: packageResult['idReceiver'].toString());
   }
-  final packageResult = result.data['createPackage'];
-  return Package(id: int.parse(packageResult['id'].toString()), storeId: int.parse(packageResult['storeId'].toString()), address: packageResult['address'].toString(), weight: double.parse(packageResult['weight'].toString()), volume: double.parse(packageResult['volume'].toString()), latitude: double.parse(packageResult['latitude'].toString()), longitude: double.parse(packageResult['longitude'].toString()), receiver: packageResult['receiver'].toString(), idReceiver: packageResult['idReceiver'].toString());
-}
 
-
-
-@override
-Future<List<Package>> getAll() async{
-  final QueryOptions options = QueryOptions(
-    document: gql(getPackages)
-  );
-  final result = await getGraphQLClient().query(options);
-  if(result.hasException){
-    throw result.exception;
-  }
-  List<Package> packages = result.data['getPackages'].map<Package>((packageResult) =>
-      Package(id: int.parse(packageResult['id'].toString()), storeId: int.parse(packageResult['storeId'].toString()), address: packageResult['address'].toString(), weight: double.parse(packageResult['weight'].toString()), volume: double.parse(packageResult['volume'].toString()), latitude: double.parse(packageResult['latitude'].toString()), longitude: double.parse(packageResult['longitude'].toString()), receiver: packageResult['receiver'].toString(), idReceiver: packageResult['idReceiver'].toString())
-  ).toList();
-  return packages;
-}
-
-@override
-Future<Package> update(int id, Package package) async{
-  final MutationOptions options = MutationOptions(
-      document: gql(updatePackage),
-      variables: <String, dynamic>{
-        'id': id,
-        'package':{
-          'address': package.address,
-          'weight': package.weight,
-          'volume': package.volume,
-          'longitude': package.longitude,
-          'latitude': package.latitude,
-          'storeId': package.storeId,
-          'receiver': package.receiver,
-          'idReceiver': package.idReceiver
-        }
-      }
-  );
-  final result = await getGraphQLClient().mutate(options);
-  if(result.hasException){
-    throw result.exception;
-  }
-  final packageResult = result.data['updatePackage'];
-  return Package(id: int.parse(packageResult['id'].toString()), storeId: int.parse(packageResult['storeId'].toString()), address: packageResult['address'].toString(), weight: double.parse(packageResult['weight'].toString()), volume: double.parse(packageResult['volume'].toString()), latitude: double.parse(packageResult['latitude'].toString()), longitude: double.parse(packageResult['longitude'].toString()), receiver: packageResult['receiver'].toString(), idReceiver: packageResult['idReceiver'].toString());
-}
-
-@override
-Future<bool> delete(int id) async{
-  final MutationOptions options = MutationOptions(
-    document: gql(deletePackage),
-    variables: <String, dynamic>{
-      'id': id
+  @override
+  Future<Package> add(Package package) async {
+    final MutationOptions options = MutationOptions(
+        document: gql(createPackage),
+        variables: <String, dynamic>{
+          'new_package': {
+            'address': package.address,
+            'weight': package.weight,
+            'volume': package.volume,
+            'longitude': package.longitude,
+            'latitude': package.latitude,
+            'storeId': package.storeId,
+            'receiver': package.receiver,
+            'idReceiver': package.idReceiver
+          }
+        });
+    final result = await getGraphQLClient().mutate(options);
+    if (result.hasException) {
+      throw result.exception;
     }
-  );
-  final result = await getGraphQLClient().mutate(options);
-  if(result.hasException){
-    throw result.exception;
+    final packageResult = result.data['createPackage'];
+    return Package(
+        id: int.parse(packageResult['id'].toString()),
+        storeId: int.parse(packageResult['storeId'].toString()),
+        address: packageResult['address'].toString(),
+        weight: double.parse(packageResult['weight'].toString()),
+        volume: double.parse(packageResult['volume'].toString()),
+        latitude: double.parse(packageResult['latitude'].toString()),
+        longitude: double.parse(packageResult['longitude'].toString()),
+        receiver: packageResult['receiver'].toString(),
+        idReceiver: packageResult['idReceiver'].toString());
   }
-  return true;
-}
 
+  @override
+  Future<List<Package>> getAll() async {
+    final QueryOptions options = QueryOptions(document: gql(getPackages));
+    final result = await getGraphQLClient().query(options);
+    if (result.hasException) {
+      throw result.exception;
+    }
+    List<Package> packages = result.data['getPackages']
+        .map<Package>((packageResult) => Package(
+            id: int.parse(packageResult['id'].toString()),
+            storeId: int.parse(packageResult['storeId'].toString()),
+            address: packageResult['address'].toString(),
+            weight: double.parse(packageResult['weight'].toString()),
+            volume: double.parse(packageResult['volume'].toString()),
+            latitude: double.parse(packageResult['latitude'].toString()),
+            longitude: double.parse(packageResult['longitude'].toString()),
+            receiver: packageResult['receiver'].toString(),
+            idReceiver: packageResult['idReceiver'].toString()))
+        .toList();
+    return packages;
+  }
+
+  @override
+  Future<Package> update(int id, Package package) async {
+    final MutationOptions options = MutationOptions(
+        document: gql(updatePackage),
+        variables: <String, dynamic>{
+          'id': id,
+          'package': {
+            'address': package.address,
+            'weight': package.weight,
+            'volume': package.volume,
+            'longitude': package.longitude,
+            'latitude': package.latitude,
+            'storeId': package.storeId,
+            'receiver': package.receiver,
+            'idReceiver': package.idReceiver
+          }
+        });
+    final result = await getGraphQLClient().mutate(options);
+    if (result.hasException) {
+      throw result.exception;
+    }
+    final packageResult = result.data['updatePackage'];
+    return Package(
+        id: int.parse(packageResult['id'].toString()),
+        storeId: int.parse(packageResult['storeId'].toString()),
+        address: packageResult['address'].toString(),
+        weight: double.parse(packageResult['weight'].toString()),
+        volume: double.parse(packageResult['volume'].toString()),
+        latitude: double.parse(packageResult['latitude'].toString()),
+        longitude: double.parse(packageResult['longitude'].toString()),
+        receiver: packageResult['receiver'].toString(),
+        idReceiver: packageResult['idReceiver'].toString());
+  }
+
+  @override
+  Future<bool> delete(int id) async {
+    final MutationOptions options = MutationOptions(
+        document: gql(deletePackage), variables: <String, dynamic>{'id': id});
+    final result = await getGraphQLClient().mutate(options);
+    if (result.hasException) {
+      throw result.exception;
+    }
+    return true;
+  }
 }

@@ -25,6 +25,8 @@ class PackageListBloc extends Bloc<PackageListEvent, PackageListState> {
       }, (packages) async* {
         yield PackagelistShowing(packages);
       });
+    } else if (event is PackageListRefresh) {
+      yield PackagelistLoading();
     }
   }
 }

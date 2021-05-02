@@ -28,3 +28,10 @@ class GetAllPackages extends PackageListEvent {
   @override
   List<Object> get props => [];
 }
+
+class PackageListRefresh extends PackageListEvent {
+  const PackageListRefresh();
+
+  @override
+  List<Object> get props => [];
+}

@@ -7,9 +7,9 @@ import 'package:kurztrip_ma/src/presentation/widgets/expandable_item.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 
 class PackagesList extends StatelessWidget {
-  final PackageListBloc bloc = getIt();
   @override
   Widget build(BuildContext context) {
+    PackageListBloc bloc = getIt();
     return BlocProvider<PackageListBloc>(
       create: (context) => bloc,
       child: BlocBuilder<PackageListBloc, PackageListState>(
@@ -19,26 +19,28 @@ class PackagesList extends StatelessWidget {
             child = ItemList(
               list: generatePackages(state.packages),
               key: ValueKey(1),
-              getList: () async => bloc.add(GetAllPackages()),
+              getList: () async =>
+                  context.read<PackageListBloc>().add(PackageListRefresh()),
               onDelete: (id) {},
               onEdit: (id) {},
             );
           } else if (state is PackagelistError) {
             print(state.message);
-            return Center(
+            child = Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Ha ocurrido un error al obtener los paquetes"),
                   IconButton(
                       icon: Icon(Icons.replay_outlined),
-                      onPressed: () => bloc.add(GetAllPackages()))
+                      onPressed: () =>
+                          context.read<PackageListBloc>().add(GetAllPackages()))
                 ],
               ),
               key: ValueKey(0),
             );
           } else {
-            bloc.add(GetAllPackages());
+            context.read<PackageListBloc>().add(GetAllPackages());
             child = child = const Center(
               child: const CircularProgressIndicator(),
               key: ValueKey(0),
@@ -61,7 +63,7 @@ class PackagesList extends StatelessWidget {
           'Destinatario:': [package.receiver],
           'D.I. del destinatario: ': [package.idReceiver],
           'peso:': [package.weight.toString(), ' Kg'],
-          'volumen:': [package.volume.toString(), 'cm3'],
+          'volumen:': [package.volume.toString(), ' cm3'],
           'centro de acopio': [package.storeId.toString()]
         },
       );

@@ -77,17 +77,19 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  void _floatingActionButton(MainPageState state, BuildContext context) {
+  void _floatingActionButton(MainPageState state, BuildContext context) async {
     int index = _getIndex(state);
     switch (index) {
       case 0:
         {
-          Navigator.of(context).pushNamed('/truck_form');
+          await Navigator.of(context).pushNamed('/truck_form');
+          context.read<MainPageBloc>().add(TabSelected(index: 0));
           break;
         }
       case 1:
         {
-          Navigator.of(context).pushNamed('/package_form');
+          await Navigator.of(context).pushNamed('/package_form');
+          context.read<MainPageBloc>().add(TabSelected(index: 1));
           break;
         }
       case 2:
