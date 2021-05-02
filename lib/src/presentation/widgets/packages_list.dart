@@ -24,6 +24,11 @@ class PackagesList extends StatelessWidget {
               onDelete: (id) {},
               onEdit: (id) {},
             );
+          } else if (state is PackagelistError) {
+            return Center(
+              child: Text(state.message),
+              key: ValueKey(0),
+            );
           } else {
             bloc.add(GetAllPackages());
             child = child = const Center(

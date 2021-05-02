@@ -9,6 +9,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/first_page_bloc/first_page_blo
 import 'package:kurztrip_ma/src/presentation/bloc/homepage/homepage_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/second_page_bloc/second_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/truck_form/truckform_bloc.dart';
@@ -41,6 +42,9 @@ void registerUserService() {
   );
   getIt.registerFactory(
     () => PackageformBloc(),
+  );
+  getIt.registerFactory(
+    () => PackageListBloc(),
   );
   //Repositories
   getIt.registerLazySingleton<TruckRepository>(() => TruckServerRepository());
