@@ -11,6 +11,7 @@ import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 import 'package:kurztrip_ma/src/data/package/package_server_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/user_repository.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/db_center_form_bloc/db_center_form_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/edit_account_bloc/edit_account_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/homepage/homepage_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
@@ -42,6 +43,9 @@ void registerUserService() {
   );
   getIt.registerFactory(
     () => PackageformBloc(),
+  );
+  getIt.registerFactory(
+    () => DBCenterFormBloc(),
   );
   getIt.registerFactory(
     () => PackageListBloc(),

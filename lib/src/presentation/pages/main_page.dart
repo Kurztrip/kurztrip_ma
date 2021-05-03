@@ -94,6 +94,7 @@ class MainPage extends StatelessWidget {
         }
       case 2:
         {
+          Navigator.of(context).pushNamed('/db_center_form');
           break;
         }
       default:
