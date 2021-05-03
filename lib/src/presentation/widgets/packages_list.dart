@@ -32,9 +32,11 @@ class PackagesList extends StatelessWidget {
                 children: [
                   Text("Ha ocurrido un error al obtener los paquetes"),
                   IconButton(
-                      icon: Icon(Icons.replay_outlined),
-                      onPressed: () =>
-                          context.read<PackageListBloc>().add(GetAllPackages()))
+                    icon: Icon(Icons.replay_outlined),
+                    onPressed: () => context
+                        .read<PackageListBloc>()
+                        .add(PackageListRefresh()),
+                  ),
                 ],
               ),
               key: ValueKey(0),

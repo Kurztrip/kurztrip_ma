@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kurztrip_ma/src/presentation/pages/edit_account.dart';
 import 'pages/pages.dart';
 
 class MobileApp extends StatelessWidget {
@@ -38,6 +39,10 @@ class MobileApp extends StatelessWidget {
                   TextStyle(color: Color(0xFF5549A6), fontFamily: 'Teko'),
               headline2:
                   TextStyle(color: Color(0xFF5549A6), fontFamily: 'Teko'),
+              headline3:
+                  TextStyle(color: Color(0xFF5549A6), fontFamily: 'Teko'),
+              headline4:
+                  TextStyle(color: Color(0xFF5549A6), fontFamily: 'Teko'),
               subtitle1: TextStyle(
                   fontSize: 20,
                   // color: Color(0xFFFFFBFA),
@@ -55,6 +60,7 @@ class MobileApp extends StatelessWidget {
         '/main_page': (context) => MainPage(),
         '/truck_form': (context) => TruckForm(),
         '/package_form': (context) => PackageForm(),
+        '/edit_account': (context) => EditAccountPage(),
       },
     );
   }
