@@ -63,13 +63,23 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
         latitude: response.results[0].geometry.location.lat,
       );
       yield PackageformLoading();
-      Either<Failure, Package> result =
-          await createPackageUseCase(Params(package));
-      yield* result.fold((failure) async* {
-        yield current.copyWith(error: failure.error);
-      }, (package) async* {
-        yield PackageformSuccess();
-      });
+      if (package.id == null) {
+        Either<Failure, Package> result =
+            await createPackageUseCase(Params(package));
+        yield* result.fold((failure) async* {
+          yield current.copyWith(error: failure.error);
+        }, (package) async* {
+          yield PackageformSuccess();
+        });
+      } else {
+        Either<Failure, Package> result =
+            await createPackageUseCase(Params(package));
+        yield* result.fold((failure) async* {
+          yield current.copyWith(error: failure.error);
+        }, (package) async* {
+          yield PackageformSuccess();
+        });
+      }
     }
   }
 }
