@@ -146,6 +146,9 @@ class _PackageFormState extends State<PackageForm> {
                         hintText: 'Volumen',
                         icon: KurztripIcons.size_1,
                         textInputType: TextInputType.number,
+                        initialValue: widget.edit != null
+                            ? widget.edit.volume.toString()
+                            : null,
                         onChanged: (value) =>
                             bloc.add(UpdateVolume(double.parse(value))),
                       ),
@@ -154,6 +157,9 @@ class _PackageFormState extends State<PackageForm> {
                         hintText: 'Centro de acopio',
                         icon: KurztripIcons.warehouse,
                         textInputType: TextInputType.number,
+                        initialValue: widget.edit != null
+                            ? widget.edit.storeId.toString()
+                            : null,
                         onChanged: (value) =>
                             bloc.add(UpdateWarehouse(int.parse(value))),
                       ),

@@ -8,13 +8,15 @@ import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/core/error/faliures.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/create_package_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/package/use_cases/update_package_use_case.dart';
 
 part 'packageform_event.dart';
 part 'packageform_state.dart';
 
 class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
   PackageformBloc() : super(PackageformShowing());
-  CreatePackageUseCase useCase = getIt();
+  CreatePackageUseCase createPackageUseCase = getIt();
+  UpdatePackageUseCase updatePackageUseCase = getIt();
   @override
   Stream<PackageformState> mapEventToState(
     PackageformEvent event,
@@ -50,6 +52,7 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
       print(response.results[0].geometry.location.lat);
       print(response.results[0].geometry.location.lng);
       Package package = Package(
+        id: current.id,
         address: current.address,
         receiver: current.receiver,
         idReceiver: current.receiverID,
@@ -60,7 +63,8 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
         latitude: response.results[0].geometry.location.lat,
       );
       yield PackageformLoading();
-      Either<Failure, Package> result = await useCase(Params(package));
+      Either<Failure, Package> result =
+          await createPackageUseCase(Params(package));
       yield* result.fold((failure) async* {
         yield current.copyWith(error: failure.error);
       }, (package) async* {
