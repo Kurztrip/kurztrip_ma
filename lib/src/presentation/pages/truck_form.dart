@@ -7,6 +7,9 @@ import 'package:kurztrip_ma/src/presentation/widgets/RoundedButton.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
 
 class TruckForm extends StatefulWidget {
+  final int edit;
+
+  const TruckForm({Key key, this.edit}) : super(key: key);
   @override
   _TruckFormState createState() => _TruckFormState();
 }

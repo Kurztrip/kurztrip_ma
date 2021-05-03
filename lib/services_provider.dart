@@ -8,6 +8,11 @@ import 'package:kurztrip_ma/src/domain/entities/package/use_cases/delete_package
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/get_package_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/get_packages_use_cases.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/update_package_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/create_truck_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/delete_truck_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/get_truck_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/get_trucks_use_cases.dart';
+import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/update_truck_use_case.dart';
 import 'package:kurztrip_ma/src/domain/repositories/locations_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 import 'package:kurztrip_ma/src/data/package/package_server_repository.dart';
@@ -21,6 +26,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.
 import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/truck_form/truckform_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/truck_list_bloc/truck_list_bloc.dart';
 
 final getIt = GetIt.instance;
 final String mapsApiKey = "AIzaSyAFCcyGgadxT2LaaQjcTRl0cGhPQSY9lBk";
@@ -51,6 +57,9 @@ void registerUserService() {
   getIt.registerFactory(
     () => PackageListBloc(),
   );
+  getIt.registerFactory(
+    () => TruckListBloc(),
+  );
   getIt.registerFactoryParam<EditAccountBloc, User, void>(
       (param1, param2) => EditAccountBloc(param1));
   //Repositories
@@ -63,6 +72,11 @@ void registerUserService() {
   getIt.registerSingleton(CreatePackageUseCase());
   getIt.registerSingleton(UpdatePackageUseCase());
   getIt.registerSingleton(DeletePackageUseCase());
+  getIt.registerSingleton(GetTruckUseCase());
+  getIt.registerSingleton(GetTrucksUseCase());
+  getIt.registerSingleton(CreateTruckUseCase());
+  getIt.registerSingleton(UpdateTruckUseCase());
+  getIt.registerSingleton(DeleteTruckUseCase());
   getIt.registerLazySingleton<LocationsRepository>(
       () => DriverServerRepository());
   getIt.registerLazySingleton<UserRepository>(() => UserServerRepository());

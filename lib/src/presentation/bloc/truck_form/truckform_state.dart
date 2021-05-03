@@ -8,7 +8,8 @@ abstract class TruckformState extends Equatable {
 }
 
 class TruckformShowing extends TruckformState {
-  final bool update;
+  final int id;
+  final String error;
   final String register;
   final double volumeCapacity;
   final double weightCapacity;
@@ -19,7 +20,8 @@ class TruckformShowing extends TruckformState {
   final String state;
 
   TruckformShowing({
-    this.update,
+    this.id,
+    this.error,
     this.register,
     this.volumeCapacity,
     this.weightCapacity,
@@ -29,6 +31,8 @@ class TruckformShowing extends TruckformState {
     this.warehouse,
     this.state,
   }) : super([
+          id,
+          error,
           register,
           volumeCapacity,
           weightCapacity,
@@ -49,7 +53,7 @@ class TruckformShowing extends TruckformState {
     String state,
   }) {
     return TruckformShowing(
-      update: this.update,
+      id: this.id,
       register: register != null ? register : this.register,
       volumeCapacity:
           volumeCapacity != null ? volumeCapacity : this.volumeCapacity,

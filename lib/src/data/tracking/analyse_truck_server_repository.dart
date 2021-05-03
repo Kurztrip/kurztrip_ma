@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:graphql/client.dart';
 import 'package:kurztrip_ma/src/data/client_config.dart';
 import 'package:kurztrip_ma/src/domain/entities/Tracking/Route.dart';
@@ -43,11 +41,13 @@ class AnalyseTruckServerRepository {
         warehouse
   */
 
-  @override
+  // @override
   Future<Route> createAnalyseRoute(int id) async {
-    final MutationOptions options = MutationOptions(document: gql(createAnalyseRouteMA), variables: <String, dynamic>{
-      'id': id,
-    });
+    final MutationOptions options = MutationOptions(
+        document: gql(createAnalyseRouteMA),
+        variables: <String, dynamic>{
+          'id': id,
+        });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception;

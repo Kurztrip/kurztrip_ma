@@ -1,10 +1,8 @@
-import 'dart:html';
-
 import 'package:graphql/client.dart';
 import 'package:kurztrip_ma/src/data/client_config.dart';
 import 'package:kurztrip_ma/src/domain/entities/Tracking/Route.dart';
-import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
-import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
+// import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
+// import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 
 //implements TruckRepository
 class TrackingServerRepository {
@@ -62,7 +60,7 @@ class TrackingServerRepository {
 
   
   */
-  @override
+  // @override
   Future<Route> get(int id) async {
     final QueryOptions options = QueryOptions(
       document: gql(getRouteMA), //NOMBRE DEL STRING QUERY O MUTATION
@@ -97,17 +95,19 @@ class TrackingServerRepository {
 
 
 */
-  @override
+  // @override
   Future<Route> add(Route route) async {
-    final MutationOptions options = MutationOptions(document: gql(createRouteMA), variables: <String, dynamic>{
-      'new_route': {
-        'starting_time': route.starting_time,
-        'p_longitudes': route.p_longitudes,
-        'p_latitudes': route.p_latitudes,
-        'driver_long': route.driver_long,
-        'driver_lat': route.driver_lat
-      }
-    });
+    final MutationOptions options = MutationOptions(
+        document: gql(createRouteMA),
+        variables: <String, dynamic>{
+          'new_route': {
+            'starting_time': route.starting_time,
+            'p_longitudes': route.p_longitudes,
+            'p_latitudes': route.p_latitudes,
+            'driver_long': route.driver_long,
+            'driver_lat': route.driver_lat
+          }
+        });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception;
@@ -132,18 +132,20 @@ class TrackingServerRepository {
 
 
 */
-  @override
+  // @override
   Future<Route> update(int id, Route route) async {
-    final MutationOptions options = MutationOptions(document: gql(updateRouteMA), variables: <String, dynamic>{
-      'id': id,
-      'route': {
-        'starting_time': route.starting_time,
-        'p_longitudes': route.p_longitudes,
-        'p_latitudes': route.p_latitudes,
-        'driver_long': route.driver_long,
-        'driver_lat': route.driver_lat
-      }
-    });
+    final MutationOptions options = MutationOptions(
+        document: gql(updateRouteMA),
+        variables: <String, dynamic>{
+          'id': id,
+          'route': {
+            'starting_time': route.starting_time,
+            'p_longitudes': route.p_longitudes,
+            'p_latitudes': route.p_latitudes,
+            'driver_long': route.driver_long,
+            'driver_lat': route.driver_lat
+          }
+        });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception;
@@ -168,9 +170,10 @@ class TrackingServerRepository {
 
 
 */
-  @override
+  // @override
   Future<bool> delete(int id) async {
-    final MutationOptions options = MutationOptions(document: gql(deleteRouteMA), variables: <String, dynamic>{'id': id});
+    final MutationOptions options = MutationOptions(
+        document: gql(deleteRouteMA), variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception;
