@@ -99,10 +99,7 @@ class _EditAccountState extends State<EditAccountPage> {
                       child: RoundedButton(
                           horizontalPadding: 30,
                           verticalPadding: 10,
-                          onPressed: () {
-                            //Enviar evento al bloc
-                            Navigator.pop(context);
-                          },
+                          onPressed: _submit,
                           text: 'Actualizar información'),
                     ),
                   ],
@@ -113,5 +110,12 @@ class _EditAccountState extends State<EditAccountPage> {
         },
       ),
     );
+  }
+
+  void _submit() {
+    if (_formKey.currentState.validate()) {
+      //Enviar evento al bloc
+      Navigator.pop(context);
+    }
   }
 }
