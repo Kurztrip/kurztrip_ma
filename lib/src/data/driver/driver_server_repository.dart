@@ -58,7 +58,7 @@ class DriverServerRepository implements LocationsRepository {
     List<Locations> locations = result.data['getAllLocations']
         .map<Locations>((LocationsResult) => Locations(
             id: int.parse(LocationsResult['id'].toString()),
-            truckId: int.parse(LocationsResult['truck_id'].toString()),
+            //truckId: int.parse(LocationsResult['truck_id'].toString()),
             latitude: double.parse(LocationsResult['latitude'].toString()),
             longitude: double.parse(LocationsResult['longitude'].toString())))
         .toList();
@@ -78,16 +78,22 @@ class DriverServerRepository implements LocationsRepository {
     final locationResult = result.data['getLocation'];
     return Locations(
         id: int.parse(locationResult['id'].toString()),
-        truckId: int.parse(locationResult['truck_id'].toString()),
+        //truckId: int.parse(locationResult['truck_id'].toString()),
         latitude: double.parse(locationResult['latitude'].toString()),
         longitude: double.parse(locationResult['longitude'].toString()));
   }
 
   @override
   Future<bool> add(Locations locations) async {
-    final MutationOptions options = MutationOptions(document: gql(createLocation), variables: <String, dynamic>{
-      'location': {'truck_id': locations.truckId, 'latitude': locations.latitude, 'longitude': locations.longitude}
-    });
+    final MutationOptions options = MutationOptions(
+        document: gql(createLocation),
+        variables: <String, dynamic>{
+          'location': {
+            //'truck_id': locations.truckId,
+            'latitude': locations.latitude,
+            'longitude': locations.longitude
+          }
+        });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception;
@@ -97,10 +103,16 @@ class DriverServerRepository implements LocationsRepository {
 
   @override
   Future<bool> update(int id, Locations locations) async {
-    final MutationOptions options = MutationOptions(document: gql(updateLocation), variables: <String, dynamic>{
-      'id': id,
-      'location': {'truck_id': locations.truckId, 'latitude': locations.latitude, 'longitude': locations.longitude}
-    });
+    final MutationOptions options = MutationOptions(
+        document: gql(updateLocation),
+        variables: <String, dynamic>{
+          'id': id,
+          'location': {
+            //'truck_id': locations.truckId,
+            'latitude': locations.latitude,
+            'longitude': locations.longitude
+          }
+        });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception;
@@ -110,7 +122,8 @@ class DriverServerRepository implements LocationsRepository {
 
   @override
   Future<bool> delete(int id) async {
-    final MutationOptions options = MutationOptions(document: gql(deleteLocation), variables: <String, dynamic>{'id': id});
+    final MutationOptions options = MutationOptions(
+        document: gql(deleteLocation), variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception;
