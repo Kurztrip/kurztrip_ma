@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
-import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
@@ -10,31 +9,24 @@ import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class PackageForm extends StatefulWidget {
-  final Package edit;
+  final int edit;
 
   const PackageForm({Key key, this.edit}) : super(key: key);
   @override
-  _PackageFormState createState() => _PackageFormState();
+  _PackageFormState createState() => _PackageFormState(edit);
 }
 
 class _PackageFormState extends State<PackageForm> {
-  final PackageformBloc bloc = getIt();
+  _PackageFormState(this.edit) {
+    bloc = getIt<PackageformBloc>(param1: edit);
+  }
+  final int edit;
+  PackageformBloc bloc;
   final _globalKey = GlobalKey<FormState>();
   final TextEditingController mapsController = TextEditingController();
   Prediction prediction;
   @override
   void initState() {
-    if (widget.edit != null) {
-      bloc.add(PackageFormAutofill(
-        widget.edit.id,
-        widget.edit.address,
-        widget.edit.receiver,
-        widget.edit.idReceiver,
-        widget.edit.weight,
-        widget.edit.volume,
-        widget.edit.storeId,
-      ));
-    }
     super.initState();
   }
 
@@ -59,13 +51,14 @@ class _PackageFormState extends State<PackageForm> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("paquete creado correctamente"),
+                  Text("paquete guardado correctamente"),
                   Icon(Icons.check),
                 ],
               ),
               key: ValueKey(0),
             );
           } else if (state is PackageformShowing) {
+            mapsController.text = state.address;
             return SingleChildScrollView(
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -92,8 +85,6 @@ class _PackageFormState extends State<PackageForm> {
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Destino',
                         icon: KurztripIcons.map,
-                        initialValue:
-                            widget.edit != null ? widget.edit.address : null,
                         controller: mapsController,
                         onTap: (fieldContext) async {
                           prediction = await PlacesAutocomplete.show(
@@ -117,16 +108,14 @@ class _PackageFormState extends State<PackageForm> {
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Destinatario',
-                        initialValue:
-                            widget.edit != null ? widget.edit.receiver : null,
+                        initialValue: state.receiver,
                         icon: KurztripIcons.id_card,
                         onChanged: (value) => bloc.add(UpdateReceiver(value)),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'D.I del destinatario',
-                        initialValue:
-                            widget.edit != null ? widget.edit.receiver : null,
+                        initialValue: state.receiverID,
                         icon: KurztripIcons.di,
                         onChanged: (value) => bloc.add(UpdateReceiverId(value)),
                       ),
@@ -134,9 +123,7 @@ class _PackageFormState extends State<PackageForm> {
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Peso',
                         icon: KurztripIcons.weight,
-                        initialValue: widget.edit != null
-                            ? widget.edit.weight.toString()
-                            : null,
+                        initialValue: state.weight.toString(),
                         textInputType: TextInputType.number,
                         onChanged: (value) =>
                             bloc.add(UpdateWeight(double.parse(value))),
@@ -146,9 +133,7 @@ class _PackageFormState extends State<PackageForm> {
                         hintText: 'Volumen',
                         icon: KurztripIcons.size_1,
                         textInputType: TextInputType.number,
-                        initialValue: widget.edit != null
-                            ? widget.edit.volume.toString()
-                            : null,
+                        initialValue: state.volume.toString(),
                         onChanged: (value) =>
                             bloc.add(UpdateVolume(double.parse(value))),
                       ),
@@ -157,9 +142,7 @@ class _PackageFormState extends State<PackageForm> {
                         hintText: 'Centro de acopio',
                         icon: KurztripIcons.warehouse,
                         textInputType: TextInputType.number,
-                        initialValue: widget.edit != null
-                            ? widget.edit.storeId.toString()
-                            : null,
+                        initialValue: state.warehouse.toString(),
                         onChanged: (value) =>
                             bloc.add(UpdateWarehouse(int.parse(value))),
                       ),

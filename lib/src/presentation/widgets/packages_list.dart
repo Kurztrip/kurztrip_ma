@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/pages/package_form.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/expandable_item.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 
@@ -22,7 +23,12 @@ class PackagesList extends StatelessWidget {
               getList: () async =>
                   context.read<PackageListBloc>().add(PackageListRefresh()),
               onDelete: (id) {},
-              onEdit: (id) {},
+              onEdit: (id) => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PackageForm(
+                            edit: id,
+                          ))),
             );
           } else if (state is PackagelistError) {
             print(state.message);
