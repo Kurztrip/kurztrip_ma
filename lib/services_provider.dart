@@ -54,7 +54,6 @@ void registerUserService() {
   //Usecases
   getIt.registerSingleton(GetPackagesUseCase());
   getIt.registerSingleton(CreatePackageUseCase());
-  getIt.registerLazySingleton<PackageRepository>(() => PackageServerRepository());
   getIt.registerLazySingleton<LocationsRepository>(() => DriverServerRepository());
   getIt.registerLazySingleton<UserRepository>(() => UserServerRepository());
 }
