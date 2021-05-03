@@ -23,9 +23,12 @@ class PackageListBloc extends Bloc<PackageListEvent, PackageListState> {
     if (event is DeletePackage) {
       Either<Failure, bool> result = await deletePackageUseCase(event.id);
       yield* result.fold((failure) async* {
-        yield PackagelistShowing([]);
+        yield PackagelistShowing((state as PackagelistShowing).packages,
+            error: "Error al eliminar el paquete");
       }, (package) async* {
-        yield PackagelistShowing([]);
+        yield PackagelistShowing((state as PackagelistShowing).packages,
+            success: "Paquete eliminado correctamente");
+        this.add(PackageListRefresh());
       });
     } else if (event is GetAllPackages) {
       yield* (await getPackagesUseCase()).fold((error) async* {

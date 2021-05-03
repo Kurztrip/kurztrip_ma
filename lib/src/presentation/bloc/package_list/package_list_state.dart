@@ -17,6 +17,9 @@ class PackagelistError extends PackageListState {
 
 class PackagelistShowing extends PackageListState {
   final List<Package> packages;
+  final String error;
+  final String success;
 
-  PackagelistShowing(this.packages) : super(packages);
+  PackagelistShowing(this.packages, {this.error, this.success})
+      : super(packages);
 }

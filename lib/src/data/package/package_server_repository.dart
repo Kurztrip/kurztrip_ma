@@ -57,7 +57,7 @@ class PackageServerRepository implements PackageRepository {
 
   final String updatePackage = r'''
     mutation updateOnePackage($id: Int!, $package: PackageInput!){
-      updatePackage(id: $id, package: $package){
+      updatePackage(id: $id, new_package: $package){
         id
         storeId
         weight

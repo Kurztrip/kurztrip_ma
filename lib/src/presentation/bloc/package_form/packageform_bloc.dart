@@ -97,7 +97,8 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
         result = await updatePackageUseCase(UpdateParams(package));
       }
       yield* result.fold((failure) async* {
-        yield current.copyWith(error: failure.error);
+        yield current.copyWith(
+            error: "operación fallida, por favor revisa tu conexión");
       }, (package) async* {
         yield PackageformSuccess();
       });

@@ -123,7 +123,9 @@ class _PackageFormState extends State<PackageForm> {
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Peso',
                         icon: KurztripIcons.weight,
-                        initialValue: state.weight.toString(),
+                        initialValue: state.weight == null
+                            ? null
+                            : state.weight.toString(),
                         textInputType: TextInputType.number,
                         onChanged: (value) =>
                             bloc.add(UpdateWeight(double.parse(value))),
@@ -133,7 +135,9 @@ class _PackageFormState extends State<PackageForm> {
                         hintText: 'Volumen',
                         icon: KurztripIcons.size_1,
                         textInputType: TextInputType.number,
-                        initialValue: state.volume.toString(),
+                        initialValue: state.volume == null
+                            ? null
+                            : state.volume.toString(),
                         onChanged: (value) =>
                             bloc.add(UpdateVolume(double.parse(value))),
                       ),
@@ -142,7 +146,9 @@ class _PackageFormState extends State<PackageForm> {
                         hintText: 'Centro de acopio',
                         icon: KurztripIcons.warehouse,
                         textInputType: TextInputType.number,
-                        initialValue: state.warehouse.toString(),
+                        initialValue: state.warehouse == null
+                            ? null
+                            : state.warehouse.toString(),
                         onChanged: (value) =>
                             bloc.add(UpdateWarehouse(int.parse(value))),
                       ),
