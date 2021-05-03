@@ -94,6 +94,7 @@ class MainPage extends StatelessWidget {
         }
       case 2:
         {
+          Navigator.of(context).pushNamed('/route_addition_page');
           break;
         }
       default:

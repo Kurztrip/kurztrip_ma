@@ -19,6 +19,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/homepage/homepage_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/route_addition_bloc/route_addition_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/truck_form/truckform_bloc.dart';
 
@@ -51,6 +52,7 @@ void registerUserService() {
   getIt.registerFactory(
     () => PackageListBloc(),
   );
+  getIt.registerFactory(() => RouteAdditionBloc());
   getIt.registerFactoryParam<EditAccountBloc, User, void>(
       (param1, param2) => EditAccountBloc(param1));
   //Repositories
