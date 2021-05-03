@@ -112,7 +112,7 @@ class _DBCenterFormState extends State<DBCenterFormPage> {
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
-                          hintText: 'Espacio Total de Almacenamiento',
+                          hintText: 'Capacidad Almacenamiento',
                           textInputType: TextInputType.number,
                           initialValue: widget.edit != null
                               ? widget.edit.total_space.toString()
@@ -123,7 +123,7 @@ class _DBCenterFormState extends State<DBCenterFormPage> {
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
-                          hintText: 'Espacio libre de Almacenamiento',
+                          hintText: 'Almacenamiento disponible',
                           textInputType: TextInputType.number,
                           initialValue: widget.edit != null
                               ? widget.edit.total_space.toString()
