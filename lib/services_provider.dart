@@ -1,11 +1,17 @@
 import 'package:get_it/get_it.dart';
+import 'package:kurztrip_ma/src/data/count/organization_server_repository.dart';
+import 'package:kurztrip_ma/src/data/count/user_server_repository.dart';
+import 'package:kurztrip_ma/src/data/driver/driver_server_repository.dart';
 import 'package:kurztrip_ma/src/data/truck/truck_server_repository.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/create_package_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/get_packages_use_cases.dart';
+import 'package:kurztrip_ma/src/domain/repositories/locations_repository.dart';
+import 'package:kurztrip_ma/src/domain/repositories/organization_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 import 'package:kurztrip_ma/src/data/package/package_server_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
+import 'package:kurztrip_ma/src/domain/repositories/user_repository.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/edit_account_bloc/edit_account_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/homepage/homepage_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
@@ -50,4 +56,8 @@ void registerUserService() {
   //Usecases
   getIt.registerSingleton(GetPackagesUseCase());
   getIt.registerSingleton(CreatePackageUseCase());
+  getIt.registerLazySingleton<PackageRepository>(() => PackageServerRepository());
+  getIt.registerLazySingleton<LocationsRepository>(() => DriverServerRepository());
+  getIt.registerLazySingleton<UserRepository>(() => UserServerRepository());
+  getIt.registerLazySingleton<OrganizationRepository>(() => OrganizationServerRepository());
 }

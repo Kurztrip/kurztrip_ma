@@ -23,5 +23,7 @@ class User{
   final String password;
   final String organization;
   final List<String> notifications;
-
+  static User createEmpty(){
+    return User(id: 0, name: '', lastName: '', email: '', cellphone: '', rol: '', createAt: DateTime.now(), password: 'password', organization: '', notifications: []);
+  }
 }
