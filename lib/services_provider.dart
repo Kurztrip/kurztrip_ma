@@ -15,6 +15,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart'
 import 'package:kurztrip_ma/src/presentation/bloc/truck_form/truckform_bloc.dart';
 
 final getIt = GetIt.instance;
+final String mapsApiKey = "AIzaSyAFCcyGgadxT2LaaQjcTRl0cGhPQSY9lBk";
 
 void init() {
   registerUserService();
