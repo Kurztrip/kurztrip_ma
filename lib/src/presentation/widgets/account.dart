@@ -30,7 +30,6 @@ class AccountPage extends StatelessWidget {
               Text('Apellido:'),
               Text('Correo:'),
               Text('Telefono:'),
-              Text('Empresa:'),
             ],
           ),
         ),
@@ -42,7 +41,7 @@ class AccountPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30.0))),
             ),
             onPressed: () {
-              // agregar evento al bloc de editar información
+              Navigator.pushNamed(context, "/edit_account");
             },
             child: Text('Editar Información')),
         OutlinedButton.icon(
