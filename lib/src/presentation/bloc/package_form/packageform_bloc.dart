@@ -34,6 +34,7 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
       yield (state as PackageformShowing).copyWith(weight: event.weight);
     } else if (event is PackageFormAutofill) {
       yield PackageformShowing(
+        id: event.id,
         address: event.address,
         receiver: event.receiver,
         receiverID: event.receiverID,

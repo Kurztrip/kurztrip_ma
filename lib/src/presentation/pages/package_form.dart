@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
+import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
@@ -9,6 +10,9 @@ import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class PackageForm extends StatefulWidget {
+  final Package edit;
+
+  const PackageForm({Key key, this.edit}) : super(key: key);
   @override
   _PackageFormState createState() => _PackageFormState();
 }
@@ -18,6 +22,22 @@ class _PackageFormState extends State<PackageForm> {
   final _globalKey = GlobalKey<FormState>();
   final TextEditingController mapsController = TextEditingController();
   Prediction prediction;
+  @override
+  void initState() {
+    if (widget.edit != null) {
+      bloc.add(PackageFormAutofill(
+        widget.edit.id,
+        widget.edit.address,
+        widget.edit.receiver,
+        widget.edit.idReceiver,
+        widget.edit.weight,
+        widget.edit.volume,
+        widget.edit.storeId,
+      ));
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +92,8 @@ class _PackageFormState extends State<PackageForm> {
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Destino',
                         icon: KurztripIcons.map,
+                        initialValue:
+                            widget.edit != null ? widget.edit.address : null,
                         controller: mapsController,
                         onTap: (fieldContext) async {
                           prediction = await PlacesAutocomplete.show(
@@ -95,12 +117,16 @@ class _PackageFormState extends State<PackageForm> {
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Destinatario',
+                        initialValue:
+                            widget.edit != null ? widget.edit.receiver : null,
                         icon: KurztripIcons.id_card,
                         onChanged: (value) => bloc.add(UpdateReceiver(value)),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'D.I del destinatario',
+                        initialValue:
+                            widget.edit != null ? widget.edit.receiver : null,
                         icon: KurztripIcons.di,
                         onChanged: (value) => bloc.add(UpdateReceiverId(value)),
                       ),
@@ -108,6 +134,9 @@ class _PackageFormState extends State<PackageForm> {
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Peso',
                         icon: KurztripIcons.weight,
+                        initialValue: widget.edit != null
+                            ? widget.edit.weight.toString()
+                            : null,
                         textInputType: TextInputType.number,
                         onChanged: (value) =>
                             bloc.add(UpdateWeight(double.parse(value))),

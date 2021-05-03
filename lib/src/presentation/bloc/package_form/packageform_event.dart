@@ -40,6 +40,7 @@ class UpdateWarehouse extends PackageformEvent {
 }
 
 class PackageFormAutofill extends PackageformEvent {
+  final int id;
   final String address;
   final String receiver;
   final String receiverID;
@@ -47,6 +48,6 @@ class PackageFormAutofill extends PackageformEvent {
   final double volume;
   final int warehouse;
 
-  PackageFormAutofill(this.address, this.receiver, this.receiverID, this.weight,
-      this.volume, this.warehouse);
+  PackageFormAutofill(this.id, this.address, this.receiver, this.receiverID,
+      this.weight, this.volume, this.warehouse);
 }

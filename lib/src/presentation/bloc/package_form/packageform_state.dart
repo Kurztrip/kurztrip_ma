@@ -6,9 +6,13 @@ abstract class PackageformState extends Equatable {
   @override
   List<Object> get props => [properties];
 }
-class PackageformLoading extends PackageformState{}
-class PackageformSuccess extends PackageformState{}
+
+class PackageformLoading extends PackageformState {}
+
+class PackageformSuccess extends PackageformState {}
+
 class PackageformShowing extends PackageformState {
+  final int id;
   final String error;
   final String address;
   final String receiver;
@@ -19,6 +23,7 @@ class PackageformShowing extends PackageformState {
   final bool update;
 
   PackageformShowing({
+    this.id,
     this.error,
     this.address,
     this.receiver,
@@ -27,7 +32,16 @@ class PackageformShowing extends PackageformState {
     this.volume,
     this.warehouse,
     this.update,
-  }) : super([error, address, receiver, receiverID, weight, volume, warehouse]);
+  }) : super([
+          id,
+          error,
+          address,
+          receiver,
+          receiverID,
+          weight,
+          volume,
+          warehouse,
+        ]);
   PackageformShowing copyWith({
     String address,
     String receiver,
@@ -38,14 +52,14 @@ class PackageformShowing extends PackageformState {
     String error,
   }) {
     return PackageformShowing(
-      address: address != null ? address : this.address,
-      receiver: receiver != null ? receiver : this.receiver,
-      receiverID: receiverID != null ? receiverID : this.receiverID,
-      weight: weight != null ? weight : this.weight,
-      volume: volume != null ? volume : this.volume,
-      warehouse: warehouse != null ? warehouse : this.warehouse,
-      update: this.update,
-      error: error!=null?error:null
-    );
+        id: this.id,
+        address: address != null ? address : this.address,
+        receiver: receiver != null ? receiver : this.receiver,
+        receiverID: receiverID != null ? receiverID : this.receiverID,
+        weight: weight != null ? weight : this.weight,
+        volume: volume != null ? volume : this.volume,
+        warehouse: warehouse != null ? warehouse : this.warehouse,
+        update: this.update,
+        error: error != null ? error : null);
   }
 }

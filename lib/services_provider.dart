@@ -49,8 +49,6 @@ void registerUserService() {
       (param1, param2) => EditAccountBloc(param1));
   //Repositories
   getIt.registerLazySingleton<TruckRepository>(() => TruckServerRepository());
-  getIt.registerLazySingleton<PackageRepository>(
-      () => PackageServerRepository());
   //Usecases
   getIt.registerSingleton(GetPackagesUseCase());
   getIt.registerSingleton(CreatePackageUseCase());
