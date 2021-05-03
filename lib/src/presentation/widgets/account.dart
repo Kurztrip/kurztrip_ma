@@ -20,7 +20,7 @@ class AccountPage extends StatelessWidget {
         Text('Rol'),
         Divider(),
         Container(
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.35,
           width: MediaQuery.of(context).size.width * 0.8,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,6 +44,16 @@ class AccountPage extends StatelessWidget {
               Navigator.pushNamed(context, "/edit_account");
             },
             child: Text('Editar Información')),
+        ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0))),
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, '/db_center_form');
+            },
+            child: Text('Crear Centro de Distribución')),
         OutlinedButton.icon(
           style: ButtonStyle(
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
