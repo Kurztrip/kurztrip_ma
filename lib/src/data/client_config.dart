@@ -15,5 +15,5 @@ GraphQLClient getGraphQLClient() {
       cache: GraphQLCache(),
       link: _httpLink,
       defaultPolicies:
-          DefaultPolicies(query: Policies(fetch: FetchPolicy.networkOnly)));
+          DefaultPolicies(query: Policies(fetch: FetchPolicy.cacheAndNetwork)));
 }

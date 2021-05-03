@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_webservice/geocoding.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
@@ -17,6 +16,7 @@ class PackageForm extends StatefulWidget {
 class _PackageFormState extends State<PackageForm> {
   final PackageformBloc bloc = getIt();
   final _globalKey = GlobalKey<FormState>();
+  final TextEditingController mapsController = TextEditingController();
   Prediction prediction;
   @override
   Widget build(BuildContext context) {
@@ -72,10 +72,24 @@ class _PackageFormState extends State<PackageForm> {
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Destino',
                         icon: KurztripIcons.map,
-                        onChanged: (value) => bloc.add(UpdateAddress(value)),
+                        controller: mapsController,
                         onTap: (fieldContext) async {
                           prediction = await PlacesAutocomplete.show(
-                              context: fieldContext, apiKey: mapsApiKey);
+                            startText: mapsController.text,
+                            context: fieldContext,
+                            apiKey: mapsApiKey,
+                            mode: Mode.overlay,
+                            onError: (response) {},
+                            language: "es",
+                            types: [],
+                            components: [Component(Component.country, "co")],
+                            strictbounds: false,
+                            hint: "Destino",
+                          );
+                          if (prediction != null) {
+                            mapsController.text = prediction.description;
+                            bloc.add(UpdateAddress(prediction.description));
+                          }
                         },
                       ),
                       RoundedInputField(
@@ -119,13 +133,7 @@ class _PackageFormState extends State<PackageForm> {
                         child: RoundedButton(
                           onPressed: () async {
                             if (_globalKey.currentState.validate()) {
-                              // GoogleMapsGeocoding geo =
-                              //     GoogleMapsGeocoding(apiKey: mapsApiKey);
-                              // GeocodingResponse response =
-                              //     await geo.searchByAddress(state.address);
-                              // print(response.results[0].geometry.location.lat);
-                              // print(response.results[0].geometry.location.lng);
-                              // bloc.add(Submit());
+                              bloc.add(Submit());
                             }
                           },
                           text: 'GUARDAR',

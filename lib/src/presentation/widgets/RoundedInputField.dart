@@ -10,6 +10,7 @@ class RoundedInputField extends StatelessWidget {
   final TextInputType textInputType;
   final String initialValue;
   final Function(BuildContext) onTap;
+  final TextEditingController controller;
   const RoundedInputField(
       {Key key,
       this.hintText,
@@ -20,7 +21,8 @@ class RoundedInputField extends StatelessWidget {
       this.validator = defaultValidator,
       this.textColor,
       this.initialValue,
-      this.onTap})
+      this.onTap,
+      this.controller})
       : super(key: key);
   static String defaultValidator(value) =>
       value == null || value.isEmpty ? 'Este campo es obligatorio' : null;
@@ -37,6 +39,7 @@ class RoundedInputField extends StatelessWidget {
         borderRadius: BorderRadius.circular(29),
       ),
       child: TextFormField(
+          controller: controller,
           onTap: onTap != null ? () => onTap(context) : null,
           keyboardType: textInputType,
           initialValue: initialValue,

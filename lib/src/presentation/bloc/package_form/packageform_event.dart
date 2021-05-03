@@ -11,8 +11,9 @@ class UpdateAddress extends PackageformEvent {
   final String address;
   const UpdateAddress(this.address);
 }
-class Submit extends PackageformEvent {
-}
+
+class Submit extends PackageformEvent {}
+
 class UpdateReceiver extends PackageformEvent {
   final String receiver;
   const UpdateReceiver(this.receiver);
