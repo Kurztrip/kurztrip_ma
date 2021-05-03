@@ -39,9 +39,7 @@ class _EditAccountState extends State<EditAccountPage> {
         builder: (context, state) {
           EditShowing fields = state as EditShowing;
           return Scaffold(
-            appBar: AppBar(
-              title: Text('Editar cuenta'),
-            ),
+            appBar: AppBar(),
             body: SingleChildScrollView(
               child: Form(
                 key: _formKey,
