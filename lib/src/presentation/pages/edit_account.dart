@@ -100,7 +100,7 @@ class _EditAccountState extends State<EditAccountPage> {
                           horizontalPadding: 30,
                           verticalPadding: 10,
                           onPressed: _submit,
-                          text: 'Actualizar información'),
+                          text: 'Actualizar\nInformación'),
                     ),
                   ],
                 ),
