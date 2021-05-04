@@ -16,12 +16,14 @@ class LoginDone extends HomepageState{}
 class SignInState extends HomepageState {
   final String user;
   final String password;
-
-  SignInState({this.user, this.password}) : super([user, password]);
-  SignInState copyWith({String user, String password}) {
+  final String error;
+  SignInState({this.user, this.password, this.error}) : super([user, password, error]);
+  SignInState copyWith({String user, String password, String error}) {
     return SignInState(
         user: user != null ? user : this.user,
-        password: password != null ? password : this.password);
+        password: password != null ? password : this.password,
+        error: error != null ? error : null);
+
   }
 }
 
