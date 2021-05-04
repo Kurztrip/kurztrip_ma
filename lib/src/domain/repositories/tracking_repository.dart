@@ -4,7 +4,7 @@ import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
 
 abstract class TrackingRepository {
   Future<Truck> get(int id);
-  Future<List<Truck>> getAll();
+  Future<List<Route>> getAll();
   Future<bool> save(Truck truck);
 
   Future<List<Package>> getTrackingPackages();

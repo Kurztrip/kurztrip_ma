@@ -2,6 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:kurztrip_ma/src/data/count/user_server_repository.dart';
 import 'package:kurztrip_ma/src/data/driver/driver_server_repository.dart';
 import 'package:kurztrip_ma/src/data/truck/truck_server_repository.dart';
+import 'package:kurztrip_ma/src/domain/entities/Tracking/use_cases/delete_route_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/Tracking/use_cases/get_routes_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/use_cases/create_user_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/use_cases/login_use_case.dart';
@@ -26,6 +28,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/homepage/homepage_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/routes_list_bloc/routes_list_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/truck_form/truckform_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/truck_list_bloc/truck_list_bloc.dart';
@@ -61,6 +64,9 @@ void registerUserService() {
   getIt.registerFactory(
     () => TruckListBloc(),
   );
+  getIt.registerFactory(
+    () => RoutesListBloc(),
+  );
   getIt.registerFactoryParam<EditAccountBloc, User, void>(
       (param1, param2) => EditAccountBloc(param1));
   //Repositories
@@ -81,6 +87,8 @@ void registerUserService() {
   getIt.registerSingleton(CreateTruckUseCase());
   getIt.registerSingleton(UpdateTruckUseCase());
   getIt.registerSingleton(DeleteTruckUseCase());
+  getIt.registerSingleton(GetRoutesUseCase());
+  getIt.registerSingleton(DeleteRouteUseCase());
   getIt.registerLazySingleton<LocationsRepository>(
       () => DriverServerRepository());
 }
