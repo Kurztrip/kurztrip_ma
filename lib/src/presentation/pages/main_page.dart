@@ -5,7 +5,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_state.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
-import 'package:kurztrip_ma/src/presentation/widgets/account.dart';
+import 'package:kurztrip_ma/src/presentation/pages/account_page.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/packages_list.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/trucks_list.dart';

@@ -13,6 +13,7 @@ import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 import 'package:kurztrip_ma/src/data/package/package_server_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/user_repository.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/account_page_bloc/account_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/db_center_form_bloc/db_center_form_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/edit_account_bloc/edit_account_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/homepage/homepage_bloc.dart';
@@ -52,6 +53,7 @@ void registerUserService() {
   getIt.registerFactory(
     () => PackageListBloc(),
   );
+  getIt.registerFactory(() => AccountPageBloc());
   getIt.registerFactory(() => RouteAdditionBloc());
   getIt.registerFactoryParam<EditAccountBloc, User, void>(
       (param1, param2) => EditAccountBloc(param1));
