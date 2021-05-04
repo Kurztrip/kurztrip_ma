@@ -5,9 +5,10 @@ import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_state.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
-import 'package:kurztrip_ma/src/presentation/widgets/account.dart';
+import 'package:kurztrip_ma/src/presentation/pages/account_page.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/packages_list.dart';
+import 'package:kurztrip_ma/src/presentation/widgets/routes.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/trucks_list.dart';
 
 class MainPage extends StatelessWidget {
@@ -77,23 +78,22 @@ class MainPage extends StatelessWidget {
     );
   }
 
-  void _floatingActionButton(MainPageState state, BuildContext context) async {
+  void _floatingActionButton(MainPageState state, BuildContext context) {
     int index = _getIndex(state);
     switch (index) {
       case 0:
         {
-          await Navigator.of(context).pushNamed('/truck_form');
-          context.read<MainPageBloc>().add(TabSelected(index: 0));
+          Navigator.of(context).pushNamed('/truck_form');
           break;
         }
       case 1:
         {
-          await Navigator.of(context).pushNamed('/package_form');
-          context.read<MainPageBloc>().add(TabSelected(index: 1));
+          Navigator.of(context).pushNamed('/package_form');
           break;
         }
       case 2:
         {
+          Navigator.of(context).pushNamed('/route_addition_page');
           break;
         }
       default:
@@ -131,9 +131,7 @@ class MainPage extends StatelessWidget {
         }
       case 2:
         {
-          return GoogleMap(
-              initialCameraPosition:
-                  CameraPosition(target: const LatLng(85, 80), zoom: 11.0));
+          return RoutesList();
         }
       case 3:
         {

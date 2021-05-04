@@ -27,5 +27,14 @@ class EditAccountBloc extends Bloc<EditAccountEvent, EditAccountState> {
         yield old.copyWith(name: event.name);
       }
     }
+    if (event is SendNewData) {
+      yield SavingData();
+      //llamar metodo de repositorio de editar usuario
+      await Future.delayed(Duration(seconds: 2));
+      //this.add(ErrorOccurred(message: 'Error de Conexión'));
+      yield SavingSuccess();
+    } else if (event is ErrorOccurred) {
+      yield ErrorOccurredWhileSaving(message: event.message);
+    }
   }
 }
