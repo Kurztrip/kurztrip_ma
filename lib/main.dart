@@ -6,6 +6,6 @@ import 'package:kurztrip_ma/src/presentation/bloc/simple_bloc_observer.dart';
 
 void main() {
   init();
-  Bloc.observer = SimpleBlocObserver();
+  //Bloc.observer = SimpleBlocObserver();
   runApp(MobileApp());
 }

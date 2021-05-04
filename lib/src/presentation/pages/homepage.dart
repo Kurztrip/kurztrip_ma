@@ -34,6 +34,11 @@ class _HomepageState extends State<Homepage> {
         create: (context) => homepageBloc,
         child:
             BlocBuilder<HomepageBloc, HomepageState>(builder: (context, state) {
+          if (state is LoginDone) {
+            Future.delayed(Duration(seconds: 1), () {
+              Navigator.pushReplacement(context, _createRoute(MainPage()));
+            });
+          }
           return WillPopScope(
             onWillPop: () async {
               if (state is Home) {
@@ -77,6 +82,12 @@ class _HomepageState extends State<Homepage> {
                         child: Form(
                           key: _globalKey,
                           child: Column(children: <Widget>[
+                            state is SignInState && state.error != null
+                                ? Text(
+                                    'Correo o Contraseña invalidos',
+                                    style: TextStyle(color: Colors.red),
+                                  )
+                                : Container(),
                             RoundedInputField(
                               hintText: 'Email',
                               iconColor:
@@ -156,9 +167,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   void _submit() {
-    homepageBloc.add(SignIn());
-    if (_globalKey.currentState.validate())
-      Navigator.pushReplacement(context, _createRoute(MainPage()));
+    if (_globalKey.currentState.validate()) homepageBloc.add(SignIn());
   }
 
   void _backHome(BuildContext context) {
