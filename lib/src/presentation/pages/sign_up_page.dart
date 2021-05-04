@@ -5,6 +5,7 @@ import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
+import 'package:kurztrip_ma/src/presentation/pages/main_page.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedButton.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedDropdown.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
@@ -141,5 +142,25 @@ class _SignUpPageState extends State<SignUpPage> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Processing Data')));
     }
+    Navigator.pushReplacement(context, _createRoute(MainPage()));
+  }
+
+  Route _createRoute(Widget widget) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => widget,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween =
+        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
   }
 }

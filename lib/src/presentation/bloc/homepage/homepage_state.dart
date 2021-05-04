@@ -11,6 +11,8 @@ abstract class HomepageState extends Equatable {
   List<Object> get props => properties;
 }
 
+class LoginDone extends HomepageState{}
+
 class SignInState extends HomepageState {
   final String user;
   final String password;

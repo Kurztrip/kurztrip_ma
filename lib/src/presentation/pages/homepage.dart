@@ -86,7 +86,7 @@ class _HomepageState extends State<Homepage> {
                                   .add(UpdateUser(value)),
                             ),
                             RoundedPasswordField(
-                              hintText: 'Contraseña',
+                              hintText: 'Email',
                               iconColor:
                                   Theme.of(context).colorScheme.onBackground,
                               onChanged: (value) => context
@@ -156,6 +156,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   void _submit() {
+    homepageBloc.add(SignIn());
     if (_globalKey.currentState.validate())
       Navigator.pushReplacement(context, _createRoute(MainPage()));
   }
