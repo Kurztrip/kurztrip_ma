@@ -47,7 +47,7 @@ class DBCenterFormBloc extends Bloc<DBCenterFormEvent, DBCenterFormState> {
       print('Distribution Center longitude: ${dbCenter.longitude_location}');
       yield DBCenterFormLoading();
       //llamar metodo de caso de uso
-      Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 2));
       yield DBCenterFormSuccess();
     }
   }
