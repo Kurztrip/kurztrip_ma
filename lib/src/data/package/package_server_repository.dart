@@ -57,7 +57,7 @@ class PackageServerRepository implements PackageRepository {
 
   final String updatePackage = r'''
     mutation updateOnePackage($id: Int!, $package: PackageInput!){
-      updatePackage(id: $id, package: $package){
+      updatePackage(id: $id, new_package: $package){
         id
         storeId
         weight
@@ -145,8 +145,8 @@ class PackageServerRepository implements PackageRepository {
     final QueryOptions options = QueryOptions(document: gql(getPackages));
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
-    }
+      throw result.exception;}
+
     List<Package> packages = result.data['getPackages']
         .map<Package>((packageResult) => Package(
             id: int.parse(packageResult['id'].toString()),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/pages/package_form.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/expandable_item.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 
@@ -16,13 +17,31 @@ class PackagesList extends StatelessWidget {
         builder: (context, state) {
           Widget child;
           if (state is PackagelistShowing) {
+            if (state.error != null) {
+              Future.delayed(
+                  Duration(seconds: 1),
+                  () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(state.error),
+                        backgroundColor: Colors.red,
+                        behavior: SnackBarBehavior.floating,
+                      )));
+            }
             child = ItemList(
               list: generatePackages(state.packages),
               key: ValueKey(1),
               getList: () async =>
                   context.read<PackageListBloc>().add(PackageListRefresh()),
-              onDelete: (id) {},
-              onEdit: (id) {},
+              onDelete: (id) =>
+                  context.read<PackageListBloc>().add(DeletePackage(id)),
+              onEdit: (id) async {
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PackageForm(
+                              edit: id,
+                            )));
+                context.read<PackageListBloc>().add(PackageListRefresh());
+              },
             );
           } else if (state is PackagelistError) {
             print(state.message);
@@ -61,7 +80,11 @@ class PackagesList extends StatelessWidget {
         title: 'Paquete ' + package.id.toString(),
         subtitle: 'EN CAMINO',
         expandedValue: {
-          'Destino:': [package.address],
+          'Destino:': [
+            (package.address.length <= 30)
+                ? package.address
+                : '${package.address.substring(0, 30)}...'
+          ],
           'Destinatario:': [package.receiver],
           'D.I. del destinatario: ': [package.idReceiver],
           'peso:': [package.weight.toString(), ' Kg'],

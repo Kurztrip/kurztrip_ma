@@ -8,20 +8,47 @@ import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/core/error/faliures.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/create_package_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/package/use_cases/get_package_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/update_package_use_case.dart';
 
 part 'packageform_event.dart';
 part 'packageform_state.dart';
 
 class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
-  PackageformBloc() : super(PackageformShowing());
-  CreatePackageUseCase createPackageUseCase = getIt();
-  UpdatePackageUseCase updatePackageUseCase = getIt();
+  PackageformBloc({this.edit}) : super(PackageformShowing()) {
+    if (edit != null) {
+      this.add(GetPackageAutofill());
+      init(edit);
+    }
+  }
+  Future<void> init(int id) async {
+    Either<Failure, Package> result = await getPackageUseCase(id);
+    result.fold((failure) {
+      this.add(ToPackageError("Error al obtener el paquete"));
+    }, (package) {
+      this.add(PackageFormAutofill(
+          package.id,
+          package.address,
+          package.receiver,
+          package.idReceiver,
+          package.weight,
+          package.volume,
+          package.storeId));
+    });
+  }
+
+  final int edit;
+
+  final GetPackageUseCase getPackageUseCase = getIt();
+  final CreatePackageUseCase createPackageUseCase = getIt();
+  final UpdatePackageUseCase updatePackageUseCase = getIt();
   @override
   Stream<PackageformState> mapEventToState(
     PackageformEvent event,
   ) async* {
-    if (event is UpdateAddress) {
+    if (event is GetPackageAutofill) {
+      yield PackageformLoading();
+    } else if (event is UpdateAddress) {
       yield (state as PackageformShowing).copyWith(address: event.address);
     } else if (event is UpdateReceiver) {
       yield (state as PackageformShowing).copyWith(receiver: event.receiver);
@@ -63,10 +90,15 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
         latitude: response.results[0].geometry.location.lat,
       );
       yield PackageformLoading();
-      Either<Failure, Package> result =
-          await createPackageUseCase(Params(package));
+      Either<Failure, Package> result;
+      if (package.id == null) {
+        result = await createPackageUseCase(Params(package));
+      } else {
+        result = await updatePackageUseCase(UpdateParams(package));
+      }
       yield* result.fold((failure) async* {
-        yield current.copyWith(error: failure.error);
+        yield current.copyWith(
+            error: "operación fallida, por favor revisa tu conexión");
       }, (package) async* {
         yield PackageformSuccess();
       });

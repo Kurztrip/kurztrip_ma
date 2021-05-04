@@ -1,4 +1,4 @@
-import 'package:kurztrip_ma/src/domain/entities/time_schedule/TimeSchedule.dart';
+import 'package:kurztrip_ma/src/domain/entities/distribution_center/TimeSchedule.dart';
 
 abstract class TimeScheduleRepository {
   Future<TimeSchedule> get(int id);
