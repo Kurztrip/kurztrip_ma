@@ -89,15 +89,24 @@ class _HomepageState extends State<Homepage> {
                                   )
                                 : Container(),
                             RoundedInputField(
-                              hintText: 'Email',
-                              iconColor:
-                                  Theme.of(context).colorScheme.onBackground,
-                              onChanged: (value) => context
-                                  .read<HomepageBloc>()
-                                  .add(UpdateUser(value)),
-                            ),
+                                hintText: 'Email',
+                                iconColor:
+                                    Theme.of(context).colorScheme.onBackground,
+                                onChanged: (value) => context
+                                    .read<HomepageBloc>()
+                                    .add(UpdateUser(value)),
+                                textInputType: TextInputType.emailAddress,
+                                validator: (value) {
+                                  if (!RegExp(
+                                          r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
+                                      .hasMatch(value)) {
+                                    return 'Email invalido';
+                                  } else {
+                                    return null;
+                                  }
+                                }),
                             RoundedPasswordField(
-                              hintText: 'Email',
+                              hintText: 'Contraseña',
                               iconColor:
                                   Theme.of(context).colorScheme.onBackground,
                               onChanged: (value) => context
