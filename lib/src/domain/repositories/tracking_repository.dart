@@ -14,8 +14,8 @@ abstract class TrackingRepository {
   updatePackageState(int id, String state);
   deleteTrackingPackage(id);
 
-  Future<Route> getRoute(id);
-  createRoute(Route new_route);
-  updateRoute(int id, Route route);
+  Future<TrackingRoute> getRoute(id);
+  createRoute(TrackingRoute new_route);
+  updateRoute(int id, TrackingRoute route);
   deleteRoute(int id);
 }
