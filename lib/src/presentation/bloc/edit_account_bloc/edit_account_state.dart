@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 
 abstract class EditAccountState extends Equatable {
   const EditAccountState([this.properties = const <dynamic>[]]) : super();
@@ -6,6 +7,15 @@ abstract class EditAccountState extends Equatable {
   @override
   List<Object> get props => properties;
 }
+
+class SavingData extends EditAccountState {}
+
+class ErrorOccurredWhileSaving extends EditAccountState {
+  final String message;
+  ErrorOccurredWhileSaving({@required this.message}) : super([message]);
+}
+
+class SavingSuccess extends EditAccountState {}
 
 class EditShowing extends EditAccountState {
   final String name;

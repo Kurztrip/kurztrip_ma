@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:kurztrip_ma/src/presentation/pages/db_center_form_page.dart';
-import 'package:kurztrip_ma/src/presentation/pages/edit_account.dart';
 import 'pages/pages.dart';
 
 class MobileApp extends StatelessWidget {
@@ -63,6 +61,7 @@ class MobileApp extends StatelessWidget {
         '/package_form': (context) => PackageForm(),
         '/db_center_form': (context) => DBCenterFormPage(),
         '/edit_account': (context) => EditAccountPage(),
+        '/route_addition_page': (context) => RouteAdditionPage(),
       },
     );
   }

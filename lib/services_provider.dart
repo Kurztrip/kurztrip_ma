@@ -22,12 +22,14 @@ import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 import 'package:kurztrip_ma/src/data/package/package_server_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/user_repository.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/account_page_bloc/account_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/db_center_form_bloc/db_center_form_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/edit_account_bloc/edit_account_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/homepage/homepage_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/route_addition_bloc/route_addition_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/routes_list_bloc/routes_list_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/truck_form/truckform_bloc.dart';
@@ -61,6 +63,10 @@ void registerUserService() {
   getIt.registerFactory(
     () => PackageListBloc(),
   );
+
+  getIt.registerFactory(() => AccountPageBloc());
+  getIt.registerFactory(() => RouteAdditionBloc());
+
   getIt.registerFactory(
     () => TruckListBloc(),
   );
