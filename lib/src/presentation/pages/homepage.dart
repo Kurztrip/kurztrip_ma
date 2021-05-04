@@ -78,7 +78,7 @@ class _HomepageState extends State<Homepage> {
                           key: _globalKey,
                           child: Column(children: <Widget>[
                             RoundedInputField(
-                              hintText: 'Usuario',
+                              hintText: 'Email',
                               iconColor:
                                   Theme.of(context).colorScheme.onBackground,
                               onChanged: (value) => context
