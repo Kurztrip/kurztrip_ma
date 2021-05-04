@@ -33,11 +33,6 @@ class _ItemListState extends State<ItemList> {
         key: ValueKey(1),
         onRefresh: () async {
           widget.getList();
-          // Future.delayed(Duration(seconds: 1), () {
-          //   setState(() {
-          //     list = widget.list;
-          //   });
-          // });
         },
         child: LayoutBuilder(
           builder: (context, constraints) {

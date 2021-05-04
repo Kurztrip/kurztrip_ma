@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kurztrip_ma/services_provider.dart';
+import 'package:kurztrip_ma/src/core/error/faliures.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
+import 'package:kurztrip_ma/src/domain/entities/package/use_cases/delete_package_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/get_packages_use_cases.dart';
 
 part 'package_list_event.dart';
@@ -10,7 +13,7 @@ part 'package_list_state.dart';
 
 class PackageListBloc extends Bloc<PackageListEvent, PackageListState> {
   final GetPackagesUseCase getPackagesUseCase = getIt();
-
+  final DeletePackageUseCase deletePackageUseCase = getIt();
   PackageListBloc() : super(PackagelistLoading());
 
   @override
@@ -18,7 +21,15 @@ class PackageListBloc extends Bloc<PackageListEvent, PackageListState> {
     PackageListEvent event,
   ) async* {
     if (event is DeletePackage) {
-    } else if (event is EditPackage) {
+      Either<Failure, bool> result = await deletePackageUseCase(event.id);
+      yield* result.fold((failure) async* {
+        yield PackagelistShowing((state as PackagelistShowing).packages,
+            error: "Error al eliminar el paquete");
+      }, (package) async* {
+        yield PackagelistShowing((state as PackagelistShowing).packages,
+            success: "Paquete eliminado correctamente");
+        this.add(PackageListRefresh());
+      });
     } else if (event is GetAllPackages) {
       yield* (await getPackagesUseCase()).fold((error) async* {
         yield PackagelistError(error.error);
@@ -27,6 +38,6 @@ class PackageListBloc extends Bloc<PackageListEvent, PackageListState> {
       });
     } else if (event is PackageListRefresh) {
       yield PackagelistLoading();
-    }
+    } else {}
   }
 }

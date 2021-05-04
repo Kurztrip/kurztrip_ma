@@ -39,6 +39,20 @@ class UpdateWarehouse extends PackageformEvent {
   UpdateWarehouse(this.warehouse);
 }
 
+class GetPackageAutofill extends PackageformEvent {}
+
+class DeletePackage extends PackageformEvent {
+  final int id;
+
+  DeletePackage(this.id);
+}
+
+class ToPackageError extends PackageformEvent {
+  final String error;
+
+  ToPackageError(this.error);
+}
+
 class PackageFormAutofill extends PackageformEvent {
   final int id;
   final String address;
