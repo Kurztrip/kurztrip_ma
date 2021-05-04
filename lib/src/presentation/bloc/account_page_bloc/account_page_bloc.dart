@@ -14,7 +14,7 @@ class AccountPageBloc extends Bloc<AccountPageEvent, AccountPageState> {
       this.add(
         AccountInfoObtained(
           user: User(
-            id: 0,
+            id: '0',
             name: 'Pepito',
             lastName: 'Perez',
             rol: 'administrador',

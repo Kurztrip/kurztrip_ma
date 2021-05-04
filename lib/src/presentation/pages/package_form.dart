@@ -17,10 +17,9 @@ class PackageForm extends StatefulWidget {
 }
 
 class _PackageFormState extends State<PackageForm> {
-  _PackageFormState(this.edit) {
+  _PackageFormState(int edit) {
     bloc = getIt<PackageformBloc>(param1: edit);
   }
-  final int edit;
   PackageformBloc bloc;
   final _globalKey = GlobalKey<FormState>();
   final TextEditingController mapsController = TextEditingController();

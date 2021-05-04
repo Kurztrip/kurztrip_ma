@@ -145,8 +145,8 @@ class PackageServerRepository implements PackageRepository {
     final QueryOptions options = QueryOptions(document: gql(getPackages));
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
-    }
+      throw result.exception;}
+
     List<Package> packages = result.data['getPackages']
         .map<Package>((packageResult) => Package(
             id: int.parse(packageResult['id'].toString()),

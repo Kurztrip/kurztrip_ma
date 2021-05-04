@@ -24,7 +24,7 @@ class _EditAccountState extends State<EditAccountPage> {
         lastName: 'Perez',
         email: 'correo@mail.com',
         cellphone: '234525647',
-        id: 0,
+        id: "----",
         createAt: null,
         notifications: null,
         organization: null,
