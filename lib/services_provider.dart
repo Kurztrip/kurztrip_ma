@@ -3,6 +3,8 @@ import 'package:kurztrip_ma/src/data/count/user_server_repository.dart';
 import 'package:kurztrip_ma/src/data/driver/driver_server_repository.dart';
 import 'package:kurztrip_ma/src/data/truck/truck_server_repository.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
+import 'package:kurztrip_ma/src/domain/entities/count/use_cases/create_user_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/count/use_cases/login_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/create_package_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/get_packages_use_cases.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/update_package_use_case.dart';
@@ -52,11 +54,13 @@ void registerUserService() {
   getIt.registerLazySingleton<TruckRepository>(() => TruckServerRepository());
   getIt.registerLazySingleton<PackageRepository>(
       () => PackageServerRepository());
+  getIt.registerLazySingleton<UserRepository>(() => UserServerRepository());
   //Usecases
   getIt.registerSingleton(GetPackagesUseCase());
+  getIt.registerSingleton(CreateUserUseCase());
+  getIt.registerSingleton(LoginUseCase());
   getIt.registerSingleton(CreatePackageUseCase());
   getIt.registerSingleton(UpdatePackageUseCase());
   getIt.registerLazySingleton<LocationsRepository>(
       () => DriverServerRepository());
-  getIt.registerLazySingleton<UserRepository>(() => UserServerRepository());
 }

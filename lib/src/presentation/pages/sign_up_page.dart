@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
+import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedButton.dart';
@@ -10,6 +11,8 @@ import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedPasswordField.dart';
 
 class SignUpPage extends StatefulWidget {
+  final User user;
+  const SignUpPage({Key key, this.user}): super(key:key);
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -19,6 +22,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
+    if(widget.user != null){
+    }
     super.initState();
   }
 
@@ -131,6 +136,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void _submit() {
+    bloc.add(Submit());
     if (_formKey.currentState.validate()) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Processing Data')));

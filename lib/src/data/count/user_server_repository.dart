@@ -87,7 +87,7 @@ class UserServerRepository extends UserRepository{
       throw result.exception;
     }
     final userResult = result.data['getUserById'];
-    return User(id: int.parse(userResult['_id'].toString()), name: userResult['name'].toString(), lastName: userResult['lastName'].toString(), email: userResult['email'].toString(), cellphone: userResult['cellphone'].toString(), rol: userResult['rol'].toString(), createAt: userResult['createAt'], password: userResult['password'].toString(), organization: userResult['organization'].toString(), notifications: userResult['notifications']);
+    return User(id: userResult['_id'].toString(), name: userResult['name'].toString(), lastName: userResult['lastName'].toString(), email: userResult['email'].toString(), cellphone: userResult['cellphone'].toString(), rol: userResult['rol'].toString(), createAt: userResult['createAt'], password: userResult['password'].toString(), organization: userResult['organization'].toString(), notifications: userResult['notifications']);
   }
 
   @override
@@ -110,7 +110,7 @@ class UserServerRepository extends UserRepository{
       throw result.exception;
     }
     final userResult = result.data['createUser'];
-    return User(id: int.parse(userResult['_id'].toString()), name: userResult['name'].toString(), lastName: userResult['lastName'].toString(), email: userResult['email'].toString(), cellphone: userResult['cellphone'].toString(), rol: userResult['rol'].toString(), createAt: userResult['createAt'], password: userResult['password'].toString(), organization: userResult['organization'].toString(), notifications: userResult['notifications']);
+    return User(id: userResult['_id'].toString(), name: userResult['name'].toString(), lastName: userResult['lastName'].toString(), email: userResult['email'].toString(), cellphone: userResult['cellphone'].toString(), rol: userResult['rol'].toString(), createAt: userResult['createAt'], password: userResult['password'].toString(), organization: userResult['organization'].toString(), notifications: userResult['notifications']);
 
   }
 
@@ -127,7 +127,7 @@ class UserServerRepository extends UserRepository{
       throw result.exception;
     }
     final userResult = result.data['deleteUser'];
-    return User(id: int.parse(userResult['_id'].toString()), name: userResult['name'].toString(), lastName: userResult['lastName'].toString(), email: userResult['email'].toString(), cellphone: userResult['cellphone'].toString(), rol: userResult['rol'].toString(), createAt: userResult['createAt'], password: userResult['password'].toString(), organization: userResult['organization'].toString(), notifications: userResult['notifications']);
+    return User(id: userResult['_id'].toString(), name: userResult['name'].toString(), lastName: userResult['lastName'].toString(), email: userResult['email'].toString(), cellphone: userResult['cellphone'].toString(), rol: userResult['rol'].toString(), createAt: userResult['createAt'], password: userResult['password'].toString(), organization: userResult['organization'].toString(), notifications: userResult['notifications']);
   }
 
   Future<String> sendMailTo(String mail) async{

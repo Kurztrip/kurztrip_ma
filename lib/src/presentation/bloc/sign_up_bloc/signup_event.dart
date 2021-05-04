@@ -41,3 +41,5 @@ class UpdateUsername extends SignupEvent {
   final String username;
   UpdateUsername(this.username);
 }
+
+class Submit extends SignupEvent{}
