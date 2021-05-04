@@ -46,9 +46,8 @@ void registerUserService() {
   getIt.registerFactory(
     () => MainPageBloc(),
   );
-  getIt.registerFactory(
-    () => TruckformBloc(),
-  );
+  getIt.registerFactoryParam<TruckformBloc, int, void>(
+      (param1, param2) => TruckformBloc(edit: param1));
   getIt.registerFactoryParam<PackageformBloc, int, void>(
       (param1, param2) => PackageformBloc(edit: param1));
   getIt.registerFactory(

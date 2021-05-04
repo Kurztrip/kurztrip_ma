@@ -7,6 +7,10 @@ abstract class TruckformState extends Equatable {
   List<Object> get props => properties;
 }
 
+class TruckformLoading extends TruckformState {}
+
+class TruckformSuccess extends TruckformState {}
+
 class TruckformShowing extends TruckformState {
   final int id;
   final String error;
@@ -16,10 +20,12 @@ class TruckformShowing extends TruckformState {
   final double fuelCapacity;
   final String fuelType;
   final double fuelPerKilometer;
+  final double fuel;
   final int warehouse;
   final String state;
 
   TruckformShowing({
+    this.fuel,
     this.id,
     this.error,
     this.register,
@@ -31,6 +37,7 @@ class TruckformShowing extends TruckformState {
     this.warehouse,
     this.state,
   }) : super([
+          fuel,
           id,
           error,
           register,
@@ -44,9 +51,11 @@ class TruckformShowing extends TruckformState {
         ]);
   TruckformShowing copyWith({
     String register,
+    String error,
     double volumeCapacity,
     double weightCapacity,
     double fuelCapacity,
+    double fuel,
     String fuelType,
     double fuelPerKilometer,
     int warehouse,
@@ -54,6 +63,8 @@ class TruckformShowing extends TruckformState {
   }) {
     return TruckformShowing(
       id: this.id,
+      fuel: fuel != null ? fuel : this.fuel,
+      error: error,
       register: register != null ? register : this.register,
       volumeCapacity:
           volumeCapacity != null ? volumeCapacity : this.volumeCapacity,

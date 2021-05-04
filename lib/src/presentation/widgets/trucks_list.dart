@@ -75,15 +75,28 @@ class TrucksList extends StatelessWidget {
 
   List<ExpandableItem> generateTrucks(List<Truck> list) {
     return list.map<ExpandableItem>((truck) {
+      String fuelType =
+          truck.fuel_type == "Gasoline" ? "Gasolina" : truck.fuel_type;
+      String state = "Disponible";
+      switch (truck.status) {
+        case 'InRoute':
+          state = "En Ruta";
+          break;
+        case 'Maintenance':
+          state = "En Mantenimiento";
+          break;
+        case 'Available':
+          state = "Disponible";
+      }
       return ExpandableItem(
         id: truck.id,
-        title: 'Camión ${truck.id}',
-        subtitle: 'DISPONIBLE',
+        title: 'Camión ${truck.registration}',
+        subtitle: state,
         expandedValue: {
           'Capacidad de Carga:': ['${truck.weight_capacity} ', 'Kg'],
           'Capacidad de Volumen:': ['${truck.volume_capacity} ', 'm3'],
-          'Combustible Disponible: ': ['${truck.fuel * 100} ', '%'],
-          'Tipo de Combustible:': ['${truck.fuel_type}'],
+          'Combustible Disponible: ': ['${truck.fuel} ', '%'],
+          'Tipo de Combustible:': ['$fuelType'],
           'Centro de Acopio:': ['${truck.warehouse}']
         },
       );
