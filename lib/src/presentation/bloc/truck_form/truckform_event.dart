@@ -31,6 +31,12 @@ class UpdateFuelCapacity extends TruckformEvent {
   const UpdateFuelCapacity(this.fuelCapacity);
 }
 
+class UpdateFuel extends TruckformEvent {
+  final double fuel;
+
+  const UpdateFuel(this.fuel);
+}
+
 class UpdateFuelType extends TruckformEvent {
   final String fuelType;
 
@@ -55,7 +61,18 @@ class UpdateState extends TruckformEvent {
   const UpdateState(this.state);
 }
 
+class SubmitTruck extends TruckformEvent {}
+
+class GetTruckAutofill extends TruckformEvent {}
+
+class ToTruckError extends TruckformEvent {
+  final String error;
+
+  ToTruckError(this.error);
+}
+
 class TruckformAutofill extends TruckformEvent {
+  final int id;
   final String register;
   final double volumeCapacity;
   final double weightCapacity;
@@ -64,7 +81,10 @@ class TruckformAutofill extends TruckformEvent {
   final double fuelPerKilometer;
   final int warehouse;
   final String state;
+  final double fuel;
+
   const TruckformAutofill(
+    this.id,
     this.register,
     this.volumeCapacity,
     this.weightCapacity,
@@ -73,5 +93,6 @@ class TruckformAutofill extends TruckformEvent {
     this.fuelPerKilometer,
     this.warehouse,
     this.state,
+    this.fuel,
   );
 }
