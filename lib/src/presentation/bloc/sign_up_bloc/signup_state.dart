@@ -7,7 +7,12 @@ abstract class SignupState extends Equatable {
   List<Object> get props => properties;
 }
 
+class SignUpLoading extends SignupState{}
+
+class SignUpSuccess extends SignupState{}
+
 class SignupShowing extends SignupState {
+  final String error;
   final String name;
   final String lastname;
   final String username;
@@ -17,6 +22,7 @@ class SignupShowing extends SignupState {
   final String rol;
 
   SignupShowing({
+    this.error,
     this.name,
     this.lastname,
     this.username,
@@ -27,6 +33,7 @@ class SignupShowing extends SignupState {
   }) : super([name,lastname,cellphone,username,password,email,rol]);
   SignupShowing copyWith(
       {String name,
+        String error,
       String lastname,
       String username,
       String password,
@@ -40,6 +47,7 @@ class SignupShowing extends SignupState {
         password: password == null ? this.password : password,
         cellphone: cellphone == null ? this.cellphone : cellphone,
         email: email == null ? this.email : email,
-        rol: rol == null ? this.rol : rol);
+        rol: rol == null ? this.rol : rol,
+        error: error != null ? error: null);
   }
 }
