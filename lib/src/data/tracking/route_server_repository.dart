@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:graphql/client.dart';
 import 'package:kurztrip_ma/src/data/client_config.dart';
 import 'package:kurztrip_ma/src/domain/entities/Tracking/Route.dart';
+import 'package:kurztrip_ma/src/domain/repositories/tracking_repository.dart';
 // import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
 // import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 
 //implements TruckRepository
-class TrackingServerRepository {
+class TrackingServerRepository extends TrackingRepository{
   TrackingRoute route = TrackingRoute.createEmpty();
 
   final String getRouteMA = r'''

@@ -4,10 +4,11 @@ import 'package:kurztrip_ma/src/data/client_config.dart';
 import 'package:kurztrip_ma/src/domain/entities/Tracking/Route.dart';
 import 'package:kurztrip_ma/src/domain/entities/analyse/AnalyseTruck.dart';
 import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
+import 'package:kurztrip_ma/src/domain/repositories/analyse_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 
 //implements TruckRepository
-class AnalyseTruckServerRepository {
+class AnalyseTruckServerRepository extends AnalyseRepository{
   AnalyseTruck analyse_truck = AnalyseTruck.createEmpty();
 
   //devuelve analyse truck
@@ -40,7 +41,7 @@ class AnalyseTruckServerRepository {
         warehouse
   */
 
-  // @override
+  @override
   Future<bool> createAnalyseRoute(int id) async {
     final MutationOptions options = MutationOptions(document: gql(createAnalyseRouteMA), variables: <String, dynamic>{
       'id': id,

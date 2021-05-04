@@ -1,6 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:kurztrip_ma/src/data/count/user_server_repository.dart';
 import 'package:kurztrip_ma/src/data/driver/driver_server_repository.dart';
+import 'package:kurztrip_ma/src/data/tracking/analyse_truck_server_repository.dart';
+import 'package:kurztrip_ma/src/data/tracking/route_server_repository.dart';
 import 'package:kurztrip_ma/src/data/truck/truck_server_repository.dart';
 import 'package:kurztrip_ma/src/domain/entities/Tracking/use_cases/delete_route_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/Tracking/use_cases/get_routes_use_case.dart';
@@ -17,7 +19,9 @@ import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/delete_truck_use
 import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/get_truck_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/get_trucks_use_cases.dart';
 import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/update_truck_use_case.dart';
+import 'package:kurztrip_ma/src/domain/repositories/analyse_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/locations_repository.dart';
+import 'package:kurztrip_ma/src/domain/repositories/tracking_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 import 'package:kurztrip_ma/src/data/package/package_server_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
@@ -80,6 +84,10 @@ void registerUserService() {
   getIt.registerLazySingleton<PackageRepository>(
       () => PackageServerRepository());
   getIt.registerLazySingleton<UserRepository>(() => UserServerRepository());
+  getIt.registerLazySingleton<AnalyseRepository>(
+          () => AnalyseTruckServerRepository());
+  getIt.registerLazySingleton<TrackingRepository>(
+          () =>TrackingServerRepository());
   //Usecases
   getIt.registerSingleton(GetPackageUseCase());
   getIt.registerSingleton(GetPackagesUseCase());
@@ -97,4 +105,5 @@ void registerUserService() {
   getIt.registerSingleton(DeleteRouteUseCase());
   getIt.registerLazySingleton<LocationsRepository>(
       () => DriverServerRepository());
+
 }

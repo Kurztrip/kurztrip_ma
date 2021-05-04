@@ -12,7 +12,7 @@ class RouteslistLoading extends RouteslistState {}
 class RouteslistError extends RouteslistState {}
 
 class RouteslistShowing extends RouteslistState {
-  final List<Route> routes;
+  final List<TrackingRoute> routes;
 
   RouteslistShowing(this.routes);
 }
