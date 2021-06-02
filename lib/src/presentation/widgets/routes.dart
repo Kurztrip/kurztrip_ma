@@ -32,20 +32,27 @@ class _RoutesListState extends State<RoutesList> {
                         BoxConstraints(minHeight: constraints.maxHeight),
                     child: Column(
                         children: state.routes.map((route) {
-                      return ListTile(
-                          title: Text("ruta ${route.truck_id}"),
-                          subtitle: Text(
-                            "En curso",
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary),
-                          ),
-                          onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RouteView(
-                                      onDelete: () => bloc
-                                          .add(DeleteRoutes(route.truck_id)),
-                                      route: route))));
+                      return Column(
+                        children: [
+                          ListTile(
+                              title: Text("ruta ${route.truck_id}"),
+                              subtitle: Text(
+                                "En curso",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .secondary),
+                              ),
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RouteView(
+                                          onDelete: () => bloc.add(
+                                              DeleteRoutes(route.truck_id)),
+                                          route: route)))),
+                          Divider(),
+                        ],
+                      );
                     }).toList()),
                   ),
                 );

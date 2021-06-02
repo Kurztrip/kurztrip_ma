@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:google_maps_webservice/geocoding.dart';
 import 'package:kurztrip_ma/services_provider.dart';
+import 'package:kurztrip_ma/src/core/error/faliures.dart';
 import 'package:kurztrip_ma/src/domain/entities/distribution_center/DistributionCenter.dart';
+import 'package:kurztrip_ma/src/domain/entities/distribution_center/use_cases/create_distribution_center_use_case.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/db_center_form_bloc/db_center_form_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/db_center_form_bloc/db_center_form_state.dart';
 
 class DBCenterFormBloc extends Bloc<DBCenterFormEvent, DBCenterFormState> {
   DBCenterFormBloc() : super(DBCenterFormShowing());
-
+  CreateDistributionCenterUseCase useCase = getIt();
   @override
   Stream<DBCenterFormState> mapEventToState(
     DBCenterFormEvent event,
@@ -47,8 +50,14 @@ class DBCenterFormBloc extends Bloc<DBCenterFormEvent, DBCenterFormState> {
       print('Distribution Center longitude: ${dbCenter.longitude_location}');
       yield DBCenterFormLoading();
       //llamar metodo de caso de uso
-      await Future.delayed(Duration(seconds: 2));
-      yield DBCenterFormSuccess();
+      Either<Failure, DistributionCenter> result =
+          await useCase(Params(dbCenter));
+      yield* result.fold((failure) async* {
+        yield current.copyWith(
+            error: "operación fallida, por favor revisa tu conexión");
+      }, (package) async* {
+        yield DBCenterFormSuccess();
+      });
     }
   }
 }

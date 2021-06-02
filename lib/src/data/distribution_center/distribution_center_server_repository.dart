@@ -33,18 +33,24 @@ class DistributionCenterServerRepository
   } 
 }
   ''';
+  final String createDistributionCenterMA = r'''
+  mutation createDistributionCenterMA($distributionCenter:DistributionCenterInput!){
+  createDistributionCenter(distribution_center:$distributionCenter){
+    id
+    address
+    latitude_location
+    longitude_location
+    total_space
+    available_space
+  } 
+}
+  ''';
+  final String deleteDistributionCenterMA = r'''
+    mutation deleteDistributionCenterMA($id: Int!){
+      deleteDistributionCenter(id: $id)
+    }
+  ''';
 
-/*
-
-
-
-
-
-
-
-
-
-*/
   @override
   Future<DistributionCenter> get(int id) async {
     final QueryOptions options = QueryOptions(
@@ -58,19 +64,19 @@ class DistributionCenterServerRepository
     if (result.hasException) {
       throw result.exception;
     }
-    final distribution_center_result =
+    final distributionCenterResult =
         result.data['getDistributionCenter']; //FUNCION DE GRAPHQL
 
     //debugPrint(distribution_center_result['address']);
 
     return DistributionCenter(
-        id: distribution_center_result['id'],
-        address: distribution_center_result['address'],
-        latitude_location: distribution_center_result['latitude_location'],
-        longitude_location: distribution_center_result['longitude_location'],
-        total_space: distribution_center_result['total_space'].toDouble(),
+        id: distributionCenterResult['id'],
+        address: distributionCenterResult['address'],
+        latitude_location: distributionCenterResult['latitude_location'],
+        longitude_location: distributionCenterResult['longitude_location'],
+        total_space: distributionCenterResult['total_space'].toDouble(),
         available_space:
-            distribution_center_result['available_space'].toDouble());
+            distributionCenterResult['available_space'].toDouble());
   }
 
 /*
@@ -114,6 +120,48 @@ class DistributionCenterServerRepository
 
     debugPrint(centers.length.toString());
     return centers;
+  }
+
+  @override
+  Future<DistributionCenter> add(DistributionCenter distributionCenter) async {
+    final MutationOptions options = MutationOptions(
+        document: gql(createDistributionCenterMA),
+        variables: <String, dynamic>{
+          'distribution_center': {
+            'address': distribution_center.address,
+            'latitude_location': distribution_center.latitude_location,
+            ' longitude_location': distribution_center.longitude_location,
+            ' total_space': distribution_center.total_space,
+            ' available_space': distribution_center.available_space
+          }
+        });
+    final result = await getGraphQLClient().mutate(options);
+    if (result.hasException) {
+      throw result.exception;
+    }
+    final distributionCenterResult = result.data['createdistributionCenter'];
+    return DistributionCenter(
+        id: int.parse(distributionCenterResult['id'].toString()),
+        address: distributionCenterResult['address'].toString(),
+        latitude_location:
+            distributionCenterResult['latitude_location'].toDouble(),
+        longitude_location:
+            distributionCenterResult['longitude_location'].toDouble(),
+        total_space: distributionCenterResult['total_space'].toDouble(),
+        available_space:
+            distributionCenterResult['available_space'].toDouble());
+  }
+
+  @override
+  Future<bool> delete(int id) async {
+    final MutationOptions options = MutationOptions(
+        document: gql(deleteDistributionCenterMA),
+        variables: <String, dynamic>{'id': id});
+    final result = await getGraphQLClient().mutate(options);
+    if (result.hasException) {
+      throw result.exception;
+    }
+    return true;
   }
   /*
 
