@@ -127,19 +127,19 @@ class DistributionCenterServerRepository
     final MutationOptions options = MutationOptions(
         document: gql(createDistributionCenterMA),
         variables: <String, dynamic>{
-          'distribution_center': {
-            'address': distribution_center.address,
-            'latitude_location': distribution_center.latitude_location,
-            ' longitude_location': distribution_center.longitude_location,
-            ' total_space': distribution_center.total_space,
-            ' available_space': distribution_center.available_space
+          'distributionCenter': {
+            'address': distributionCenter.address,
+            'latitude_location': distributionCenter.latitude_location,
+            'longitude_location': distributionCenter.longitude_location,
+            'total_space': distributionCenter.total_space,
+            'available_space': distributionCenter.available_space
           }
         });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception;
     }
-    final distributionCenterResult = result.data['createdistributionCenter'];
+    final distributionCenterResult = result.data['createDistributionCenter'];
     return DistributionCenter(
         id: int.parse(distributionCenterResult['id'].toString()),
         address: distributionCenterResult['address'].toString(),

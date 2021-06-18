@@ -51,6 +51,9 @@ class _DBCenterFormState extends State<DBCenterFormPage> {
                 key: ValueKey(0),
               );
             } else if (state is DBCenterFormSuccess) {
+              Future.delayed(Duration(seconds: 2), () async {
+                Navigator.of(context).pop();
+              });
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

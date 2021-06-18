@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:kurztrip_ma/src/data/count/user_server_repository.dart';
+import 'package:kurztrip_ma/src/data/distribution_center/distribution_center_server_repository.dart';
 import 'package:kurztrip_ma/src/data/driver/driver_server_repository.dart';
 import 'package:kurztrip_ma/src/data/tracking/analyse_truck_server_repository.dart';
 import 'package:kurztrip_ma/src/data/tracking/route_server_repository.dart';
@@ -9,6 +10,7 @@ import 'package:kurztrip_ma/src/domain/entities/Tracking/use_cases/get_routes_us
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/use_cases/create_user_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/use_cases/login_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/distribution_center/use_cases/create_distribution_center_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/create_package_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/delete_package_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/get_package_use_case.dart';
@@ -20,6 +22,7 @@ import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/get_truck_use_ca
 import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/get_trucks_use_cases.dart';
 import 'package:kurztrip_ma/src/domain/entities/truck/use_cases/update_truck_use_case.dart';
 import 'package:kurztrip_ma/src/domain/repositories/analyse_repository.dart';
+import 'package:kurztrip_ma/src/domain/repositories/distribution_center_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/locations_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/tracking_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
@@ -85,9 +88,11 @@ void registerUserService() {
       () => PackageServerRepository());
   getIt.registerLazySingleton<UserRepository>(() => UserServerRepository());
   getIt.registerLazySingleton<AnalyseRepository>(
-          () => AnalyseTruckServerRepository());
+      () => AnalyseTruckServerRepository());
   getIt.registerLazySingleton<TrackingRepository>(
-          () =>TrackingServerRepository());
+      () => TrackingServerRepository());
+  getIt.registerLazySingleton<DistributionCenterRepository>(
+      () => DistributionCenterServerRepository());
   //Usecases
   getIt.registerSingleton(GetPackageUseCase());
   getIt.registerSingleton(GetPackagesUseCase());
@@ -103,7 +108,7 @@ void registerUserService() {
   getIt.registerSingleton(DeleteTruckUseCase());
   getIt.registerSingleton(GetRoutesUseCase());
   getIt.registerSingleton(DeleteRouteUseCase());
+  getIt.registerSingleton(CreateDistributionCenterUseCase());
   getIt.registerLazySingleton<LocationsRepository>(
       () => DriverServerRepository());
-
 }
