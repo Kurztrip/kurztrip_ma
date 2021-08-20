@@ -23,16 +23,16 @@ class DBCenterFormBloc extends Bloc<DBCenterFormEvent, DBCenterFormState> {
           .copyWith(availableStorage: event.storageSpace);
     } else if (event is DBCenterFormAutofill) {
       yield DBCenterFormShowing(
-        id: event.dbcenter.id,
-        address: event.dbcenter.address,
-        totalStorage: event.dbcenter.total_space,
-        availableStorage: event.dbcenter.available_space,
+        id: event.dbcenter!.id,
+        address: event.dbcenter!.address,
+        totalStorage: event.dbcenter!.total_space,
+        availableStorage: event.dbcenter!.available_space,
         update: true,
       );
     } else if (event is Submit) {
       DBCenterFormShowing current = state as DBCenterFormShowing;
       GoogleMapsGeocoding geo = GoogleMapsGeocoding(apiKey: mapsApiKey);
-      GeocodingResponse response = await geo.searchByAddress(current.address);
+      GeocodingResponse response = await geo.searchByAddress(current.address!);
       print(response.results[0].geometry.location.lat);
       print(response.results[0].geometry.location.lng);
       DistributionCenter dbCenter = DistributionCenter(

@@ -8,12 +8,12 @@ import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
 
 
 class CreatePackageUseCase extends UseCase<Package,Params>{
-  final PackageRepository _packageRepository=getIt();
+  final PackageRepository? _packageRepository=getIt();
 
   @override
   Future<Either<Failure,Package>> call(Params params) async{
     try {
-      return Right(await _packageRepository.add(params.package));
+      return Right(await _packageRepository!.add(params.package));
     }catch(e){
       return Left(ServerFailure(e.toString()));
     }

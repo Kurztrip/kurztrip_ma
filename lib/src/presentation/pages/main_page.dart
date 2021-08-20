@@ -12,7 +12,7 @@ import 'package:kurztrip_ma/src/presentation/widgets/routes.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/trucks_list.dart';
 
 class MainPage extends StatelessWidget {
-  final MainPageBloc bloc = getIt<MainPageBloc>();
+  final MainPageBloc? bloc = getIt<MainPageBloc>();
 
   @override
   Widget build(BuildContext context) {

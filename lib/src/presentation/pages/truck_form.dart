@@ -8,17 +8,17 @@ import 'package:kurztrip_ma/src/presentation/widgets/RoundedDropdown.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
 
 class TruckForm extends StatefulWidget {
-  final int edit;
+  final int? edit;
 
-  const TruckForm({Key key, this.edit}) : super(key: key);
+  const TruckForm({Key? key, this.edit}) : super(key: key);
   @override
   _TruckFormState createState() => _TruckFormState(this.edit);
 }
 
 class _TruckFormState extends State<TruckForm> {
-  TruckformBloc bloc = getIt();
+  TruckformBloc? bloc = getIt();
   final _globalKey = GlobalKey<FormState>();
-  _TruckFormState(int edit) {
+  _TruckFormState(int? edit) {
     bloc = getIt<TruckformBloc>(param1: edit);
   }
   @override
@@ -26,7 +26,7 @@ class _TruckFormState extends State<TruckForm> {
     return Scaffold(
       appBar: AppBar(),
       body: BlocProvider<TruckformBloc>(
-        create: (context) => bloc,
+        create: (context) => bloc!,
         child: BlocBuilder<TruckformBloc, TruckformState>(
             builder: (context, state) {
           if (state is TruckformLoading) {
@@ -76,10 +76,10 @@ class _TruckFormState extends State<TruckForm> {
                       state.error == null
                           ? Container()
                           : Text(
-                              state.error,
+                              state.error!,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyText1!
                                   .apply(color: Colors.red),
                             ),
                       RoundedInputField(
@@ -87,7 +87,7 @@ class _TruckFormState extends State<TruckForm> {
                         hintText: 'Placa',
                         icon: Icons.directions_bus,
                         initialValue: state.register,
-                        onChanged: (value) => bloc.add(UpdateRegister(value)),
+                        onChanged: (value) => bloc!.add(UpdateRegister(value)),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -98,7 +98,7 @@ class _TruckFormState extends State<TruckForm> {
                         icon: KurztripIcons.weight,
                         textInputType: TextInputType.number,
                         onChanged: (value) =>
-                            bloc.add(UpdateWeightCapacity(double.parse(value))),
+                            bloc!.add(UpdateWeightCapacity(double.parse(value))),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -109,7 +109,7 @@ class _TruckFormState extends State<TruckForm> {
                         icon: KurztripIcons.size,
                         textInputType: TextInputType.number,
                         onChanged: (value) =>
-                            bloc.add(UpdateVolumeCapacity(double.parse(value))),
+                            bloc!.add(UpdateVolumeCapacity(double.parse(value))),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -120,7 +120,7 @@ class _TruckFormState extends State<TruckForm> {
                         icon: KurztripIcons.fuel_capacity,
                         textInputType: TextInputType.number,
                         onChanged: (value) =>
-                            bloc.add(UpdateFuelCapacity(double.parse(value))),
+                            bloc!.add(UpdateFuelCapacity(double.parse(value))),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -130,7 +130,7 @@ class _TruckFormState extends State<TruckForm> {
                         icon: KurztripIcons.capacity,
                         textInputType: TextInputType.number,
                         onChanged: (value) =>
-                            bloc.add(UpdateFuel(double.parse(value))),
+                            bloc!.add(UpdateFuel(double.parse(value))),
                       ),
                       RoundedDropdown(
                         iconColor: Theme.of(context).accentColor,
@@ -142,7 +142,7 @@ class _TruckFormState extends State<TruckForm> {
                         hint: 'Tipo de combustible',
                         value: state.fuelType,
                         icon: KurztripIcons.fuel,
-                        onChanged: (value) => bloc.add(UpdateFuelType(value)),
+                        onChanged: (value) => bloc!.add(UpdateFuelType(value)),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -152,7 +152,7 @@ class _TruckFormState extends State<TruckForm> {
                             : state.fuelPerKilometer.toString(),
                         icon: KurztripIcons.growth,
                         textInputType: TextInputType.number,
-                        onChanged: (value) => bloc
+                        onChanged: (value) => bloc!
                             .add(UpdateFuelPerKilometer(double.parse(value))),
                       ),
                       RoundedInputField(
@@ -164,7 +164,7 @@ class _TruckFormState extends State<TruckForm> {
                         icon: KurztripIcons.warehouse,
                         textInputType: TextInputType.number,
                         onChanged: (value) =>
-                            bloc.add(UpdateWarehouse(int.parse(value))),
+                            bloc!.add(UpdateWarehouse(int.parse(value))),
                       ),
                       state.state == null
                           ? Container()
@@ -179,14 +179,14 @@ class _TruckFormState extends State<TruckForm> {
                               value: truckState,
                               icon: KurztripIcons.fuel,
                               onChanged: (value) =>
-                                  bloc.add(UpdateState(value)),
+                                  bloc!.add(UpdateState(value)),
                             ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: RoundedButton(
                           onPressed: () {
-                            if (_globalKey.currentState.validate()) {
-                              bloc.add(SubmitTruck());
+                            if (_globalKey.currentState!.validate()) {
+                              bloc!.add(SubmitTruck());
                             }
                           },
                           text: 'GUARDAR',

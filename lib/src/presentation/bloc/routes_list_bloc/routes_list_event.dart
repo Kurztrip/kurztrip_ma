@@ -12,7 +12,7 @@ class GetRoutes extends RoutesListEvent {}
 class RefreshRoutes extends RoutesListEvent {}
 
 class DeleteRoutes extends RoutesListEvent {
-  final int id;
+  final int? id;
 
   DeleteRoutes(this.id);
 }

@@ -8,7 +8,7 @@ abstract class MainPageState extends Equatable {
   final List properties;
 
   @override
-  List<Object> get props => properties;
+  List<Object> get props => properties as List<Object>;
 }
 
 class TruckTab extends MainPageState {}

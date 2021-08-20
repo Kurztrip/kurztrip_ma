@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
 class RoundedPasswordField extends StatefulWidget {
-  final String hintText;
-  final ValueChanged<String> onChanged;
+  final String? hintText;
+  final ValueChanged<String>? onChanged;
   final Color iconColor;
-  final String Function(String) validator;
+  final String? Function(String?) validator;
 
   RoundedPasswordField({
-    Key key,
+    Key? key,
     this.hintText,
     this.onChanged,
-    @required this.iconColor,
+    required this.iconColor,
     this.validator = defaultValidator,
   }) : super(key: key);
 
-  static String defaultValidator(value) =>
+  static String? defaultValidator(value) =>
       value == null || value.isEmpty ? 'Este campo es obligatorio' : null;
 
   @override
@@ -47,14 +47,14 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
                 color: widget.iconColor,
               ),
               hintText: "Contraseña",
-              hintStyle: Theme.of(context).textTheme.bodyText1.apply(
+              hintStyle: Theme.of(context).textTheme.bodyText1!.apply(
                   color: Theme.of(context)
                       .colorScheme
                       .onBackground
                       .withAlpha(180)),
               errorStyle: Theme.of(context)
                   .textTheme
-                  .bodyText2
+                  .bodyText2!
                   .apply(color: Theme.of(context).colorScheme.error),
               border: InputBorder.none,
               suffixIcon: IconButton(

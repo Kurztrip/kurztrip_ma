@@ -18,7 +18,7 @@ class EditAccountPage extends StatefulWidget {
 }
 
 class _EditAccountState extends State<EditAccountPage> {
-  final EditAccountBloc bloc = getIt<EditAccountBloc>(
+  final EditAccountBloc? bloc = getIt<EditAccountBloc>(
     param1: User(
         name: 'Pepito',
         lastName: 'Perez',
@@ -38,7 +38,7 @@ class _EditAccountState extends State<EditAccountPage> {
     return Scaffold(
       appBar: AppBar(),
       body: BlocProvider<EditAccountBloc>(
-        create: (context) => bloc,
+        create: (context) => bloc!,
         child: BlocBuilder<EditAccountBloc, EditAccountState>(
           builder: (context, state) {
             if (state is EditShowing) {
@@ -63,14 +63,14 @@ class _EditAccountState extends State<EditAccountPage> {
                         initialValue: fields.name,
                         icon: KurztripIcons.id_card,
                         textInputType: TextInputType.name,
-                        onChanged: (value) => bloc.add(UpdateName(value)),
+                        onChanged: (value) => bloc!.add(UpdateName(value)),
                       ),
                       RoundedInputField(
                         icon: KurztripIcons.id_card,
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Apellido',
                         initialValue: fields.lastname,
-                        onChanged: (value) => bloc.add(UpdateLastName(value)),
+                        onChanged: (value) => bloc!.add(UpdateLastName(value)),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -87,7 +87,7 @@ class _EditAccountState extends State<EditAccountPage> {
                             return null;
                           }
                         },
-                        onChanged: (value) => bloc.add(UpdateEmail(value)),
+                        onChanged: (value) => bloc!.add(UpdateEmail(value)),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -95,7 +95,7 @@ class _EditAccountState extends State<EditAccountPage> {
                         initialValue: fields.cellphone,
                         icon: Icons.phone,
                         textInputType: TextInputType.phone,
-                        onChanged: (value) => bloc.add(UpdateCellphone(value)),
+                        onChanged: (value) => bloc!.add(UpdateCellphone(value)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -148,8 +148,8 @@ class _EditAccountState extends State<EditAccountPage> {
   }
 
   void _submit(User user) {
-    if (_formKey.currentState.validate()) {
-      bloc.add(SendNewData(user: user));
+    if (_formKey.currentState!.validate()) {
+      bloc!.add(SendNewData(user: user));
     }
   }
 }

@@ -12,14 +12,14 @@ import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedPasswordField.dart';
 
 class SignUpPage extends StatefulWidget {
-  final User user;
-  const SignUpPage({Key key, this.user}): super(key:key);
+  final User? user;
+  const SignUpPage({Key? key, this.user}): super(key:key);
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final SignupBloc bloc = getIt();
+  final SignupBloc? bloc = getIt();
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SignupBloc>(
-        create: (context) => bloc,
+        create: (context) => bloc!,
         child: BlocBuilder<SignupBloc, SignupState>(builder: (context, state) {
           return Scaffold(
             body: Center(
@@ -55,13 +55,13 @@ class _SignUpPageState extends State<SignUpPage> {
                           hintText: 'Nombre',
                           icon: KurztripIcons.id_card,
                           textInputType: TextInputType.name,
-                          onChanged: (value) => bloc.add(UpdateName(value)),
+                          onChanged: (value) => bloc!.add(UpdateName(value)),
                         ),
                         RoundedInputField(
                           icon: KurztripIcons.id_card,
                           iconColor: Theme.of(context).accentColor,
                           hintText: 'Apellido',
-                          onChanged: (value) => bloc.add(UpdateLastName(value)),
+                          onChanged: (value) => bloc!.add(UpdateLastName(value)),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
@@ -77,7 +77,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               return null;
                             }
                           },
-                          onChanged: (value) => bloc.add(UpdateEmail(value)),
+                          onChanged: (value) => bloc!.add(UpdateEmail(value)),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
@@ -85,7 +85,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           icon: Icons.phone,
                           textInputType: TextInputType.phone,
                           onChanged: (value) =>
-                              bloc.add(UpdateCellphone(value)),
+                              bloc!.add(UpdateCellphone(value)),
                         ),
                         RoundedDropdown(
                           hint: "Elije tu rol",
@@ -95,23 +95,23 @@ class _SignUpPageState extends State<SignUpPage> {
                             'Administrador': Icons.supervisor_account,
                             'Conductor': Icons.directions_bus
                           },
-                          onChanged: (value) => bloc.add(UpdateRol(value)),
+                          onChanged: (value) => bloc!.add(UpdateRol(value)),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: "Usuario",
-                          onChanged: (value) => bloc.add(UpdateUsername(value)),
+                          onChanged: (value) => bloc!.add(UpdateUsername(value)),
                         ),
                         RoundedPasswordField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: "Contraseña",
-                          onChanged: (value) => bloc.add(UpdatePassword(value)),
+                          onChanged: (value) => bloc!.add(UpdatePassword(value)),
                         ),
                         RoundedPasswordField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: "Confirmar Contraseña",
                           validator: (value) {
-                            if (value != (state as SignupShowing).password) {
+                            if (value != state.password) {
                               return "Las contraseñas no coinciden";
                             } else {
                               return null;
@@ -137,8 +137,8 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void _submit() {
-    bloc.add(Submit());
-    if (_formKey.currentState.validate()) {
+    bloc!.add(Submit());
+    if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Processing Data')));
     }

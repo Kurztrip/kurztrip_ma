@@ -9,17 +9,17 @@ abstract class AccountPageEvent extends Equatable {
   final List properties;
 
   @override
-  List<Object> get props => properties;
+  List<Object> get props => properties as List<Object>;
 }
 
 class StartFetching extends AccountPageEvent {}
 
 class AccountInfoObtained extends AccountPageEvent {
   final User user;
-  AccountInfoObtained({@required this.user}) : super([user]);
+  AccountInfoObtained({required this.user}) : super([user]);
 }
 
 class ErrorOccurred extends AccountPageEvent {
   final String message;
-  ErrorOccurred({@required this.message}) : super([message]);
+  ErrorOccurred({required this.message}) : super([message]);
 }

@@ -8,7 +8,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/account_page_bloc/account_page
 class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AccountPageBloc bloc = getIt();
+    AccountPageBloc? bloc = getIt();
     return BlocProvider<AccountPageBloc>(
       create: (context) => bloc,
       child: BlocBuilder<AccountPageBloc, AccountPageState>(
@@ -34,8 +34,8 @@ class AccountPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(state.user.email),
-                Text(state.user.rol),
+                Text(state.user.email!),
+                Text(state.user.rol!),
                 Divider(),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.35,

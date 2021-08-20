@@ -7,9 +7,9 @@ class RoundedButton extends StatelessWidget {
   final double verticalPadding;
   final double horizontalPadding;
   const RoundedButton({
-    Key key,
-    @required this.onPressed,
-    @required this.text,
+    Key? key,
+    required this.onPressed,
+    required this.text,
     this.verticalPadding = 5.0,
     this.horizontalPadding = 60.0,
   }) : super(key: key);
@@ -17,7 +17,7 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: onPressed as void Function()?,
       child: Text(
         text,
         style: Theme.of(context).textTheme.subtitle1,

@@ -6,11 +6,11 @@ import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
 import 'package:kurztrip_ma/src/domain/repositories/user_repository.dart';
 
 class CreateUserUseCase extends UseCase<User,Params>{
- final UserRepository _userRepository = getIt();
+ final UserRepository? _userRepository = getIt();
  @override
  Future<Either<Failure,User>> call(Params params) async{
    try {
-     return Right(await _userRepository.add(params.user));
+     return Right(await _userRepository!.add(params.user));
    }catch(e){
      return Left(ServerFailure(e.toString()));
    }

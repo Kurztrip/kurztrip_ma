@@ -11,7 +11,7 @@ import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 class TrucksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TruckListBloc bloc = getIt();
+    TruckListBloc? bloc = getIt();
     return BlocProvider<TruckListBloc>(
       create: (context) => bloc,
       child: BlocBuilder<TruckListBloc, TruckListState>(
@@ -22,7 +22,7 @@ class TrucksList extends StatelessWidget {
               Future.delayed(
                   Duration(seconds: 1),
                   () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(state.error),
+                        content: Text(state.error!),
                         backgroundColor: Colors.red,
                         behavior: SnackBarBehavior.floating,
                       )));
@@ -75,7 +75,7 @@ class TrucksList extends StatelessWidget {
 
   List<ExpandableItem> generateTrucks(List<Truck> list) {
     return list.map<ExpandableItem>((truck) {
-      String fuelType =
+      String? fuelType =
           truck.fuel_type == "Gasoline" ? "Gasolina" : truck.fuel_type;
       String state = "Disponible";
       switch (truck.status) {

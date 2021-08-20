@@ -15,7 +15,7 @@ class _HomepageState extends State<Homepage> {
   double _width = 0;
   double _opacity = 0;
   final _globalKey = GlobalKey<FormState>();
-  final HomepageBloc homepageBloc = getIt();
+  final HomepageBloc? homepageBloc = getIt();
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -31,7 +31,7 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocProvider<HomepageBloc>(
-        create: (context) => homepageBloc,
+        create: (context) => homepageBloc!,
         child:
             BlocBuilder<HomepageBloc, HomepageState>(builder: (context, state) {
           if (state is LoginDone) {
@@ -146,7 +146,7 @@ class _HomepageState extends State<Homepage> {
   void _showLogin(BuildContext context) {
     context.read<HomepageBloc>().add(SignInButtonPressed());
     setState(() {
-      _globalKey.currentState.reset();
+      _globalKey.currentState!.reset();
       _width = MediaQuery.of(context).size.width;
       _opacity = 1;
     });
@@ -176,7 +176,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   void _submit() {
-    if (_globalKey.currentState.validate()) homepageBloc.add(SignIn());
+    if (_globalKey.currentState!.validate()) homepageBloc!.add(SignIn());
   }
 
   void _backHome(BuildContext context) {

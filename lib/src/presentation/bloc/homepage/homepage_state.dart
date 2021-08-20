@@ -8,17 +8,17 @@ abstract class HomepageState extends Equatable {
   final List properties;
 
   @override
-  List<Object> get props => properties;
+  List<Object?> get props => properties;
 }
 
 class LoginDone extends HomepageState{}
 
 class SignInState extends HomepageState {
-  final String user;
-  final String password;
-  final String error;
+  final String? user;
+  final String? password;
+  final String? error;
   SignInState({this.user, this.password, this.error}) : super([user, password, error]);
-  SignInState copyWith({String user, String password, String error}) {
+  SignInState copyWith({String? user, String? password, String? error}) {
     return SignInState(
         user: user != null ? user : this.user,
         password: password != null ? password : this.password,

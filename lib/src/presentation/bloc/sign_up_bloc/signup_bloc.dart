@@ -14,8 +14,8 @@ part 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   SignupBloc() : super(SignupShowing());
-  CreateUserUseCase createUserUseCase = getIt();
-  LoginUseCase loginUseCase = getIt();
+  CreateUserUseCase? createUserUseCase = getIt();
+  LoginUseCase? loginUseCase = getIt();
   List<String> roles = ['Administrador', 'Conductor'];
   @override
   Stream<SignupState> mapEventToState(
@@ -42,7 +42,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
         print(signUp);
         User user = User(id: '', name: signUp.name, lastName: signUp.lastname, email: signUp.email, cellphone: signUp.cellphone, rol: signUp.rol, createAt: DateTime.now(), password: signUp.password, organization: '', notifications: []);
         Either<Failure, User> result =
-        await createUserUseCase(Params(user));
+        await createUserUseCase!(Params(user));
         yield* result.fold((failure) async* {
           yield signUp.copyWith(error: failure.error);
         }, (user) async* {

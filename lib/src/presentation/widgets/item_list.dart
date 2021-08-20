@@ -5,14 +5,14 @@ import 'package:kurztrip_ma/src/presentation/widgets/expandable_item.dart';
 
 class ItemList extends StatefulWidget {
   ItemList({
-    Key key,
-    @required this.getList,
-    @required this.onEdit,
-    @required this.onDelete,
-    @required this.list,
+    Key? key,
+    required this.getList,
+    required this.onEdit,
+    required this.onDelete,
+    required this.list,
   }) : super(key: key);
-  final Function(int) onEdit;
-  final Function(int) onDelete;
+  final Function(int?) onEdit;
+  final Function(int?) onDelete;
   final Function getList;
   final List<ExpandableItem> list;
 
@@ -53,7 +53,7 @@ class _ItemListState extends State<ItemList> {
                         return ListTile(
                           title: Text(item.title),
                           subtitle: Text(
-                            item.subtitle,
+                            item.subtitle!,
                             style: TextStyle(
                                 color: Theme.of(context).colorScheme.secondary),
                           ),

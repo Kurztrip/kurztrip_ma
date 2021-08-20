@@ -10,7 +10,7 @@ import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 class PackagesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    PackageListBloc bloc = getIt();
+    PackageListBloc? bloc = getIt();
     return BlocProvider<PackageListBloc>(
       create: (context) => bloc,
       child: BlocBuilder<PackageListBloc, PackageListState>(
@@ -21,7 +21,7 @@ class PackagesList extends StatelessWidget {
               Future.delayed(
                   Duration(seconds: 1),
                   () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(state.error),
+                        content: Text(state.error!),
                         backgroundColor: Colors.red,
                         behavior: SnackBarBehavior.floating,
                       )));
@@ -81,9 +81,9 @@ class PackagesList extends StatelessWidget {
         subtitle: 'EN CAMINO',
         expandedValue: {
           'Destino:': [
-            (package.address.length <= 30)
+            (package.address!.length <= 30)
                 ? package.address
-                : '${package.address.substring(0, 30)}...'
+                : '${package.address!.substring(0, 30)}...'
           ],
           'Destinatario:': [package.receiver],
           'D.I. del destinatario: ': [package.idReceiver],

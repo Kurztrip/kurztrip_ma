@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class RoundedDropdown extends StatelessWidget {
-  final String value;
-  final String hint;
-  final Function(String) onChanged;
-  final Map<String, IconData> items;
+  final String? value;
+  final String? hint;
+  final Function(String?)? onChanged;
+  final Map<String, IconData>? items;
   final IconData icon;
   final Color iconColor;
 
   const RoundedDropdown(
-      {Key key,
+      {Key? key,
       this.value,
       this.hint,
       this.onChanged,
       this.items,
       this.icon = Icons.person,
-      @required this.iconColor})
+      required this.iconColor})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class RoundedDropdown extends StatelessWidget {
           decoration: InputDecoration(
               enabledBorder: InputBorder.none, errorBorder: InputBorder.none),
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          validator: (value) => value == null ? 'Seleccione una opción' : null,
+          validator: (dynamic value) => value == null ? 'Seleccione una opción' : null,
           isExpanded: true,
           hint: Row(
             children: [
@@ -45,8 +45,8 @@ class RoundedDropdown extends StatelessWidget {
                 ),
               ),
               Text(
-                hint,
-                style: Theme.of(context).textTheme.bodyText1.apply(
+                hint!,
+                style: Theme.of(context).textTheme.bodyText1!.apply(
                     color: Theme.of(context)
                         .colorScheme
                         .onBackground
@@ -55,7 +55,7 @@ class RoundedDropdown extends StatelessWidget {
             ],
           ),
           value: value,
-          items: items.entries.map<DropdownMenuItem<String>>((entry) {
+          items: items!.entries.map<DropdownMenuItem<String>>((entry) {
             return DropdownMenuItem<String>(
               value: entry.key,
               child: Row(
