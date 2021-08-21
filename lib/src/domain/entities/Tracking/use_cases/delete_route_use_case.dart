@@ -5,7 +5,7 @@ import 'package:kurztrip_ma/src/core/usecases/usecases.dart';
 import 'package:kurztrip_ma/src/domain/repositories/tracking_repository.dart';
 
 class DeleteRouteUseCase extends UseCase<bool, int> {
-  final TrackingRepository? _packageRepository = getIt();
+  final TrackingRepository _packageRepository = getIt();
 
   @override
   Future<Either<Failure, bool>> call(int params) async {

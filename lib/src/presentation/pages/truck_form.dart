@@ -16,7 +16,7 @@ class TruckForm extends StatefulWidget {
 }
 
 class _TruckFormState extends State<TruckForm> {
-  TruckformBloc? bloc = getIt();
+  TruckformBloc? bloc;
   final _globalKey = GlobalKey<FormState>();
   _TruckFormState(int? edit) {
     bloc = getIt<TruckformBloc>(param1: edit);
@@ -27,7 +27,8 @@ class _TruckFormState extends State<TruckForm> {
       appBar: AppBar(),
       body: BlocProvider<TruckformBloc>(
         create: (context) => bloc!,
-        child: BlocBuilder<TruckformBloc, TruckformState>(builder: (context, state) {
+        child: BlocBuilder<TruckformBloc, TruckformState>(
+            builder: (context, state) {
           if (state is TruckformLoading) {
             return const Center(
               child: const CircularProgressIndicator(),
@@ -69,13 +70,17 @@ class _TruckFormState extends State<TruckForm> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 30),
-                        child: Text('Añadir camión', style: Theme.of(context).textTheme.headline2),
+                        child: Text('Añadir camión',
+                            style: Theme.of(context).textTheme.headline2),
                       ),
                       state.error == null
                           ? Container()
                           : Text(
                               state.error!,
-                              style: Theme.of(context).textTheme.bodyText1!.apply(color: Colors.red),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1!
+                                  .apply(color: Colors.red),
                             ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -87,38 +92,53 @@ class _TruckFormState extends State<TruckForm> {
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Capacidad de carga',
-                        initialValue: state.weightCapacity == null ? null : state.weightCapacity.toString(),
+                        initialValue: state.weightCapacity == null
+                            ? null
+                            : state.weightCapacity.toString(),
                         icon: KurztripIcons.weight,
                         textInputType: TextInputType.number,
-                        onChanged: (value) => bloc!.add(UpdateWeightCapacity(double.parse(value))),
+                        onChanged: (value) => bloc!
+                            .add(UpdateWeightCapacity(double.parse(value))),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Capacidad de volumen',
-                        initialValue: state.volumeCapacity == null ? null : state.volumeCapacity.toString(),
+                        initialValue: state.volumeCapacity == null
+                            ? null
+                            : state.volumeCapacity.toString(),
                         icon: KurztripIcons.size,
                         textInputType: TextInputType.number,
-                        onChanged: (value) => bloc!.add(UpdateVolumeCapacity(double.parse(value))),
+                        onChanged: (value) => bloc!
+                            .add(UpdateVolumeCapacity(double.parse(value))),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Capacidad de combustible',
-                        initialValue: state.fuelCapacity == null ? null : state.fuelCapacity.toString(),
+                        initialValue: state.fuelCapacity == null
+                            ? null
+                            : state.fuelCapacity.toString(),
                         icon: KurztripIcons.fuel_capacity,
                         textInputType: TextInputType.number,
-                        onChanged: (value) => bloc!.add(UpdateFuelCapacity(double.parse(value))),
+                        onChanged: (value) =>
+                            bloc!.add(UpdateFuelCapacity(double.parse(value))),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Combustible disponible(%)',
-                        initialValue: state.fuel == null ? null : state.fuel.toString(),
+                        initialValue:
+                            state.fuel == null ? null : state.fuel.toString(),
                         icon: KurztripIcons.capacity,
                         textInputType: TextInputType.number,
-                        onChanged: (value) => bloc!.add(UpdateFuel(double.parse(value))),
+                        onChanged: (value) =>
+                            bloc!.add(UpdateFuel(double.parse(value))),
                       ),
                       RoundedDropdown(
                         iconColor: Theme.of(context).accentColor,
-                        items: {"Gasolina": KurztripIcons.fuel, "Diesel": KurztripIcons.fuel, "Gas": KurztripIcons.fuel},
+                        items: {
+                          "Gasolina": KurztripIcons.fuel,
+                          "Diesel": KurztripIcons.fuel,
+                          "Gas": KurztripIcons.fuel
+                        },
                         hint: 'Tipo de combustible',
                         value: state.fuelType,
                         icon: KurztripIcons.fuel,
@@ -127,18 +147,24 @@ class _TruckFormState extends State<TruckForm> {
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Combustible/Km',
-                        initialValue: state.fuelPerKilometer == null ? null : state.fuelPerKilometer.toString(),
+                        initialValue: state.fuelPerKilometer == null
+                            ? null
+                            : state.fuelPerKilometer.toString(),
                         icon: KurztripIcons.growth,
                         textInputType: TextInputType.number,
-                        onChanged: (value) => bloc!.add(UpdateFuelPerKilometer(double.parse(value))),
+                        onChanged: (value) => bloc!
+                            .add(UpdateFuelPerKilometer(double.parse(value))),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'Centro de acopio',
-                        initialValue: state.warehouse == null ? null : state.warehouse.toString(),
+                        initialValue: state.warehouse == null
+                            ? null
+                            : state.warehouse.toString(),
                         icon: KurztripIcons.warehouse,
                         textInputType: TextInputType.number,
-                        onChanged: (value) => bloc!.add(UpdateWarehouse(int.parse(value))),
+                        onChanged: (value) =>
+                            bloc!.add(UpdateWarehouse(int.parse(value))),
                       ),
                       state.state == null
                           ? Container()
@@ -152,7 +178,8 @@ class _TruckFormState extends State<TruckForm> {
                               hint: 'Estado',
                               value: truckState,
                               icon: KurztripIcons.fuel,
-                              onChanged: (value) => bloc!.add(UpdateState(value!)),
+                              onChanged: (value) =>
+                                  bloc!.add(UpdateState(value!)),
                             ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),

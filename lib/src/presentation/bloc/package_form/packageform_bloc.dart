@@ -27,13 +27,13 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
       this.add(ToPackageError("Error al obtener el paquete"));
     }, (package) {
       this.add(PackageFormAutofill(
-          package.id,
-          package.address,
-          package.receiver,
-          package.idReceiver,
-          package.weight,
-          package.volume,
-          package.storeId));
+          package.id!,
+          package.address!,
+          package.receiver!,
+          package.idReceiver!,
+          package.weight!,
+          package.volume!,
+          package.storeId!));
     });
   }
 
@@ -75,7 +75,7 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
     } else if (event is Submit) {
       PackageformShowing current = state as PackageformShowing;
       GoogleMapsGeocoding geo = GoogleMapsGeocoding(apiKey: mapsApiKey);
-      GeocodingResponse response = await geo.searchByAddress(current.address!);
+      GeocodingResponse response = await geo.searchByAddress(current.address);
       print(response.results[0].geometry.location.lat);
       print(response.results[0].geometry.location.lng);
       Package package = Package(

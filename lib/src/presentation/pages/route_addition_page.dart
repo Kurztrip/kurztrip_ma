@@ -50,10 +50,11 @@ class RouteAdditionPage extends StatelessWidget {
                                           leading: Radio<int>(
                                             value: index,
                                             groupValue: state.index,
-                                            onChanged: (int? newIndex) => context
-                                                .read<RouteAdditionBloc>()
-                                                .add(RadioButtonSelected(
-                                                    index: newIndex)),
+                                            onChanged: (int? newIndex) =>
+                                                context
+                                                    .read<RouteAdditionBloc>()
+                                                    .add(RadioButtonSelected(
+                                                        index: newIndex)),
                                           ),
                                         ),
                                       ))
@@ -70,7 +71,7 @@ class RouteAdditionPage extends StatelessWidget {
                               onPressed: () => context
                                   .read<RouteAdditionBloc>()
                                   .add(CreateButtonPressed(
-                                      id: state.dbList![state.index!].id)),
+                                      id: state.dbList![state.index!].id!)),
                               text: 'Crear Ruta'),
                         ),
                       ],
@@ -92,6 +93,9 @@ class RouteAdditionPage extends StatelessWidget {
                       ),
                     );
                   } else if (state is Success) {
+                    Future.delayed(Duration(seconds: 2), () async {
+                      Navigator.of(context).pop();
+                    });
                     return Center(
                         child: Text('Ruta ha sido creada exitosamente'));
                   } else {

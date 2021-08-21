@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
+import 'package:kurztrip_ma/src/domain/entities/Tracking/use_cases/create_route_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/distribution_center/use_cases/get_distribution_centers_use_case.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/route_addition_bloc/route_addition_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/route_addition_bloc/route_addition_state.dart';
@@ -8,6 +9,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/route_addition_bloc/route_addi
 class RouteAdditionBloc extends Bloc<RouteAdditionEvent, RouteAdditionState> {
   RouteAdditionBloc() : super(FetchingList());
   GetDistributionCentersUseCase getDistributionCentersUseCase = getIt();
+  CreateRouteUseCase createRouteUseCase = getIt();
   @override
   Stream<RouteAdditionState> mapEventToState(RouteAdditionEvent event) async* {
     if (event is StartFetching) {
@@ -56,12 +58,12 @@ class RouteAdditionBloc extends Bloc<RouteAdditionEvent, RouteAdditionState> {
       yield ShowingDBCenterList(
           index: event.index, dbList: (state as ShowingDBCenterList).dbList);
     } else if (event is CreateButtonPressed) {
-      yield CreatingRoute();
-      //llamar metodo de repositorio para crear ruta
-      await Future.delayed(Duration(seconds: 2));
-      this.add(ErrorOccurred(message: "Error de conexión"));
-    } else if (event is RouteCreatedSuccessfully) {
-      yield Success();
+      yield Loading();
+      yield* (await createRouteUseCase(event.id)).fold((e) async* {
+        yield ShowingErrorMessage(message: e.toString());
+      }, (res) async* {
+        yield Success();
+      });
     } else if (event is ErrorOccurred) {
       yield ShowingErrorMessage(message: event.message);
     }

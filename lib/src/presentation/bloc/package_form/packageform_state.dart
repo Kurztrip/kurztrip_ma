@@ -14,7 +14,7 @@ class PackageformSuccess extends PackageformState {}
 class PackageformShowing extends PackageformState {
   final int? id;
   final String? error;
-  final String? address;
+  final String address;
   final String? receiver;
   final String? receiverID;
   final double? weight;
@@ -25,7 +25,7 @@ class PackageformShowing extends PackageformState {
   PackageformShowing({
     this.id,
     this.error,
-    this.address,
+    this.address = '',
     this.receiver,
     this.receiverID,
     this.weight,

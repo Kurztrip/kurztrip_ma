@@ -3,10 +3,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:kurztrip_ma/src/domain/entities/Tracking/Route.dart';
 
 class RouteView extends StatefulWidget {
-  final Function? onDelete;
+  final Function onDelete;
   final TrackingRoute? route;
 
-  const RouteView({Key? key, this.onDelete, this.route}) : super(key: key);
+  const RouteView({Key? key, required this.onDelete, this.route})
+      : super(key: key);
   @override
   _RouteViewState createState() => _RouteViewState();
 }
@@ -19,8 +20,8 @@ class _RouteViewState extends State<RouteView> {
       for (int i = 0; i < widget.route!.p_latitudes!.length; i++) {
         final Marker marker = Marker(
           markerId: MarkerId(i.toString()),
-          position:
-              LatLng(widget.route!.p_latitudes![i], widget.route!.p_longitudes![i]),
+          position: LatLng(
+              widget.route!.p_latitudes![i], widget.route!.p_longitudes![i]),
         );
         _markers[i.toString()] = marker;
       }
@@ -32,7 +33,7 @@ class _RouteViewState extends State<RouteView> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(onPressed: widget.onDelete, icon: Icon(Icons.delete))
+          IconButton(onPressed: widget.onDelete(), icon: Icon(Icons.delete))
         ],
       ),
       body: Container(

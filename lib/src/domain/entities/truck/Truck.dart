@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 //Type Truck de GraphQL
 class Truck {
   const Truck({

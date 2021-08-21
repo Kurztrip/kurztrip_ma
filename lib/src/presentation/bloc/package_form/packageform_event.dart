@@ -54,13 +54,13 @@ class ToPackageError extends PackageformEvent {
 }
 
 class PackageFormAutofill extends PackageformEvent {
-  final int? id;
-  final String? address;
-  final String? receiver;
-  final String? receiverID;
-  final double? weight;
-  final double? volume;
-  final int? warehouse;
+  final int id;
+  final String address;
+  final String receiver;
+  final String receiverID;
+  final double weight;
+  final double volume;
+  final int warehouse;
 
   PackageFormAutofill(this.id, this.address, this.receiver, this.receiverID,
       this.weight, this.volume, this.warehouse);

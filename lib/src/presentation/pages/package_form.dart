@@ -57,7 +57,7 @@ class _PackageFormState extends State<PackageForm> {
               key: ValueKey(0),
             );
           } else if (state is PackageformShowing) {
-            mapsController.text = state.address!;
+            mapsController.text = state.address;
             return SingleChildScrollView(
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -116,7 +116,8 @@ class _PackageFormState extends State<PackageForm> {
                         hintText: 'D.I del destinatario',
                         initialValue: state.receiverID,
                         icon: KurztripIcons.di,
-                        onChanged: (value) => bloc!.add(UpdateReceiverId(value)),
+                        onChanged: (value) =>
+                            bloc!.add(UpdateReceiverId(value)),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,

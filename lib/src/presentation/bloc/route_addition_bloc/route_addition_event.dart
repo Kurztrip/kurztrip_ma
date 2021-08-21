@@ -25,7 +25,8 @@ class DBCenterListObtained extends RouteAdditionEvent {
 }
 
 class CreateButtonPressed extends RouteAdditionEvent {
-  CreateButtonPressed({int? id}) : super([id]);
+  final int id;
+  CreateButtonPressed({required this.id}) : super([id]);
 }
 
 class RouteCreatedSuccessfully extends RouteAdditionEvent {}

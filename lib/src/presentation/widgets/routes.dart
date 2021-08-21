@@ -63,7 +63,7 @@ class _RoutesListState extends State<RoutesList> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Ha ocurrido un error al obtener los paquetes"),
+                  Text("Ha ocurrido un error al obtener las rutas"),
                   IconButton(
                     icon: Icon(Icons.replay_outlined),
                     onPressed: () =>
