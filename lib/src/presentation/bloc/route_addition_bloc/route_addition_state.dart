@@ -12,6 +12,8 @@ abstract class RouteAdditionState extends Equatable {
   List<Object?> get props => properties;
 }
 
+class Loading extends RouteAdditionState {}
+
 class FetchingList extends RouteAdditionState {}
 
 class CreatingRoute extends RouteAdditionState {}

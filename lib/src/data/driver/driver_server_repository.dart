@@ -56,11 +56,11 @@ class DriverServerRepository implements LocationsRepository {
       throw result.exception!;
     }
     List<Locations>? locations = result.data!['getAllLocations']
-        .map<Locations>((LocationsResult) => Locations(
-            id: int.parse(LocationsResult['id'].toString()),
+        .map<Locations>((locationsResult) => Locations(
+            id: int.parse(locationsResult['id'].toString()),
             //truckId: int.parse(LocationsResult['truck_id'].toString()),
-            latitude: double.parse(LocationsResult['latitude'].toString()),
-            longitude: double.parse(LocationsResult['longitude'].toString())))
+            latitude: double.parse(locationsResult['latitude'].toString()),
+            longitude: double.parse(locationsResult['longitude'].toString())))
         .toList();
     return locations;
   }

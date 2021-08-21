@@ -28,15 +28,7 @@ class RouteAdditionPage extends StatelessWidget {
               create: (context) => bloc,
               child: BlocBuilder<RouteAdditionBloc, RouteAdditionState>(
                 builder: (context, state) {
-                  if (state is FetchingList || state is CreatingRoute) {
-                    if (state is FetchingList) {
-                      context.read<RouteAdditionBloc>().add(StartFetching());
-                    }
-                    return const Center(
-                      child: const CircularProgressIndicator(),
-                      key: ValueKey(0),
-                    );
-                  } else if (state is ShowingDBCenterList) {
+                  if (state is ShowingDBCenterList) {
                     return Column(
                       children: [
                         Text(
@@ -103,7 +95,12 @@ class RouteAdditionPage extends StatelessWidget {
                     return Center(
                         child: Text('Ruta ha sido creada exitosamente'));
                   } else {
-                    return SizedBox();
+                    if (state is FetchingList)
+                      context.read<RouteAdditionBloc>().add(StartFetching());
+                    return const Center(
+                      child: const CircularProgressIndicator(),
+                      key: ValueKey(0),
+                    );
                   }
                 },
               ),
