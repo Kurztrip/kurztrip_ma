@@ -7,9 +7,9 @@ class RoundedButton extends StatelessWidget {
   final double verticalPadding;
   final double horizontalPadding;
   const RoundedButton({
-    Key key,
-    @required this.onPressed,
-    @required this.text,
+    Key? key,
+    required this.onPressed,
+    required this.text,
     this.verticalPadding = 5.0,
     this.horizontalPadding = 60.0,
   }) : super(key: key);
@@ -17,20 +17,19 @@ class RoundedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: onPressed as void Function()?,
       child: Text(
         text,
         style: Theme.of(context).textTheme.subtitle1,
         textAlign: TextAlign.center,
       ),
       style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
-        backgroundColor: MaterialStateProperty.all<Color>(
-            Theme.of(context).colorScheme.primaryVariant),
+        shape:
+            MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
+        backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primaryVariant),
         elevation: MaterialStateProperty.all<double>(5.0),
-        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(
-            horizontal: horizontalPadding, vertical: verticalPadding)),
+        padding:
+            MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding)),
       ),
     );
   }

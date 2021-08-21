@@ -4,7 +4,7 @@ abstract class SignupState extends Equatable {
   const SignupState([this.properties = const <dynamic>[]]) : super();
   final List properties;
   @override
-  List<Object> get props => properties;
+  List<Object?> get props => properties;
 }
 
 class SignUpLoading extends SignupState{}
@@ -12,14 +12,14 @@ class SignUpLoading extends SignupState{}
 class SignUpSuccess extends SignupState{}
 
 class SignupShowing extends SignupState {
-  final String error;
-  final String name;
-  final String lastname;
-  final String username;
-  final String password;
-  final String cellphone;
-  final String email;
-  final String rol;
+  final String? error;
+  final String? name;
+  final String? lastname;
+  final String? username;
+  final String? password;
+  final String? cellphone;
+  final String? email;
+  final String? rol;
 
   SignupShowing({
     this.error,
@@ -32,14 +32,14 @@ class SignupShowing extends SignupState {
     this.rol,
   }) : super([name,lastname,cellphone,username,password,email,rol]);
   SignupShowing copyWith(
-      {String name,
-        String error,
-      String lastname,
-      String username,
-      String password,
-      String cellphone,
-      String email,
-      String rol}) {
+      {String? name,
+        String? error,
+      String? lastname,
+      String? username,
+      String? password,
+      String? cellphone,
+      String? email,
+      String? rol}) {
     return SignupShowing(
         name: name == null ? this.name : name,
         lastname: lastname == null ? this.lastname : lastname,

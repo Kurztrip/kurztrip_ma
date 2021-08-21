@@ -5,13 +5,13 @@ import 'package:kurztrip_ma/src/domain/entities/Tracking/Route.dart';
 import 'package:kurztrip_ma/src/domain/repositories/tracking_repository.dart';
 
 class GetRoutesUseCase {
-  final TrackingRepository repository = getIt();
+  final TrackingRepository? repository = getIt();
 
   Future<Either<Failure, List<TrackingRoute>>> call() async {
     try {
-      return Right(await repository.getAll());
+      return Right(await repository!.getAll());
     } catch (e) {
-      return Left(ServerFailure(e));
+      return Left(ServerFailure(e.toString()));
     }
   }
 }

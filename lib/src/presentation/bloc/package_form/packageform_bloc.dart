@@ -21,8 +21,8 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
       init(edit);
     }
   }
-  Future<void> init(int id) async {
-    Either<Failure, Package> result = await getPackageUseCase(id);
+  Future<void> init(int? id) async {
+    Either<Failure, Package> result = await getPackageUseCase!(id!);
     result.fold((failure) {
       this.add(ToPackageError("Error al obtener el paquete"));
     }, (package) {
@@ -37,11 +37,11 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
     });
   }
 
-  final int edit;
+  final int? edit;
 
-  final GetPackageUseCase getPackageUseCase = getIt();
-  final CreatePackageUseCase createPackageUseCase = getIt();
-  final UpdatePackageUseCase updatePackageUseCase = getIt();
+  final GetPackageUseCase? getPackageUseCase = getIt();
+  final CreatePackageUseCase? createPackageUseCase = getIt();
+  final UpdatePackageUseCase? updatePackageUseCase = getIt();
   @override
   Stream<PackageformState> mapEventToState(
     PackageformEvent event,
@@ -75,7 +75,7 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
     } else if (event is Submit) {
       PackageformShowing current = state as PackageformShowing;
       GoogleMapsGeocoding geo = GoogleMapsGeocoding(apiKey: mapsApiKey);
-      GeocodingResponse response = await geo.searchByAddress(current.address);
+      GeocodingResponse response = await geo.searchByAddress(current.address!);
       print(response.results[0].geometry.location.lat);
       print(response.results[0].geometry.location.lng);
       Package package = Package(
@@ -90,11 +90,11 @@ class PackageformBloc extends Bloc<PackageformEvent, PackageformState> {
         latitude: response.results[0].geometry.location.lat,
       );
       yield PackageformLoading();
-      Either<Failure, Package> result;
+      Either<Failure, Package>? result;
       if (package.id == null) {
-        result = await createPackageUseCase(Params(package));
+        result = await createPackageUseCase!(Params(package));
       } else {
-        result = await updatePackageUseCase(UpdateParams(package));
+        result = await updatePackageUseCase!(UpdateParams(package));
       }
       yield* result.fold((failure) async* {
         yield current.copyWith(

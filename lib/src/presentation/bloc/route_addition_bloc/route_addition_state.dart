@@ -9,21 +9,23 @@ abstract class RouteAdditionState extends Equatable {
   final List properties;
 
   @override
-  List<Object> get props => properties;
+  List<Object?> get props => properties;
 }
+
+class Loading extends RouteAdditionState {}
 
 class FetchingList extends RouteAdditionState {}
 
 class CreatingRoute extends RouteAdditionState {}
 
 class ShowingDBCenterList extends RouteAdditionState {
-  final int index;
-  final List<DistributionCenter> dbList;
+  final int? index;
+  final List<DistributionCenter>? dbList;
   ShowingDBCenterList({this.index, this.dbList}) : super([index, dbList]);
 }
 
 class ShowingErrorMessage extends RouteAdditionState {
-  final String message;
+  final String? message;
   ShowingErrorMessage({this.message = 'error'}) : super([message]);
 }
 

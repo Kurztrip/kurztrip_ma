@@ -11,6 +11,7 @@ import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/use_cases/create_user_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/use_cases/login_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/distribution_center/use_cases/create_distribution_center_use_case.dart';
+import 'package:kurztrip_ma/src/domain/entities/distribution_center/use_cases/get_distribution_centers_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/create_package_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/delete_package_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/use_cases/get_package_use_case.dart';
@@ -81,7 +82,7 @@ void registerUserService() {
     () => RoutesListBloc(),
   );
   getIt.registerFactoryParam<EditAccountBloc, User, void>(
-      (param1, param2) => EditAccountBloc(param1));
+      (param1, param2) => EditAccountBloc(param1!));
   //Repositories
   getIt.registerLazySingleton<TruckRepository>(() => TruckServerRepository());
   getIt.registerLazySingleton<PackageRepository>(
@@ -109,6 +110,7 @@ void registerUserService() {
   getIt.registerSingleton(GetRoutesUseCase());
   getIt.registerSingleton(DeleteRouteUseCase());
   getIt.registerSingleton(CreateDistributionCenterUseCase());
+  getIt.registerSingleton(GetDistributionCentersUseCase());
   getIt.registerLazySingleton<LocationsRepository>(
       () => DriverServerRepository());
 }

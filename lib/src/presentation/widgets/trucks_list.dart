@@ -11,7 +11,7 @@ import 'package:kurztrip_ma/src/presentation/widgets/item_list.dart';
 class TrucksList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TruckListBloc bloc = getIt();
+    TruckListBloc? bloc = getIt();
     return BlocProvider<TruckListBloc>(
       create: (context) => bloc,
       child: BlocBuilder<TruckListBloc, TruckListState>(
@@ -22,7 +22,7 @@ class TrucksList extends StatelessWidget {
               Future.delayed(
                   Duration(seconds: 1),
                   () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(state.error),
+                        content: Text(state.error!),
                         backgroundColor: Colors.red,
                         behavior: SnackBarBehavior.floating,
                       )));
@@ -30,10 +30,8 @@ class TrucksList extends StatelessWidget {
             child = ItemList(
               list: generateTrucks(state.trucks),
               key: ValueKey(1),
-              getList: () async =>
-                  context.read<TruckListBloc>().add(TruckListRefresh()),
-              onDelete: (id) =>
-                  context.read<TruckListBloc>().add(DeleteTruck(id)),
+              getList: () async => context.read<TruckListBloc>().add(TruckListRefresh()),
+              onDelete: (id) => context.read<TruckListBloc>().add(DeleteTruck(id!)),
               onEdit: (id) async {
                 await Navigator.push(
                     context,
@@ -53,8 +51,7 @@ class TrucksList extends StatelessWidget {
                   Text("Ha ocurrido un error al obtener los paquetes"),
                   IconButton(
                     icon: Icon(Icons.replay_outlined),
-                    onPressed: () =>
-                        context.read<TruckListBloc>().add(TruckListRefresh()),
+                    onPressed: () => context.read<TruckListBloc>().add(TruckListRefresh()),
                   ),
                 ],
               ),
@@ -75,8 +72,7 @@ class TrucksList extends StatelessWidget {
 
   List<ExpandableItem> generateTrucks(List<Truck> list) {
     return list.map<ExpandableItem>((truck) {
-      String fuelType =
-          truck.fuel_type == "Gasoline" ? "Gasolina" : truck.fuel_type;
+      String? fuelType = truck.fuel_type == "Gasoline" ? "Gasolina" : truck.fuel_type;
       String state = "Disponible";
       switch (truck.status) {
         case 'InRoute':

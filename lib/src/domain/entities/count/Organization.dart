@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 class Organization{
   const Organization({
-    @required this.id,
-    @required this.name,
-    @required this.createAt,
-    @required this.users
+    required this.id,
+    required this.name,
+    required this.createAt,
+    required this.users
 
   });
   final int id;

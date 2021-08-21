@@ -12,8 +12,8 @@ part 'truck_list_event.dart';
 part 'truck_list_state.dart';
 
 class TruckListBloc extends Bloc<TruckListEvent, TruckListState> {
-  final GetTrucksUseCase getTrucksUseCase = getIt();
-  final DeleteTruckUseCase deleteTruckUseCase = getIt();
+  final GetTrucksUseCase? getTrucksUseCase = getIt();
+  final DeleteTruckUseCase? deleteTruckUseCase = getIt();
   TruckListBloc() : super(TrucklistLoading());
 
   @override
@@ -21,7 +21,7 @@ class TruckListBloc extends Bloc<TruckListEvent, TruckListState> {
     TruckListEvent event,
   ) async* {
     if (event is DeleteTruck) {
-      Either<Failure, bool> result = await deleteTruckUseCase(event.id);
+      Either<Failure, bool> result = await deleteTruckUseCase!(event.id);
       yield* result.fold((failure) async* {
         yield TrucklistShowing((state as TrucklistShowing).trucks,
             error: "Error al eliminar el paquete");
@@ -31,7 +31,7 @@ class TruckListBloc extends Bloc<TruckListEvent, TruckListState> {
         this.add(TruckListRefresh());
       });
     } else if (event is GetAllTrucks) {
-      yield* (await getTrucksUseCase()).fold((error) async* {
+      yield* (await getTrucksUseCase!()).fold((error) async* {
         yield TrucklistError(error.error);
       }, (trucks) async* {
         yield TrucklistShowing(trucks);

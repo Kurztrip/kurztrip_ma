@@ -6,7 +6,7 @@ import 'package:kurztrip_ma/src/domain/repositories/distribution_center_reposito
 
 class DistributionCenterServerRepository
     implements DistributionCenterRepository {
-  DistributionCenter distribution_center = DistributionCenter.createEmpty();
+  DistributionCenter distributionCenter = DistributionCenter.createEmpty();
 
   final String getDistributionCenterMA = r'''
     query getDistributionCenterMA($id: Int!){
@@ -62,10 +62,10 @@ class DistributionCenterServerRepository
     );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     final distributionCenterResult =
-        result.data['getDistributionCenter']; //FUNCION DE GRAPHQL
+        result.data!['getDistributionCenter']; //FUNCION DE GRAPHQL
 
     //debugPrint(distribution_center_result['address']);
 
@@ -99,26 +99,26 @@ class DistributionCenterServerRepository
         );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
 
-    List<DistributionCenter> centers = result.data['getDistributionCenters']
-        .map<DistributionCenter>((DistributionCentersResult) =>
+    List<DistributionCenter> centers = result.data!['getDistributionCenters']
+        .map<DistributionCenter>((distributionCentersResult) =>
             DistributionCenter(
-              id: int.parse(DistributionCentersResult['id'].toString()),
-              address: DistributionCentersResult['address'].toString(),
+              id: int.parse(distributionCentersResult['id'].toString()),
+              address: distributionCentersResult['address'].toString(),
               latitude_location: double.parse(
-                  DistributionCentersResult['latitude_location'].toString()),
+                  distributionCentersResult['latitude_location'].toString()),
               longitude_location: double.parse(
-                  DistributionCentersResult['longitude'].toString()),
+                  distributionCentersResult['longitude_location'].toString()),
               total_space: double.parse(
-                  DistributionCentersResult['total_space'].toString()),
+                  distributionCentersResult['total_space'].toString()),
               available_space: double.parse(
-                  DistributionCentersResult['available_space'].toString()),
+                  distributionCentersResult['available_space'].toString()),
             ))
         .toList();
 
-    debugPrint(centers.length.toString());
+    debugPrint(centers.toString());
     return centers;
   }
 
@@ -137,9 +137,9 @@ class DistributionCenterServerRepository
         });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final distributionCenterResult = result.data['createDistributionCenter'];
+    final distributionCenterResult = result.data!['createDistributionCenter'];
     return DistributionCenter(
         id: int.parse(distributionCenterResult['id'].toString()),
         address: distributionCenterResult['address'].toString(),
@@ -159,7 +159,7 @@ class DistributionCenterServerRepository
         variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     return true;
   }

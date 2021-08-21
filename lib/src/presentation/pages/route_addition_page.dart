@@ -9,7 +9,7 @@ import 'package:kurztrip_ma/src/presentation/widgets/RoundedButton.dart';
 class RouteAdditionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    RouteAdditionBloc bloc = getIt();
+    RouteAdditionBloc? bloc = getIt();
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -28,15 +28,7 @@ class RouteAdditionPage extends StatelessWidget {
               create: (context) => bloc,
               child: BlocBuilder<RouteAdditionBloc, RouteAdditionState>(
                 builder: (context, state) {
-                  if (state is FetchingList || state is CreatingRoute) {
-                    if (state is FetchingList) {
-                      context.read<RouteAdditionBloc>().add(StartFetching());
-                    }
-                    return const Center(
-                      child: const CircularProgressIndicator(),
-                      key: ValueKey(0),
-                    );
-                  } else if (state is ShowingDBCenterList) {
+                  if (state is ShowingDBCenterList) {
                     return Column(
                       children: [
                         Text(
@@ -49,16 +41,16 @@ class RouteAdditionPage extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.4,
                           child: SingleChildScrollView(
                             child: Column(
-                              children: state.dbList
+                              children: state.dbList!
                                   .asMap()
                                   .map((index, value) => MapEntry(
                                         index,
                                         ListTile(
-                                          title: Text(value.address),
+                                          title: Text(value.address!),
                                           leading: Radio<int>(
                                             value: index,
                                             groupValue: state.index,
-                                            onChanged: (int newIndex) => context
+                                            onChanged: (int? newIndex) => context
                                                 .read<RouteAdditionBloc>()
                                                 .add(RadioButtonSelected(
                                                     index: newIndex)),
@@ -78,7 +70,7 @@ class RouteAdditionPage extends StatelessWidget {
                               onPressed: () => context
                                   .read<RouteAdditionBloc>()
                                   .add(CreateButtonPressed(
-                                      id: state.dbList[state.index].id)),
+                                      id: state.dbList![state.index!].id)),
                               text: 'Crear Ruta'),
                         ),
                       ],
@@ -103,7 +95,12 @@ class RouteAdditionPage extends StatelessWidget {
                     return Center(
                         child: Text('Ruta ha sido creada exitosamente'));
                   } else {
-                    return SizedBox();
+                    if (state is FetchingList)
+                      context.read<RouteAdditionBloc>().add(StartFetching());
+                    return const Center(
+                      child: const CircularProgressIndicator(),
+                      key: ValueKey(0),
+                    );
                   }
                 },
               ),

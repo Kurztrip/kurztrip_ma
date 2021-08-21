@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 class TimeWindow {
   const TimeWindow(
-      {@required this.id,
-      @required this.beginning,
-      @required this.ending,
-      @required this.time_schedule_id});
+      {required this.id,
+      required this.beginning,
+      required this.ending,
+      required this.time_schedule_id});
   final int id;
   final String beginning;
   final String ending;

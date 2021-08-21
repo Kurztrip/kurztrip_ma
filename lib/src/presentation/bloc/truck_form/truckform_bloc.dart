@@ -20,8 +20,8 @@ class TruckformBloc extends Bloc<TruckformEvent, TruckformState> {
       init(edit);
     }
   }
-  Future<void> init(int id) async {
-    Either<Failure, Truck> result = await getTruckUseCase(id);
+  Future<void> init(int? id) async {
+    Either<Failure, Truck> result = await getTruckUseCase!(id!);
     result.fold((failure) {
       this.add(ToTruckError("Error al obtener el camion"));
     }, (truck) {
@@ -40,11 +40,11 @@ class TruckformBloc extends Bloc<TruckformEvent, TruckformState> {
     });
   }
 
-  final int edit;
+  final int? edit;
 
-  final GetTruckUseCase getTruckUseCase = getIt();
-  final CreateTruckUseCase createTruckUseCase = getIt();
-  final UpdateTruckUseCase updateTruckUseCase = getIt();
+  final GetTruckUseCase? getTruckUseCase = getIt();
+  final CreateTruckUseCase? createTruckUseCase = getIt();
+  final UpdateTruckUseCase? updateTruckUseCase = getIt();
 
   @override
   Stream<TruckformState> mapEventToState(
@@ -115,7 +115,7 @@ class TruckformBloc extends Bloc<TruckformEvent, TruckformState> {
       yield TruckformLoading();
 
       if (truck.id == null) {
-        Either<Failure, Truck> result = await createTruckUseCase(Params(truck));
+        Either<Failure, Truck> result = await createTruckUseCase!(Params(truck));
         yield* result.fold((failure) async* {
           yield current.copyWith(
               error: "operación fallida, por favor revisa tu conexión");
@@ -124,7 +124,7 @@ class TruckformBloc extends Bloc<TruckformEvent, TruckformState> {
         });
       } else {
         Either<Failure, int> result =
-            await updateTruckUseCase(UpdateParams(truck));
+            await (updateTruckUseCase!(UpdateParams(truck)) as FutureOr<Either<Failure, int>>);
         yield* result.fold((failure) async* {
           yield current.copyWith(
               error: "operación fallida, por favor revisa tu conexión");

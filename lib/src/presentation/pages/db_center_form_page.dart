@@ -13,24 +13,24 @@ import '../../../services_provider.dart';
 import '../kurztrip_icons_icons.dart';
 
 class DBCenterFormPage extends StatefulWidget {
-  final DistributionCenter edit;
+  final DistributionCenter? edit;
 
-  const DBCenterFormPage({Key key, this.edit}) : super(key: key);
+  const DBCenterFormPage({Key? key, this.edit}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DBCenterFormState();
 }
 
 class _DBCenterFormState extends State<DBCenterFormPage> {
-  final DBCenterFormBloc bloc = getIt();
+  final DBCenterFormBloc? bloc = getIt();
   final _globalKey = GlobalKey<FormState>();
   final TextEditingController mapsController = TextEditingController();
-  Prediction prediction;
+  Prediction? prediction;
 
   @override
   void initState() {
     if (widget.edit != null) {
-      bloc.add(DBCenterFormAutofill(
+      bloc!.add(DBCenterFormAutofill(
         widget.edit,
       ));
     }
@@ -42,7 +42,7 @@ class _DBCenterFormState extends State<DBCenterFormPage> {
     return Scaffold(
       appBar: AppBar(),
       body: BlocProvider<DBCenterFormBloc>(
-        create: (context) => bloc,
+        create: (context) => bloc!,
         child: BlocBuilder<DBCenterFormBloc, DBCenterFormState>(
           builder: (contex, state) {
             if (state is DBCenterFormLoading) {
@@ -81,10 +81,10 @@ class _DBCenterFormState extends State<DBCenterFormPage> {
                         state.error == null
                             ? Container()
                             : Text(
-                                state.error,
+                                state.error!,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyText1!
                                     .apply(color: Colors.red),
                               ),
                         RoundedInputField(
@@ -92,7 +92,7 @@ class _DBCenterFormState extends State<DBCenterFormPage> {
                           hintText: 'Dirección',
                           icon: KurztripIcons.map,
                           initialValue:
-                              widget.edit != null ? widget.edit.address : null,
+                              widget.edit != null ? widget.edit!.address : null,
                           controller: mapsController,
                           onTap: (fieldContext) async {
                             prediction = await PlacesAutocomplete.show(
@@ -108,8 +108,8 @@ class _DBCenterFormState extends State<DBCenterFormPage> {
                               hint: "Dirección",
                             );
                             if (prediction != null) {
-                              mapsController.text = prediction.description;
-                              bloc.add(UpdateAddress(prediction.description));
+                              mapsController.text = prediction!.description!;
+                              bloc!.add(UpdateAddress(prediction!.description));
                             }
                           },
                         ),
@@ -118,21 +118,21 @@ class _DBCenterFormState extends State<DBCenterFormPage> {
                           hintText: 'Capacidad Almacenamiento',
                           textInputType: TextInputType.number,
                           initialValue: widget.edit != null
-                              ? widget.edit.total_space.toString()
+                              ? widget.edit!.total_space.toString()
                               : null,
                           icon: Icons.disc_full,
                           onChanged: (value) =>
-                              bloc.add(UpdateTotalStorage(double.parse(value))),
+                              bloc!.add(UpdateTotalStorage(double.parse(value))),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: 'Almacenamiento disponible',
                           textInputType: TextInputType.number,
                           initialValue: widget.edit != null
-                              ? widget.edit.total_space.toString()
+                              ? widget.edit!.total_space.toString()
                               : null,
                           icon: Icons.disc_full_outlined,
-                          onChanged: (value) => bloc
+                          onChanged: (value) => bloc!
                               .add(UpdateAvailableStorage(double.parse(value))),
                         ),
                         Padding(
@@ -140,8 +140,8 @@ class _DBCenterFormState extends State<DBCenterFormPage> {
                               MediaQuery.of(context).size.width * 0.1),
                           child: RoundedButton(
                             onPressed: () async {
-                              if (_globalKey.currentState.validate()) {
-                                bloc.add(Submit());
+                              if (_globalKey.currentState!.validate()) {
+                                bloc!.add(Submit());
                               }
                             },
                             text: 'GUARDAR',

@@ -9,21 +9,21 @@ import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
 import 'package:google_maps_webservice/places.dart';
 
 class PackageForm extends StatefulWidget {
-  final int edit;
+  final int? edit;
 
-  const PackageForm({Key key, this.edit}) : super(key: key);
+  const PackageForm({Key? key, this.edit}) : super(key: key);
   @override
   _PackageFormState createState() => _PackageFormState(edit);
 }
 
 class _PackageFormState extends State<PackageForm> {
-  _PackageFormState(int edit) {
+  _PackageFormState(int? edit) {
     bloc = getIt<PackageformBloc>(param1: edit);
   }
-  PackageformBloc bloc;
+  PackageformBloc? bloc;
   final _globalKey = GlobalKey<FormState>();
   final TextEditingController mapsController = TextEditingController();
-  Prediction prediction;
+  Prediction? prediction;
   @override
   void initState() {
     super.initState();
@@ -34,7 +34,7 @@ class _PackageFormState extends State<PackageForm> {
     return Scaffold(
       appBar: AppBar(),
       body: BlocProvider<PackageformBloc>(
-        create: (context) => bloc,
+        create: (context) => bloc!,
         child: BlocBuilder<PackageformBloc, PackageformState>(
             builder: (context, state) {
           if (state is PackageformLoading) {
@@ -57,7 +57,7 @@ class _PackageFormState extends State<PackageForm> {
               key: ValueKey(0),
             );
           } else if (state is PackageformShowing) {
-            mapsController.text = state.address;
+            mapsController.text = state.address!;
             return SingleChildScrollView(
               child: Container(
                 width: MediaQuery.of(context).size.width,
@@ -74,10 +74,10 @@ class _PackageFormState extends State<PackageForm> {
                       state.error == null
                           ? Container()
                           : Text(
-                              state.error,
+                              state.error!,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1
+                                  .bodyText1!
                                   .apply(color: Colors.red),
                             ),
                       RoundedInputField(
@@ -99,8 +99,8 @@ class _PackageFormState extends State<PackageForm> {
                             hint: "Destino",
                           );
                           if (prediction != null) {
-                            mapsController.text = prediction.description;
-                            bloc.add(UpdateAddress(prediction.description));
+                            mapsController.text = prediction!.description!;
+                            bloc!.add(UpdateAddress(prediction!.description));
                           }
                         },
                       ),
@@ -109,14 +109,14 @@ class _PackageFormState extends State<PackageForm> {
                         hintText: 'Destinatario',
                         initialValue: state.receiver,
                         icon: KurztripIcons.id_card,
-                        onChanged: (value) => bloc.add(UpdateReceiver(value)),
+                        onChanged: (value) => bloc!.add(UpdateReceiver(value)),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
                         hintText: 'D.I del destinatario',
                         initialValue: state.receiverID,
                         icon: KurztripIcons.di,
-                        onChanged: (value) => bloc.add(UpdateReceiverId(value)),
+                        onChanged: (value) => bloc!.add(UpdateReceiverId(value)),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -127,7 +127,7 @@ class _PackageFormState extends State<PackageForm> {
                             : state.weight.toString(),
                         textInputType: TextInputType.number,
                         onChanged: (value) =>
-                            bloc.add(UpdateWeight(double.parse(value))),
+                            bloc!.add(UpdateWeight(double.parse(value))),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -138,7 +138,7 @@ class _PackageFormState extends State<PackageForm> {
                             ? null
                             : state.volume.toString(),
                         onChanged: (value) =>
-                            bloc.add(UpdateVolume(double.parse(value))),
+                            bloc!.add(UpdateVolume(double.parse(value))),
                       ),
                       RoundedInputField(
                         iconColor: Theme.of(context).accentColor,
@@ -149,14 +149,14 @@ class _PackageFormState extends State<PackageForm> {
                             ? null
                             : state.warehouse.toString(),
                         onChanged: (value) =>
-                            bloc.add(UpdateWarehouse(int.parse(value))),
+                            bloc!.add(UpdateWarehouse(int.parse(value))),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: RoundedButton(
                           onPressed: () async {
-                            if (_globalKey.currentState.validate()) {
-                              bloc.add(Submit());
+                            if (_globalKey.currentState!.validate()) {
+                              bloc!.add(Submit());
                             }
                           },
                           text: 'GUARDAR',

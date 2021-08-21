@@ -15,7 +15,7 @@ class _HomepageState extends State<Homepage> {
   double _width = 0;
   double _opacity = 0;
   final _globalKey = GlobalKey<FormState>();
-  final HomepageBloc homepageBloc = getIt();
+  final HomepageBloc? homepageBloc = getIt();
   @override
   void initState() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -31,9 +31,8 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return BlocProvider<HomepageBloc>(
-        create: (context) => homepageBloc,
-        child:
-            BlocBuilder<HomepageBloc, HomepageState>(builder: (context, state) {
+        create: (context) => homepageBloc!,
+        child: BlocBuilder<HomepageBloc, HomepageState>(builder: (context, state) {
           if (state is LoginDone) {
             Future.delayed(Duration(seconds: 1), () {
               Navigator.pushReplacement(context, _createRoute(MainPage()));
@@ -58,9 +57,7 @@ class _HomepageState extends State<Homepage> {
                       flex: 3,
                     ),
                     Image(
-                      height: MediaQuery.of(context).viewInsets.bottom > 0
-                          ? size.height * 0.15
-                          : size.height * 0.25,
+                      height: MediaQuery.of(context).viewInsets.bottom > 0 ? size.height * 0.15 : size.height * 0.25,
                       image: AssetImage('assets/label_logo.png'),
                       fit: BoxFit.fitHeight,
                     ),
@@ -90,16 +87,13 @@ class _HomepageState extends State<Homepage> {
                                 : Container(),
                             RoundedInputField(
                                 hintText: 'Email',
-                                iconColor:
-                                    Theme.of(context).colorScheme.onBackground,
-                                onChanged: (value) => context
-                                    .read<HomepageBloc>()
-                                    .add(UpdateUser(value)),
+                                iconColor: Theme.of(context).colorScheme.onBackground,
+                                onChanged: (value) => context.read<HomepageBloc>().add(UpdateUser(value)),
                                 textInputType: TextInputType.emailAddress,
                                 validator: (value) {
                                   if (!RegExp(
                                           r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                                      .hasMatch(value)) {
+                                      .hasMatch(value!)) {
                                     return 'Email invalido';
                                   } else {
                                     return null;
@@ -107,11 +101,8 @@ class _HomepageState extends State<Homepage> {
                                 }),
                             RoundedPasswordField(
                               hintText: 'Contraseña',
-                              iconColor:
-                                  Theme.of(context).colorScheme.onBackground,
-                              onChanged: (value) => context
-                                  .read<HomepageBloc>()
-                                  .add(UpdatePassword(value)),
+                              iconColor: Theme.of(context).colorScheme.onBackground,
+                              onChanged: (value) => context.read<HomepageBloc>().add(UpdatePassword(value)),
                             ),
                           ]),
                         ),
@@ -121,18 +112,14 @@ class _HomepageState extends State<Homepage> {
                       flex: 2,
                     ),
                     RoundedButton(
-                      onPressed: () =>
-                          state is Home ? _showLogin(context) : _submit(),
+                      onPressed: () => state is Home ? _showLogin(context) : _submit(),
                       text: 'INICIAR\nSESIÓN',
                     ),
                     TextButton(
-                        onPressed: () =>
-                            state is Home ? _showSignUp() : _backHome(context),
+                        onPressed: () => state is Home ? _showSignUp() : _backHome(context),
                         child: Text(
                           state is Home ? 'Regístrate' : 'Atrás',
-                          style: TextStyle(
-                              color: Theme.of(context).accentColor,
-                              fontFamily: 'Kameron'),
+                          style: TextStyle(color: Theme.of(context).accentColor, fontFamily: 'Kameron'),
                         )),
                     Spacer(),
                   ],
@@ -146,7 +133,7 @@ class _HomepageState extends State<Homepage> {
   void _showLogin(BuildContext context) {
     context.read<HomepageBloc>().add(SignInButtonPressed());
     setState(() {
-      _globalKey.currentState.reset();
+      _globalKey.currentState!.reset();
       _width = MediaQuery.of(context).size.width;
       _opacity = 1;
     });
@@ -160,8 +147,7 @@ class _HomepageState extends State<Homepage> {
         var end = Offset.zero;
         var curve = Curves.ease;
 
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),
@@ -176,7 +162,7 @@ class _HomepageState extends State<Homepage> {
   }
 
   void _submit() {
-    if (_globalKey.currentState.validate()) homepageBloc.add(SignIn());
+    if (_globalKey.currentState!.validate()) homepageBloc!.add(SignIn());
   }
 
   void _backHome(BuildContext context) {

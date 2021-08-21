@@ -48,9 +48,9 @@ class AnalyseTruckServerRepository extends AnalyseRepository{
     });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final AT_result = result.data['createAnalyseRoute'];
+    final AT_result = result.data!['createAnalyseRoute'];
     debugPrint(AT_result['state']);
     return true;
   }

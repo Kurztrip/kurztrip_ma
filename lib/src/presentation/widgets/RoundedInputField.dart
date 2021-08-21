@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 class RoundedInputField extends StatelessWidget {
-  final String hintText;
+  final String? hintText;
   final IconData icon;
-  final ValueChanged<String> onChanged;
+  final ValueChanged<String>? onChanged;
   final Color iconColor;
-  final Color textColor;
-  final String Function(String) validator;
+  final Color? textColor;
+  final String? Function(String?) validator;
   final TextInputType textInputType;
-  final String initialValue;
-  final Function(BuildContext) onTap;
-  final TextEditingController controller;
+  final String? initialValue;
+  final Function(BuildContext)? onTap;
+  final TextEditingController? controller;
   const RoundedInputField(
-      {Key key,
+      {Key? key,
       this.hintText,
       this.icon = Icons.person,
       this.onChanged,
-      @required this.iconColor,
+      required this.iconColor,
       this.textInputType = TextInputType.text,
       this.validator = defaultValidator,
       this.textColor,
@@ -24,7 +24,7 @@ class RoundedInputField extends StatelessWidget {
       this.onTap,
       this.controller})
       : super(key: key);
-  static String defaultValidator(value) =>
+  static String? defaultValidator(value) =>
       value == null || value.isEmpty ? 'Este campo es obligatorio' : null;
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class RoundedInputField extends StatelessWidget {
       ),
       child: TextFormField(
           controller: controller,
-          onTap: onTap != null ? () => onTap(context) : null,
+          onTap: onTap != null ? () => onTap!(context) : null,
           keyboardType: textInputType,
           initialValue: initialValue,
           onChanged: onChanged,
@@ -53,12 +53,12 @@ class RoundedInputField extends StatelessWidget {
               color: iconColor,
             ),
             hintText: hintText,
-            hintStyle: Theme.of(context).textTheme.bodyText1.apply(
+            hintStyle: Theme.of(context).textTheme.bodyText1!.apply(
                 color:
                     Theme.of(context).colorScheme.onBackground.withAlpha(180)),
             errorStyle: Theme.of(context)
                 .textTheme
-                .bodyText2
+                .bodyText2!
                 .apply(color: Theme.of(context).colorScheme.error),
             border: InputBorder.none,
           ),

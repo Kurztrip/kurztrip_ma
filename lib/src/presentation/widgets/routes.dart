@@ -10,11 +10,11 @@ class RoutesList extends StatefulWidget {
 }
 
 class _RoutesListState extends State<RoutesList> {
-  RoutesListBloc bloc = getIt();
+  RoutesListBloc? bloc = getIt();
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RoutesListBloc>(
-      create: (context) => bloc,
+      create: (context) => bloc!,
       child: BlocBuilder<RoutesListBloc, RouteslistState>(
         builder: (context, state) {
           Widget child;
@@ -22,7 +22,7 @@ class _RoutesListState extends State<RoutesList> {
             child = RefreshIndicator(
               key: ValueKey(1),
               onRefresh: () async {
-                bloc.add(RefreshRoutes());
+                bloc!.add(RefreshRoutes());
               },
               child: LayoutBuilder(builder: (context, constraints) {
                 return SingleChildScrollView(
@@ -47,7 +47,7 @@ class _RoutesListState extends State<RoutesList> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => RouteView(
-                                          onDelete: () => bloc.add(
+                                          onDelete: () => bloc!.add(
                                               DeleteRoutes(route.truck_id)),
                                           route: route)))),
                           Divider(),

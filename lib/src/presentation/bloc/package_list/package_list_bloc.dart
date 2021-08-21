@@ -12,8 +12,8 @@ part 'package_list_event.dart';
 part 'package_list_state.dart';
 
 class PackageListBloc extends Bloc<PackageListEvent, PackageListState> {
-  final GetPackagesUseCase getPackagesUseCase = getIt();
-  final DeletePackageUseCase deletePackageUseCase = getIt();
+  final GetPackagesUseCase? getPackagesUseCase = getIt();
+  final DeletePackageUseCase? deletePackageUseCase = getIt();
   PackageListBloc() : super(PackagelistLoading());
 
   @override
@@ -21,7 +21,7 @@ class PackageListBloc extends Bloc<PackageListEvent, PackageListState> {
     PackageListEvent event,
   ) async* {
     if (event is DeletePackage) {
-      Either<Failure, bool> result = await deletePackageUseCase(event.id);
+      Either<Failure, bool> result = await deletePackageUseCase!(event.id);
       yield* result.fold((failure) async* {
         yield PackagelistShowing((state as PackagelistShowing).packages,
             error: "Error al eliminar el paquete");
@@ -31,11 +31,11 @@ class PackageListBloc extends Bloc<PackageListEvent, PackageListState> {
         this.add(PackageListRefresh());
       });
     } else if (event is GetAllPackages) {
-      yield* (await getPackagesUseCase()).fold((error) async* {
+      yield* (await getPackagesUseCase!()).fold((error) async* {
         yield PackagelistError(error.error);
       }, (packages) async* {
         yield PackagelistShowing(packages);
-      });
+      } as Stream<PackageListState> Function(List<Package>?));
     } else if (event is PackageListRefresh) {
       yield PackagelistLoading();
     } else {}
