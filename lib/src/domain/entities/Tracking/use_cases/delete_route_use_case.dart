@@ -9,11 +9,10 @@ class DeleteRouteUseCase extends UseCase<bool, int> {
 
   @override
   Future<Either<Failure, bool>> call(int params) async {
-    // try {
-    //   return Right(await _packageRepository.deleteRoute(params));
-    // } catch (e) {
-    //   return Left(ServerFailure(e.toString()));
-    // }
-    return Left(ServerFailure(" "));
+    try {
+      return Right(await _packageRepository.delete(params));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
   }
 }

@@ -30,7 +30,11 @@ class _RouteViewState extends State<RouteView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: <Widget>[
+          IconButton(onPressed: widget.onDelete, icon: Icon(Icons.delete))
+        ],
+      ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         child: GoogleMap(
