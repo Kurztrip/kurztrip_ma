@@ -49,13 +49,13 @@ class DriverServerRepository implements LocationsRepository {
   ''';
 
   @override
-  Future<List<Locations>> getAll() async {
+  Future<List<Locations>?> getAll() async {
     final QueryOptions options = QueryOptions(document: gql(getLocations));
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    List<Locations> locations = result.data['getAllLocations']
+    List<Locations>? locations = result.data!['getAllLocations']
         .map<Locations>((LocationsResult) => Locations(
             id: int.parse(LocationsResult['id'].toString()),
             //truckId: int.parse(LocationsResult['truck_id'].toString()),
@@ -73,9 +73,9 @@ class DriverServerRepository implements LocationsRepository {
     );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final locationResult = result.data['getLocation'];
+    final locationResult = result.data!['getLocation'];
     return Locations(
         id: int.parse(locationResult['id'].toString()),
         //truckId: int.parse(locationResult['truck_id'].toString()),
@@ -96,7 +96,7 @@ class DriverServerRepository implements LocationsRepository {
         });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     return true;
   }
@@ -115,7 +115,7 @@ class DriverServerRepository implements LocationsRepository {
         });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     return true;
   }
@@ -126,7 +126,7 @@ class DriverServerRepository implements LocationsRepository {
         document: gql(deleteLocation), variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     return true;
   }

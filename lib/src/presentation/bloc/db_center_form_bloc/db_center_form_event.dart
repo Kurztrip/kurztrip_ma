@@ -9,7 +9,7 @@ abstract class DBCenterFormEvent extends Equatable {
 }
 
 class UpdateAddress extends DBCenterFormEvent {
-  final String address;
+  final String? address;
   const UpdateAddress(this.address);
 }
 
@@ -26,7 +26,7 @@ class UpdateAvailableStorage extends DBCenterFormEvent {
 class Submit extends DBCenterFormEvent {}
 
 class DBCenterFormAutofill extends DBCenterFormEvent {
-  final DistributionCenter dbcenter;
+  final DistributionCenter? dbcenter;
 
   DBCenterFormAutofill(this.dbcenter);
 }

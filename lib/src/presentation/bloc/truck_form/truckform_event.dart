@@ -72,16 +72,16 @@ class ToTruckError extends TruckformEvent {
 }
 
 class TruckformAutofill extends TruckformEvent {
-  final int id;
-  final String register;
-  final double volumeCapacity;
-  final double weightCapacity;
-  final double fuelCapacity;
-  final String fuelType;
-  final double fuelPerKilometer;
-  final int warehouse;
-  final String state;
-  final double fuel;
+  final int? id;
+  final String? register;
+  final double? volumeCapacity;
+  final double? weightCapacity;
+  final double? fuelCapacity;
+  final String? fuelType;
+  final double? fuelPerKilometer;
+  final int? warehouse;
+  final String? state;
+  final double? fuel;
 
   const TruckformAutofill(
     this.id,

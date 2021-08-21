@@ -4,7 +4,7 @@ abstract class PackageListState extends Equatable {
   const PackageListState([this.properties = const <dynamic>[]]);
   final List properties;
   @override
-  List<Object> get props => properties;
+  List<Object> get props => properties as List<Object>;
 }
 
 class PackagelistLoading extends PackageListState {}
@@ -17,8 +17,8 @@ class PackagelistError extends PackageListState {
 
 class PackagelistShowing extends PackageListState {
   final List<Package> packages;
-  final String error;
-  final String success;
+  final String? error;
+  final String? success;
 
   PackagelistShowing(this.packages, {this.error, this.success})
       : super(packages);

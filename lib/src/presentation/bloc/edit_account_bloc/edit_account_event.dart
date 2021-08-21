@@ -11,12 +11,12 @@ abstract class EditAccountEvent extends Equatable {
 
 class SendNewData extends EditAccountEvent {
   final User user;
-  SendNewData({@required this.user});
+  SendNewData({required this.user});
 }
 
 class ErrorOccurred extends EditAccountEvent {
   final String message;
-  ErrorOccurred({@required this.message});
+  ErrorOccurred({required this.message});
 }
 
 class UpdateName extends EditAccountEvent {

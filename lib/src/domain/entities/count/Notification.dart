@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 class Notification{
   const Notification({
-    @required this.id,
-    @required this.type ,
-    @required this.message,
-    @required this.createAt
+    required this.id,
+    required this.type ,
+    required this.message,
+    required this.createAt
   });
 
   final String id;

@@ -8,11 +8,11 @@ abstract class MainPageEvent extends Equatable {
   final List properties;
 
   @override
-  List<Object> get props => properties;
+  List<Object?> get props => properties;
 }
 
 class TabSelected extends MainPageEvent {
-  TabSelected({int index}) : super([index]);
+  TabSelected({int? index}) : super([index]);
 }
 
 class AddButtonPressed extends MainPageEvent {}

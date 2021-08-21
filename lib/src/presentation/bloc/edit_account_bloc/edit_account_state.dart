@@ -5,23 +5,23 @@ abstract class EditAccountState extends Equatable {
   const EditAccountState([this.properties = const <dynamic>[]]) : super();
   final List properties;
   @override
-  List<Object> get props => properties;
+  List<Object?> get props => properties;
 }
 
 class SavingData extends EditAccountState {}
 
 class ErrorOccurredWhileSaving extends EditAccountState {
   final String message;
-  ErrorOccurredWhileSaving({@required this.message}) : super([message]);
+  ErrorOccurredWhileSaving({required this.message}) : super([message]);
 }
 
 class SavingSuccess extends EditAccountState {}
 
 class EditShowing extends EditAccountState {
-  final String name;
-  final String lastname;
-  final String cellphone;
-  final String email;
+  final String? name;
+  final String? lastname;
+  final String? cellphone;
+  final String? email;
 
   EditShowing({
     this.name,
@@ -30,10 +30,10 @@ class EditShowing extends EditAccountState {
     this.email,
   }) : super([name, lastname, cellphone, email]);
   EditShowing copyWith({
-    String name,
-    String lastname,
-    String cellphone,
-    String email,
+    String? name,
+    String? lastname,
+    String? cellphone,
+    String? email,
   }) {
     return EditShowing(
       name: name == null ? this.name : name,
