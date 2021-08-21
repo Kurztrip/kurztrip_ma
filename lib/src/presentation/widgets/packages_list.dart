@@ -29,10 +29,8 @@ class PackagesList extends StatelessWidget {
             child = ItemList(
               list: generatePackages(state.packages),
               key: ValueKey(1),
-              getList: () async =>
-                  context.read<PackageListBloc>().add(PackageListRefresh()),
-              onDelete: (id) =>
-                  context.read<PackageListBloc>().add(DeletePackage(id)),
+              getList: () async => context.read<PackageListBloc>().add(PackageListRefresh()),
+              onDelete: (id) => context.read<PackageListBloc>().add(DeletePackage(id!)),
               onEdit: (id) async {
                 await Navigator.push(
                     context,
@@ -52,9 +50,7 @@ class PackagesList extends StatelessWidget {
                   Text("Ha ocurrido un error al obtener los paquetes"),
                   IconButton(
                     icon: Icon(Icons.replay_outlined),
-                    onPressed: () => context
-                        .read<PackageListBloc>()
-                        .add(PackageListRefresh()),
+                    onPressed: () => context.read<PackageListBloc>().add(PackageListRefresh()),
                   ),
                 ],
               ),
@@ -80,11 +76,7 @@ class PackagesList extends StatelessWidget {
         title: 'Paquete ' + package.id.toString(),
         subtitle: 'EN CAMINO',
         expandedValue: {
-          'Destino:': [
-            (package.address!.length <= 30)
-                ? package.address
-                : '${package.address!.substring(0, 30)}...'
-          ],
+          'Destino:': [(package.address!.length <= 30) ? package.address : '${package.address!.substring(0, 30)}...'],
           'Destinatario:': [package.receiver],
           'D.I. del destinatario: ': [package.idReceiver],
           'peso:': [package.weight.toString(), ' Kg'],

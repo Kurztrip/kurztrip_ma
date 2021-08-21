@@ -49,8 +49,7 @@ class _EditAccountState extends State<EditAccountPage> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(
-                            MediaQuery.of(context).size.width * 0.1),
+                        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
                         child: Text(
                           'Editar datos de cuenta',
                           style: Theme.of(context).textTheme.headline3,
@@ -81,7 +80,7 @@ class _EditAccountState extends State<EditAccountPage> {
                         validator: (value) {
                           if (!RegExp(
                                   r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                              .hasMatch(value)) {
+                              .hasMatch(value!)) {
                             return 'Este correo electronico es invalido';
                           } else {
                             return null;

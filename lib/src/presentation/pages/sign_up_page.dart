@@ -13,7 +13,7 @@ import 'package:kurztrip_ma/src/presentation/widgets/RoundedPasswordField.dart';
 
 class SignUpPage extends StatefulWidget {
   final User? user;
-  const SignUpPage({Key? key, this.user}): super(key:key);
+  const SignUpPage({Key? key, this.user}) : super(key: key);
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
@@ -23,8 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
-    if(widget.user != null){
-    }
+    if (widget.user != null) {}
     super.initState();
   }
 
@@ -71,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           validator: (value) {
                             if (!RegExp(
                                     r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$")
-                                .hasMatch(value)) {
+                                .hasMatch(value!)) {
                               return 'Este correo electronico es invalido';
                             } else {
                               return null;
@@ -84,18 +83,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           hintText: "Celular",
                           icon: Icons.phone,
                           textInputType: TextInputType.phone,
-                          onChanged: (value) =>
-                              bloc!.add(UpdateCellphone(value)),
+                          onChanged: (value) => bloc!.add(UpdateCellphone(value)),
                         ),
                         RoundedDropdown(
                           hint: "Elije tu rol",
                           iconColor: Theme.of(context).accentColor,
                           value: (state as SignupShowing).rol,
-                          items: <String, IconData>{
-                            'Administrador': Icons.supervisor_account,
-                            'Conductor': Icons.directions_bus
-                          },
-                          onChanged: (value) => bloc!.add(UpdateRol(value)),
+                          items: <String, IconData>{'Administrador': Icons.supervisor_account, 'Conductor': Icons.directions_bus},
+                          onChanged: (value) => bloc!.add(UpdateRol(value!)),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
@@ -120,11 +115,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: RoundedButton(
-                              horizontalPadding: 30,
-                              verticalPadding: 10,
-                              onPressed: _submit,
-                              text: 'Crear cuenta'),
+                          child:
+                              RoundedButton(horizontalPadding: 30, verticalPadding: 10, onPressed: _submit, text: 'Crear cuenta'),
                         )
                       ],
                     ),
@@ -139,8 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
   void _submit() {
     bloc!.add(Submit());
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Processing Data')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
     }
     Navigator.pushReplacement(context, _createRoute(MainPage()));
   }
@@ -153,8 +144,7 @@ class _SignUpPageState extends State<SignUpPage> {
         var end = Offset.zero;
         var curve = Curves.ease;
 
-        var tween =
-        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),

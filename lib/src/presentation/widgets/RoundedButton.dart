@@ -24,13 +24,12 @@ class RoundedButton extends StatelessWidget {
         textAlign: TextAlign.center,
       ),
       style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
-        backgroundColor: MaterialStateProperty.all<Color>(
-            Theme.of(context).colorScheme.primaryVariant),
+        shape:
+            MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
+        backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).colorScheme.primaryVariant),
         elevation: MaterialStateProperty.all<double>(5.0),
-        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(
-            horizontal: horizontalPadding, vertical: verticalPadding)),
+        padding:
+            MaterialStateProperty.all<EdgeInsets>(EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: verticalPadding)),
       ),
     );
   }
