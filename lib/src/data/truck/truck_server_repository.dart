@@ -92,9 +92,9 @@ class TruckServerRepository implements TruckRepository {
     );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final TruckResult = result.data['getTruck'];
+    final TruckResult = result.data!['getTruck'];
 
     debugPrint(TruckResult['registration'].toString()); //LINEA DEBUG
 
@@ -151,10 +151,10 @@ class TruckServerRepository implements TruckRepository {
         );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
 
-    List<Truck> trucks_to_return = result.data['getTrucks']
+    List<Truck> trucks_to_return = result.data!['getTrucks']
         .map<Truck>((TrucksResult) => Truck(
             id: int.parse(TrucksResult['id'].toString()),
             registration: TrucksResult['registration'].toString(),
@@ -205,9 +205,9 @@ class TruckServerRepository implements TruckRepository {
     });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final TruckResult = result.data['createTruck'];
+    final TruckResult = result.data!['createTruck'];
     return Truck(
         id: int.parse(TruckResult['id'].toString()),
         registration: TruckResult['registration'].toString(),
@@ -229,7 +229,7 @@ class TruckServerRepository implements TruckRepository {
 
   */
   @override
-  Future<int> update(int id, Truck truck) async {
+  Future<int?> update(int? id, Truck truck) async {
     final MutationOptions options = MutationOptions(document: gql(updateTruckMA), variables: <String, dynamic>{
       'id': id,
       'truck': {
@@ -247,7 +247,7 @@ class TruckServerRepository implements TruckRepository {
     });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
 
     return truck.id;
@@ -265,7 +265,7 @@ class TruckServerRepository implements TruckRepository {
     final MutationOptions options = MutationOptions(document: gql(deleteTruckMA), variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     return true;
   }

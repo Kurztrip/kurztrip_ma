@@ -10,7 +10,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/homepage/homepage_state.dart';
 import '../../../domain/entities/count/User.dart';
 
 class HomepageBloc extends Bloc<HomepageEvent, HomepageState> {
-  LoginUseCase loginUseCase = getIt();
+  LoginUseCase? loginUseCase = getIt();
   HomepageBloc() : super(Home());
 
   @override
@@ -26,7 +26,7 @@ class HomepageBloc extends Bloc<HomepageEvent, HomepageState> {
     } else if(event is SignIn){
       SignInState signIn = state as SignInState;
       Either<Failure, String> result =
-        await loginUseCase(LoginParams(signIn.user, signIn.password));
+        await loginUseCase!(LoginParams(signIn.user, signIn.password));
       yield* result.fold((failure) async* {
           yield signIn.copyWith(error: failure.error);
         }, (login) async* {

@@ -6,13 +6,13 @@ import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
 
 class UpdatePackageUseCase extends UseCase<Package, UpdateParams> {
-  final PackageRepository _packageRepository = getIt();
+  final PackageRepository? _packageRepository = getIt();
 
   @override
   Future<Either<Failure, Package>> call(UpdateParams params) async {
     try {
       return Right(
-          await _packageRepository.update(params.package.id, params.package));
+          await _packageRepository!.update(params.package.id, params.package));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

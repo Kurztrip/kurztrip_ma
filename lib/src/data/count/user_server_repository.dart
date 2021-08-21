@@ -84,9 +84,9 @@ class UserServerRepository extends UserRepository{
     );
     final result = await getGraphQLClient().query(options);
     if(result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final userResult = result.data['getUserById'];
+    final userResult = result.data!['getUserById'];
     return User(id: userResult['_id'].toString(), name: userResult['name'].toString(), lastName: userResult['lastName'].toString(), email: userResult['email'].toString(), cellphone: userResult['cellphone'].toString(), rol: userResult['rol'].toString(), createAt: userResult['createAt'], password: userResult['password'].toString(), organization: userResult['organization'].toString(), notifications: userResult['notifications']);
   }
 
@@ -107,9 +107,9 @@ class UserServerRepository extends UserRepository{
     );
     final result = await getGraphQLClient().mutate(options);
     if(result.hasException){
-      throw result.exception;
+      throw result.exception!;
     }
-    final userResult = result.data['createUser'];
+    final userResult = result.data!['createUser'];
     return User(id: userResult['_id'].toString(), name: userResult['name'].toString(), lastName: userResult['lastName'].toString(), email: userResult['email'].toString(), cellphone: userResult['cellphone'].toString(), rol: userResult['rol'].toString(), createAt: userResult['createAt'], password: userResult['password'].toString(), organization: userResult['organization'].toString(), notifications: userResult['notifications']);
 
   }
@@ -124,9 +124,9 @@ class UserServerRepository extends UserRepository{
     );
     final result = await getGraphQLClient().mutate(options);
     if(result.hasException){
-      throw result.exception;
+      throw result.exception!;
     }
-    final userResult = result.data['deleteUser'];
+    final userResult = result.data!['deleteUser'];
     return User(id: userResult['_id'].toString(), name: userResult['name'].toString(), lastName: userResult['lastName'].toString(), email: userResult['email'].toString(), cellphone: userResult['cellphone'].toString(), rol: userResult['rol'].toString(), createAt: userResult['createAt'], password: userResult['password'].toString(), organization: userResult['organization'].toString(), notifications: userResult['notifications']);
   }
 
@@ -141,13 +141,13 @@ class UserServerRepository extends UserRepository{
     );
     final result = await getGraphQLClient().mutate(options);
     if(result.hasException){
-      throw result.exception;
+      throw result.exception!;
     }
-    final mailResult = result.data['createUser'];
+    final mailResult = result.data!['createUser'];
     return mailResult.toString();
   }
 
-  Future<String> login(String email, String password) async {
+  Future<String> login(String? email, String? password) async {
     final MutationOptions options = MutationOptions(
     document: gql(loginUser),
     variables: <String, dynamic>{
@@ -159,9 +159,9 @@ class UserServerRepository extends UserRepository{
     );
     final result = await getGraphQLClient().mutate(options);
     if(result.hasException){
-      throw result.exception;
+      throw result.exception!;
     }
-    final loginResult = result.data['Login'];
+    final loginResult = result.data!['Login'];
     print(loginResult);
     return loginResult.toString();
   }

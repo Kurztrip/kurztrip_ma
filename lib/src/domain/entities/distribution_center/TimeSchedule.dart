@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 
 class TimeSchedule {
   const TimeSchedule({
-    @required this.id,
-    @required this.title,
-    @required this.description,
-    @required this.distribution_center_id,
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.distribution_center_id,
   });
   final int id;
   final String title;

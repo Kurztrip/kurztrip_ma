@@ -62,10 +62,10 @@ class DistributionCenterServerRepository
     );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     final distributionCenterResult =
-        result.data['getDistributionCenter']; //FUNCION DE GRAPHQL
+        result.data!['getDistributionCenter']; //FUNCION DE GRAPHQL
 
     //debugPrint(distribution_center_result['address']);
 
@@ -99,10 +99,10 @@ class DistributionCenterServerRepository
         );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
 
-    List<DistributionCenter> centers = result.data['getDistributionCenters']
+    List<DistributionCenter> centers = result.data!['getDistributionCenters']
         .map<DistributionCenter>((DistributionCentersResult) =>
             DistributionCenter(
               id: int.parse(DistributionCentersResult['id'].toString()),

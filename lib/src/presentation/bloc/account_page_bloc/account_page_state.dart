@@ -9,17 +9,17 @@ abstract class AccountPageState extends Equatable {
   final List properties;
 
   @override
-  List<Object> get props => properties;
+  List<Object> get props => properties as List<Object>;
 }
 
 class FetchingAccountInfo extends AccountPageState {}
 
 class ShowingAccountInfo extends AccountPageState {
   final User user;
-  ShowingAccountInfo({@required this.user}) : super([user]);
+  ShowingAccountInfo({required this.user}) : super([user]);
 }
 
 class ErrorState extends AccountPageState {
   final String message;
-  ErrorState({@required this.message}) : super([message]);
+  ErrorState({required this.message}) : super([message]);
 }

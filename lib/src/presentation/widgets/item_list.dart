@@ -5,14 +5,14 @@ import 'package:kurztrip_ma/src/presentation/widgets/expandable_item.dart';
 
 class ItemList extends StatefulWidget {
   ItemList({
-    Key key,
-    @required this.getList,
-    @required this.onEdit,
-    @required this.onDelete,
-    @required this.list,
+    Key? key,
+    required this.getList,
+    required this.onEdit,
+    required this.onDelete,
+    required this.list,
   }) : super(key: key);
-  final Function(int) onEdit;
-  final Function(int) onDelete;
+  final Function(int?) onEdit;
+  final Function(int?) onDelete;
   final Function getList;
   final List<ExpandableItem> list;
 
@@ -53,9 +53,8 @@ class _ItemListState extends State<ItemList> {
                         return ListTile(
                           title: Text(item.title),
                           subtitle: Text(
-                            item.subtitle,
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.secondary),
+                            item.subtitle!,
+                            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
                           ),
                         );
                       },
@@ -73,10 +72,7 @@ class _ItemListState extends State<ItemList> {
                                               ? Container()
                                               : Text(
                                                   e.value[1].toString(),
-                                                  style:
-                                                      TextStyle(fontFeatures: [
-                                                    FontFeature.enable('sups')
-                                                  ]),
+                                                  style: TextStyle(fontFeatures: [FontFeature.enable('sups')]),
                                                 ),
                                         ],
                                       ))
@@ -88,10 +84,7 @@ class _ItemListState extends State<ItemList> {
                                   onPressed: () => widget.onEdit(item.id),
                                   child: Text(
                                     'EDITAR',
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
+                                    style: TextStyle(color: Theme.of(context).colorScheme.secondary),
                                   ),
                                 ),
                                 TextButton(
@@ -100,52 +93,39 @@ class _ItemListState extends State<ItemList> {
                                   },
                                   child: Text(
                                     'VER RUTA',
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary),
+                                    style: TextStyle(color: Theme.of(context).colorScheme.secondary),
                                   ),
                                 ),
                                 Spacer(),
                                 IconButton(
                                   icon: Icon(Icons.delete),
                                   onPressed: () {
-                                    return showDialog(
+                                    showDialog(
                                         context: context,
-                                        builder: (BuildContext context) =>
-                                            AlertDialog(
+                                        builder: (BuildContext context) => AlertDialog(
                                               title: Text(
                                                 'Eliminar ${item.title}',
-                                                style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .secondary),
+                                                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
                                               ),
                                               content: Text('Estas seguro?'),
                                               actions: [
                                                 TextButton(
                                                   onPressed: () {
-                                                    Navigator.of(context,
-                                                            rootNavigator: true)
-                                                        .pop();
+                                                    Navigator.of(context, rootNavigator: true).pop();
                                                   },
                                                   child: Text(
                                                     'CANCELAR',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
+                                                    style: TextStyle(color: Colors.white),
                                                   ),
                                                 ),
                                                 TextButton(
                                                   onPressed: () {
                                                     widget.onDelete(item.id);
-                                                    Navigator.of(context,
-                                                            rootNavigator: true)
-                                                        .pop();
+                                                    Navigator.of(context, rootNavigator: true).pop();
                                                   },
                                                   child: Text(
                                                     'ACEPTAR',
-                                                    style: TextStyle(
-                                                        color: Colors.white),
+                                                    style: TextStyle(color: Colors.white),
                                                   ),
                                                 ),
                                               ],

@@ -84,9 +84,9 @@ class TrackingServerRepository extends TrackingRepository{
     );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final route_result = result.data['getRoute']; //FUNCION DE GRAPHQL
+    final route_result = result.data!['getRoute']; //FUNCION DE GRAPHQL
 
     //debugPrint(distribution_center_result['address']);
 
@@ -123,9 +123,9 @@ class TrackingServerRepository extends TrackingRepository{
     });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final route_result = result.data['createRoute'];
+    final route_result = result.data!['createRoute'];
     return TrackingRoute(
         starting_time: route_result['starting_time'],
         p_longitudes: route_result['p_longitudes'],
@@ -158,9 +158,9 @@ class TrackingServerRepository extends TrackingRepository{
     });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final RouteResult = result.data['updateRoute'];
+    final RouteResult = result.data!['updateRoute'];
     return TrackingRoute(
         starting_time: RouteResult['starting_time'],
         p_longitudes: RouteResult['p_longitudes'].map((i) => i.toDouble()).toList(),
@@ -184,7 +184,7 @@ class TrackingServerRepository extends TrackingRepository{
     final MutationOptions options = MutationOptions(document: gql(deleteRouteMA), variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     return true;
   }
@@ -201,10 +201,10 @@ class TrackingServerRepository extends TrackingRepository{
         );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
 
-    List<TrackingRoute> routes_to_return = result.data['getRoutes']
+    List<TrackingRoute> routes_to_return = result.data!['getRoutes']
         .map<TrackingRoute>((RoutesResult) => TrackingRoute(
             truck_id: RoutesResult['truck_id'],
             starting_time: RoutesResult['starting_time'],

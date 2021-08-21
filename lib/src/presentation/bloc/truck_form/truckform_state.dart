@@ -4,7 +4,7 @@ abstract class TruckformState extends Equatable {
   const TruckformState([this.properties = const <dynamic>[]]) : super();
   final List properties;
   @override
-  List<Object> get props => properties;
+  List<Object?> get props => properties;
 }
 
 class TruckformLoading extends TruckformState {}
@@ -12,17 +12,17 @@ class TruckformLoading extends TruckformState {}
 class TruckformSuccess extends TruckformState {}
 
 class TruckformShowing extends TruckformState {
-  final int id;
-  final String error;
-  final String register;
-  final double volumeCapacity;
-  final double weightCapacity;
-  final double fuelCapacity;
-  final String fuelType;
-  final double fuelPerKilometer;
-  final double fuel;
-  final int warehouse;
-  final String state;
+  final int? id;
+  final String? error;
+  final String? register;
+  final double? volumeCapacity;
+  final double? weightCapacity;
+  final double? fuelCapacity;
+  final String? fuelType;
+  final double? fuelPerKilometer;
+  final double? fuel;
+  final int? warehouse;
+  final String? state;
 
   TruckformShowing({
     this.fuel,
@@ -50,16 +50,16 @@ class TruckformShowing extends TruckformState {
           state
         ]);
   TruckformShowing copyWith({
-    String register,
-    String error,
-    double volumeCapacity,
-    double weightCapacity,
-    double fuelCapacity,
-    double fuel,
-    String fuelType,
-    double fuelPerKilometer,
-    int warehouse,
-    String state,
+    String? register,
+    String? error,
+    double? volumeCapacity,
+    double? weightCapacity,
+    double? fuelCapacity,
+    double? fuel,
+    String? fuelType,
+    double? fuelPerKilometer,
+    int? warehouse,
+    String? state,
   }) {
     return TruckformShowing(
       id: this.id,

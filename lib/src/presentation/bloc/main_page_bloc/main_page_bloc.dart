@@ -8,7 +8,7 @@ class MainPageBloc extends Bloc<MainPageEvent, MainPageState> {
   @override
   Stream<MainPageState> mapEventToState(MainPageEvent event) async* {
     if (event is TabSelected) {
-      final int index = event.properties[0];
+      final int? index = event.properties[0];
       if (index == 0) {
         yield TruckTab();
       } else if (index == 1) {

@@ -91,10 +91,10 @@ class PackageServerRepository implements PackageRepository {
     );
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     print(result.data);
-    final packageResult = result.data['getPackage'];
+    final packageResult = result.data!['getPackage'];
     return Package(
         id: int.parse(packageResult['id'].toString()),
         storeId: int.parse(packageResult['storeId'].toString()),
@@ -125,9 +125,9 @@ class PackageServerRepository implements PackageRepository {
         });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final packageResult = result.data['createPackage'];
+    final packageResult = result.data!['createPackage'];
     return Package(
         id: int.parse(packageResult['id'].toString()),
         storeId: int.parse(packageResult['storeId'].toString()),
@@ -141,13 +141,13 @@ class PackageServerRepository implements PackageRepository {
   }
 
   @override
-  Future<List<Package>> getAll() async {
+  Future<List<Package>?> getAll() async {
     final QueryOptions options = QueryOptions(document: gql(getPackages));
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception;}
+      throw result.exception!;}
 
-    List<Package> packages = result.data['getPackages']
+    List<Package>? packages = result.data!['getPackages']
         .map<Package>((packageResult) => Package(
             id: int.parse(packageResult['id'].toString()),
             storeId: int.parse(packageResult['storeId'].toString()),
@@ -163,7 +163,7 @@ class PackageServerRepository implements PackageRepository {
   }
 
   @override
-  Future<Package> update(int id, Package package) async {
+  Future<Package> update(int? id, Package package) async {
     final MutationOptions options = MutationOptions(
         document: gql(updatePackage),
         variables: <String, dynamic>{
@@ -181,9 +181,9 @@ class PackageServerRepository implements PackageRepository {
         });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
-    final packageResult = result.data['updatePackage'];
+    final packageResult = result.data!['updatePackage'];
     return Package(
         id: int.parse(packageResult['id'].toString()),
         storeId: int.parse(packageResult['storeId'].toString()),
@@ -202,7 +202,7 @@ class PackageServerRepository implements PackageRepository {
         document: gql(deletePackage), variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
-      throw result.exception;
+      throw result.exception!;
     }
     return true;
   }

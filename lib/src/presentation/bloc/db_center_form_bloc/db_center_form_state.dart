@@ -12,12 +12,12 @@ class DBCenterFormLoading extends DBCenterFormState {}
 class DBCenterFormSuccess extends DBCenterFormState {}
 
 class DBCenterFormShowing extends DBCenterFormState {
-  final int id;
-  final String error;
-  final String address;
-  final double totalStorage;
-  final double availableStorage;
-  final bool update;
+  final int? id;
+  final String? error;
+  final String? address;
+  final double? totalStorage;
+  final double? availableStorage;
+  final bool? update;
 
   DBCenterFormShowing({
     this.id,
@@ -34,10 +34,10 @@ class DBCenterFormShowing extends DBCenterFormState {
           availableStorage,
         ]);
   DBCenterFormShowing copyWith({
-    String address,
-    double totalStorage,
-    double availableStorage,
-    String error,
+    String? address,
+    double? totalStorage,
+    double? availableStorage,
+    String? error,
   }) {
     return DBCenterFormShowing(
         id: this.id,

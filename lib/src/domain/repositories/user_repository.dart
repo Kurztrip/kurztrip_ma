@@ -5,5 +5,5 @@ abstract class UserRepository{
   Future<User> add(User user);
   Future<User> delete(String id);
   Future<String> sendMailTo(String mail);
-  Future<String> login(String email, String password);
+  Future<String> login(String? email, String? password);
 }

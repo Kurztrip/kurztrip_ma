@@ -12,15 +12,15 @@ class PackageformLoading extends PackageformState {}
 class PackageformSuccess extends PackageformState {}
 
 class PackageformShowing extends PackageformState {
-  final int id;
-  final String error;
-  final String address;
-  final String receiver;
-  final String receiverID;
-  final double weight;
-  final double volume;
-  final int warehouse;
-  final bool update;
+  final int? id;
+  final String? error;
+  final String? address;
+  final String? receiver;
+  final String? receiverID;
+  final double? weight;
+  final double? volume;
+  final int? warehouse;
+  final bool? update;
 
   PackageformShowing({
     this.id,
@@ -43,13 +43,13 @@ class PackageformShowing extends PackageformState {
           warehouse,
         ]);
   PackageformShowing copyWith({
-    String address,
-    String receiver,
-    String receiverID,
-    double weight,
-    double volume,
-    int warehouse,
-    String error,
+    String? address,
+    String? receiver,
+    String? receiverID,
+    double? weight,
+    double? volume,
+    int? warehouse,
+    String? error,
   }) {
     return PackageformShowing(
         id: this.id,
