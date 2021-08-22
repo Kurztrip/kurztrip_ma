@@ -1,29 +1,51 @@
-import 'package:flutter/widgets.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'User.g.dart';
 
-class User{
-  const User({
-    required this.id,
-    required this.name,
-    required this.lastName,
-    required this.email,
-    required this.cellphone,
-    required this.rol,
-    required this.createAt,
-    required this.password,
-    required this.organization,
-    required this.notifications
-  });
+@JsonSerializable()
+class User {
+  const User(
+      {this.id,
+      this.name,
+      this.lastName,
+      this.email,
+      this.cellphone,
+      this.rol,
+      this.createAt,
+      this.password,
+      this.organization,
+      this.notifications,
+      this.token});
+
   final String? id;
   final String? name;
   final String? lastName;
   final String? email;
   final String? cellphone;
   final String? rol;
+  @JsonKey(ignore: true)
   final DateTime? createAt;
+  @JsonKey(ignore: true)
   final String? password;
+  @JsonKey(ignore: true)
   final String? organization;
+  @JsonKey(ignore: true)
   final List<String>? notifications;
-  static User createEmpty(){
-    return User(id: '', name: '', lastName: '', email: '', cellphone: '', rol: '', createAt: DateTime.now(), password: 'password', organization: '', notifications: []);
+  final String? token;
+
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+
+  static User createEmpty() {
+    return User(
+        id: '',
+        name: '',
+        lastName: '',
+        email: '',
+        cellphone: '',
+        rol: '',
+        createAt: DateTime.now(),
+        password: 'password',
+        organization: '',
+        notifications: []);
   }
 }

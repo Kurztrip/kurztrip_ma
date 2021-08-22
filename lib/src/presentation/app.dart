@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kurztrip_ma/services_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/pages.dart';
 
 class MobileApp extends StatelessWidget {
@@ -9,6 +11,7 @@ class MobileApp extends StatelessWidget {
     var mySystemTheme = SystemUiOverlayStyle.light
         .copyWith(systemNavigationBarColor: Color(0xFF1E1E1E));
     SystemChrome.setSystemUIOverlayStyle(mySystemTheme);
+    SharedPreferences prefs = getIt();
     return MaterialApp(
       title: 'Kurztrip Mobile App',
       theme: ThemeData(
@@ -53,7 +56,7 @@ class MobileApp extends StatelessWidget {
                   color: Color(0xFFFFFFFF),
                   fontWeight: FontWeight.w600),
               bodyText1: TextStyle(fontSize: 16))),
-      initialRoute: '/',
+      initialRoute: prefs.getString('user') == null ? '/' : '/main_page',
       routes: {
         '/': (context) => Homepage(),
         '/main_page': (context) => MainPage(),

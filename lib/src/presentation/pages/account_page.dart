@@ -107,6 +107,7 @@ class AccountPage extends StatelessWidget {
                                   TextButton(
                                     onPressed: () async {
                                       // agregar evento al bloc de cerrar sesión.
+                                      bloc.add(LogOut());
                                       Navigator.of(context)
                                           .pushNamedAndRemoveUntil('/',
                                               (Route<dynamic> route) => false);

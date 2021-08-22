@@ -30,8 +30,10 @@ class TrucksList extends StatelessWidget {
             child = ItemList(
               list: generateTrucks(state.trucks),
               key: ValueKey(1),
-              getList: () async => context.read<TruckListBloc>().add(TruckListRefresh()),
-              onDelete: (id) => context.read<TruckListBloc>().add(DeleteTruck(id!)),
+              getList: () async =>
+                  context.read<TruckListBloc>().add(TruckListRefresh()),
+              onDelete: (id) =>
+                  context.read<TruckListBloc>().add(DeleteTruck(id!)),
               onEdit: (id) async {
                 await Navigator.push(
                     context,
@@ -51,7 +53,8 @@ class TrucksList extends StatelessWidget {
                   Text("Ha ocurrido un error al obtener los paquetes"),
                   IconButton(
                     icon: Icon(Icons.replay_outlined),
-                    onPressed: () => context.read<TruckListBloc>().add(TruckListRefresh()),
+                    onPressed: () =>
+                        context.read<TruckListBloc>().add(TruckListRefresh()),
                   ),
                 ],
               ),
@@ -72,10 +75,11 @@ class TrucksList extends StatelessWidget {
 
   List<ExpandableItem> generateTrucks(List<Truck> list) {
     return list.map<ExpandableItem>((truck) {
-      String? fuelType = truck.fuel_type == "Gasoline" ? "Gasolina" : truck.fuel_type;
+      String? fuelType =
+          truck.fuel_type == "Gasoline" ? "Gasolina" : truck.fuel_type;
       String state = "Disponible";
       switch (truck.status) {
-        case 'InRoute':
+        case 'in route':
           state = "En Ruta";
           break;
         case 'Maintenance':

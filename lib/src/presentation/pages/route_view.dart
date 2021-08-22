@@ -33,7 +33,8 @@ class _RouteViewState extends State<RouteView> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(onPressed: widget.onDelete(), icon: Icon(Icons.delete))
+          IconButton(
+              onPressed: () => widget.onDelete(), icon: Icon(Icons.delete))
         ],
       ),
       body: Container(

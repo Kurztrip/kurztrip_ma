@@ -51,7 +51,7 @@ class _TruckFormState extends State<TruckForm> {
           } else if (state is TruckformShowing) {
             String truckState;
             switch (state.state) {
-              case 'InRoute':
+              case 'in route':
                 truckState = "En Ruta";
                 break;
               case 'Maintenance':

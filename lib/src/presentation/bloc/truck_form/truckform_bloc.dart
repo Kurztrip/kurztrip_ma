@@ -68,7 +68,7 @@ class TruckformBloc extends Bloc<TruckformEvent, TruckformState> {
       String status;
       switch (event.state) {
         case 'En Ruta':
-          status = "InRoute";
+          status = "in route";
           break;
         case 'En Mantenimiento':
           status = "Maintenance";

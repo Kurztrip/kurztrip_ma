@@ -23,3 +23,5 @@ class ErrorOccurred extends AccountPageEvent {
   final String message;
   ErrorOccurred({required this.message}) : super([message]);
 }
+
+class LogOut extends AccountPageEvent {}

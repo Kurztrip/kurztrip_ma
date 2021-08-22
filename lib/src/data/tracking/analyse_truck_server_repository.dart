@@ -8,7 +8,7 @@ import 'package:kurztrip_ma/src/domain/repositories/analyse_repository.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 
 //implements TruckRepository
-class AnalyseTruckServerRepository extends AnalyseRepository{
+class AnalyseTruckServerRepository extends AnalyseRepository {
   AnalyseTruck analyse_truck = AnalyseTruck.createEmpty();
 
   //devuelve analyse truck
@@ -43,15 +43,16 @@ class AnalyseTruckServerRepository extends AnalyseRepository{
 
   @override
   Future<bool> createAnalyseRoute(int id) async {
-    final MutationOptions options = MutationOptions(document: gql(createAnalyseRouteMA), variables: <String, dynamic>{
-      'id': id,
-    });
+    final MutationOptions options = MutationOptions(
+        document: gql(createAnalyseRouteMA),
+        variables: <String, dynamic>{
+          'id': id,
+        });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception!;
     }
     final AT_result = result.data!['createAnalyseRoute'];
-    debugPrint(AT_result['state']);
     return true;
   }
 }

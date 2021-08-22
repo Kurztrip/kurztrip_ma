@@ -30,12 +30,14 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    NavigatorState navigator = Navigator.of(context);
     return BlocProvider<HomepageBloc>(
         create: (context) => homepageBloc!,
-        child: BlocBuilder<HomepageBloc, HomepageState>(builder: (context, state) {
+        child:
+            BlocBuilder<HomepageBloc, HomepageState>(builder: (context, state) {
           if (state is LoginDone) {
             Future.delayed(Duration(seconds: 1), () {
-              Navigator.pushReplacement(context, _createRoute(MainPage()));
+              navigator.pushReplacement(_createRoute(MainPage()));
             });
           }
           return WillPopScope(
@@ -57,7 +59,9 @@ class _HomepageState extends State<Homepage> {
                       flex: 3,
                     ),
                     Image(
-                      height: MediaQuery.of(context).viewInsets.bottom > 0 ? size.height * 0.15 : size.height * 0.25,
+                      height: MediaQuery.of(context).viewInsets.bottom > 0
+                          ? size.height * 0.15
+                          : size.height * 0.25,
                       image: AssetImage('assets/label_logo.png'),
                       fit: BoxFit.fitHeight,
                     ),
@@ -87,8 +91,11 @@ class _HomepageState extends State<Homepage> {
                                 : Container(),
                             RoundedInputField(
                                 hintText: 'Email',
-                                iconColor: Theme.of(context).colorScheme.onBackground,
-                                onChanged: (value) => context.read<HomepageBloc>().add(UpdateUser(value)),
+                                iconColor:
+                                    Theme.of(context).colorScheme.onBackground,
+                                onChanged: (value) => context
+                                    .read<HomepageBloc>()
+                                    .add(UpdateUser(value)),
                                 textInputType: TextInputType.emailAddress,
                                 validator: (value) {
                                   if (!RegExp(
@@ -101,8 +108,11 @@ class _HomepageState extends State<Homepage> {
                                 }),
                             RoundedPasswordField(
                               hintText: 'Contraseña',
-                              iconColor: Theme.of(context).colorScheme.onBackground,
-                              onChanged: (value) => context.read<HomepageBloc>().add(UpdatePassword(value)),
+                              iconColor:
+                                  Theme.of(context).colorScheme.onBackground,
+                              onChanged: (value) => context
+                                  .read<HomepageBloc>()
+                                  .add(UpdatePassword(value)),
                             ),
                           ]),
                         ),
@@ -112,14 +122,18 @@ class _HomepageState extends State<Homepage> {
                       flex: 2,
                     ),
                     RoundedButton(
-                      onPressed: () => state is Home ? _showLogin(context) : _submit(),
+                      onPressed: () =>
+                          state is Home ? _showLogin(context) : _submit(),
                       text: 'INICIAR\nSESIÓN',
                     ),
                     TextButton(
-                        onPressed: () => state is Home ? _showSignUp() : _backHome(context),
+                        onPressed: () =>
+                            state is Home ? _showSignUp() : _backHome(context),
                         child: Text(
                           state is Home ? 'Regístrate' : 'Atrás',
-                          style: TextStyle(color: Theme.of(context).accentColor, fontFamily: 'Kameron'),
+                          style: TextStyle(
+                              color: Theme.of(context).accentColor,
+                              fontFamily: 'Kameron'),
                         )),
                     Spacer(),
                   ],
@@ -147,7 +161,8 @@ class _HomepageState extends State<Homepage> {
         var end = Offset.zero;
         var curve = Curves.ease;
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),

@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kurztrip_ma/src/data/count/user_server_repository.dart';
 import 'package:kurztrip_ma/src/data/distribution_center/distribution_center_server_repository.dart';
@@ -43,6 +44,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/routes_list_bloc/routes_list_b
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/truck_form/truckform_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/truck_list_bloc/truck_list_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
 final String mapsApiKey = "AIzaSyAFCcyGgadxT2LaaQjcTRl0cGhPQSY9lBk";
@@ -115,4 +117,8 @@ void registerUserService() {
   getIt.registerSingleton(GetDistributionCentersUseCase());
   getIt.registerLazySingleton<LocationsRepository>(
       () => DriverServerRepository());
+  getIt.registerSingletonAsync<SharedPreferences>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    return await SharedPreferences.getInstance();
+  });
 }
