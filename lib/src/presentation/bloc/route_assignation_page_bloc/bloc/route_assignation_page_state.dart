@@ -12,17 +12,13 @@ abstract class RouteAssignationPageState extends Equatable {
 class RouteassignationpageInitial extends RouteAssignationPageState {}
 
 class DataFetched extends RouteAssignationPageState {
-  final int dcIndex;
-  final int routeIndex;
-  final List<DistributionCenter>? distributionCenters;
+  final int index;
   final List<TrackingRoute>? routes;
 
   DataFetched(
-    this.distributionCenters,
     this.routes,
-    this.dcIndex,
-    this.routeIndex,
-  ) : super([distributionCenters, routes, dcIndex, routeIndex]);
+    this.index,
+  ) : super([routes, index]);
 }
 
 class ShowingErrorMessage extends RouteAssignationPageState {
@@ -32,6 +28,8 @@ class ShowingErrorMessage extends RouteAssignationPageState {
 
 class Success extends RouteAssignationPageState {}
 
+class Loading extends RouteAssignationPageState {}
+
 class FetchingDC extends RouteAssignationPageState {}
 
 class FetchingRoutes extends RouteAssignationPageState {
@@ -40,4 +38,11 @@ class FetchingRoutes extends RouteAssignationPageState {
 
   FetchingRoutes(this.dcIndex, this.distributionCenters)
       : super([distributionCenters, dcIndex]);
+}
+
+class ShowingDBCenterList extends RouteAssignationPageState {
+  final int? index;
+  final List<DistributionCenter>? distributionCenters;
+  ShowingDBCenterList({this.index, this.distributionCenters})
+      : super([index, distributionCenters]);
 }

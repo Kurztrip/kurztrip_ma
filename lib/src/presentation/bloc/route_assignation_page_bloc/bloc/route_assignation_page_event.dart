@@ -21,3 +21,5 @@ class AssignButtonPressed extends RouteAssignationPageEvent {
 }
 
 class StartFetching extends RouteAssignationPageEvent {}
+
+class Submit extends RouteAssignationPageEvent {}

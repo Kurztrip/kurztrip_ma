@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/route_addition_bloc/route_addition_state.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/pages/main_page.dart';
@@ -32,6 +33,19 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocProvider<SignupBloc>(
         create: (context) => bloc!,
         child: BlocBuilder<SignupBloc, SignupState>(builder: (context, state) {
+          if (state is Success) {
+            Future.delayed(Duration(seconds: 2), () async {
+              Navigator.pushReplacement(context, _createRoute(MainPage()));
+            });
+            return Center(
+                child: Column(
+              children: [Text('Usuario Registrado Correctamente')],
+            ));
+          }
+          if ((state as SignupShowing).error != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Error al registrar usuario')));
+          }
           return Scaffold(
             body: Center(
               child: SingleChildScrollView(
@@ -60,7 +74,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           icon: KurztripIcons.id_card,
                           iconColor: Theme.of(context).accentColor,
                           hintText: 'Apellido',
-                          onChanged: (value) => bloc!.add(UpdateLastName(value)),
+                          onChanged: (value) =>
+                              bloc!.add(UpdateLastName(value)),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
@@ -83,24 +98,30 @@ class _SignUpPageState extends State<SignUpPage> {
                           hintText: "Celular",
                           icon: Icons.phone,
                           textInputType: TextInputType.phone,
-                          onChanged: (value) => bloc!.add(UpdateCellphone(value)),
+                          onChanged: (value) =>
+                              bloc!.add(UpdateCellphone(value)),
                         ),
                         RoundedDropdown(
                           hint: "Elije tu rol",
                           iconColor: Theme.of(context).accentColor,
                           value: (state as SignupShowing).rol,
-                          items: <String, IconData>{'Administrador': Icons.supervisor_account, 'Conductor': Icons.directions_bus},
+                          items: <String, IconData>{
+                            'Administrador': Icons.supervisor_account,
+                            'Conductor': Icons.directions_bus
+                          },
                           onChanged: (value) => bloc!.add(UpdateRol(value!)),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: "Usuario",
-                          onChanged: (value) => bloc!.add(UpdateUsername(value)),
+                          onChanged: (value) =>
+                              bloc!.add(UpdateUsername(value)),
                         ),
                         RoundedPasswordField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: "Contraseña",
-                          onChanged: (value) => bloc!.add(UpdatePassword(value)),
+                          onChanged: (value) =>
+                              bloc!.add(UpdatePassword(value)),
                         ),
                         RoundedPasswordField(
                           iconColor: Theme.of(context).accentColor,
@@ -115,8 +136,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child:
-                              RoundedButton(horizontalPadding: 30, verticalPadding: 10, onPressed: _submit, text: 'Crear cuenta'),
+                          child: RoundedButton(
+                              horizontalPadding: 30,
+                              verticalPadding: 10,
+                              onPressed: _submit,
+                              text: 'Crear cuenta'),
                         )
                       ],
                     ),
@@ -129,11 +153,11 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void _submit() {
-    bloc!.add(Submit());
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
+      bloc!.add(Submit());
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Processing Data')));
     }
-    Navigator.pushReplacement(context, _createRoute(MainPage()));
   }
 
   Route _createRoute(Widget widget) {
@@ -144,7 +168,8 @@ class _SignUpPageState extends State<SignUpPage> {
         var end = Offset.zero;
         var curve = Curves.ease;
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),
