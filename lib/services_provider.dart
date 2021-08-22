@@ -40,6 +40,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/main_page_bloc/main_page_bloc.
 import 'package:kurztrip_ma/src/presentation/bloc/package_form/packageform_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/package_list/package_list_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/route_addition_bloc/route_addition_bloc.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/route_assignation_page_bloc/bloc/route_assignation_page_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/routes_list_bloc/routes_list_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/truck_form/truckform_bloc.dart';
@@ -77,6 +78,7 @@ void registerUserService() {
 
   getIt.registerFactory(() => AccountPageBloc());
   getIt.registerFactory(() => RouteAdditionBloc());
+  getIt.registerFactory(() => RouteAssignationPageBloc());
 
   getIt.registerFactory(
     () => TruckListBloc(),
@@ -117,6 +119,7 @@ void registerUserService() {
   getIt.registerSingleton(GetDistributionCentersUseCase());
   getIt.registerLazySingleton<LocationsRepository>(
       () => DriverServerRepository());
+  //shared preferences
   getIt.registerSingletonAsync<SharedPreferences>(() async {
     WidgetsFlutterBinding.ensureInitialized();
     return await SharedPreferences.getInstance();

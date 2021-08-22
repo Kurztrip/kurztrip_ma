@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kurztrip_ma/services_provider.dart';
+import 'package:kurztrip_ma/src/presentation/pages/route_assignation_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/pages.dart';
 
@@ -65,6 +66,7 @@ class MobileApp extends StatelessWidget {
         '/db_center_form': (context) => DBCenterFormPage(),
         '/edit_account': (context) => EditAccountPage(),
         '/route_addition_page': (context) => RouteAdditionPage(),
+        '/route_assignation_page': (context) => RouteAssignationPage(),
       },
     );
   }

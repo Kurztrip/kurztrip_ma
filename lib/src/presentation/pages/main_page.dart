@@ -92,7 +92,11 @@ class MainPage extends StatelessWidget {
         }
       case 2:
         {
-          Navigator.of(context).pushNamed('/route_addition_page');
+          if (state.driver) {
+            Navigator.of(context).pushNamed('/route_assignation_page');
+          } else {
+            Navigator.of(context).pushNamed('/route_addition_page');
+          }
           break;
         }
       default:
