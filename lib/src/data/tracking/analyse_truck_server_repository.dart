@@ -1,15 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:graphql/client.dart';
 import 'package:kurztrip_ma/src/data/client_config.dart';
-import 'package:kurztrip_ma/src/domain/entities/Tracking/Route.dart';
 import 'package:kurztrip_ma/src/domain/entities/analyse/AnalyseTruck.dart';
-import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
 import 'package:kurztrip_ma/src/domain/repositories/analyse_repository.dart';
-import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 
 //implements TruckRepository
 class AnalyseTruckServerRepository extends AnalyseRepository {
-  AnalyseTruck analyse_truck = AnalyseTruck.createEmpty();
+  AnalyseTruck analyseTruck = AnalyseTruck.createEmpty();
 
   //devuelve analyse truck
   final String createAnalyseRouteMA = r'''
@@ -52,7 +48,7 @@ class AnalyseTruckServerRepository extends AnalyseRepository {
     if (result.hasException) {
       throw result.exception!;
     }
-    final AT_result = result.data!['createAnalyseRoute'];
+    // final ATResult = result.data!['createAnalyseRoute'];
     return true;
   }
 }

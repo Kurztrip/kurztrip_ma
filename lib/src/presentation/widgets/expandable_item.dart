@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class ExpandableItem {
   ExpandableItem({
     required this.expandedValue,

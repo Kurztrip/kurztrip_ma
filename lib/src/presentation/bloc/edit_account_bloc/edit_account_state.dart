@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
 abstract class EditAccountState extends Equatable {
   const EditAccountState([this.properties = const <dynamic>[]]) : super();

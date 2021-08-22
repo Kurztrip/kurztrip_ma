@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 class TimeWindow {
   const TimeWindow(
       {required this.id,

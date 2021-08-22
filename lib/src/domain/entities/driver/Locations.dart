@@ -1,7 +1,9 @@
-import 'package:flutter/widgets.dart';
-
 class Locations {
-  const Locations({required this.id, this.truck_id, required this.latitude, required this.longitude});
+  const Locations(
+      {required this.id,
+      this.truck_id,
+      required this.latitude,
+      required this.longitude});
   final int id;
   final int? truck_id;
   final double latitude;

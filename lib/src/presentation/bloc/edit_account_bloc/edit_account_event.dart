@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
-import 'package:meta/meta.dart';
 
 abstract class EditAccountEvent extends Equatable {
   const EditAccountEvent();

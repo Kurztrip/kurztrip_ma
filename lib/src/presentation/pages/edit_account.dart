@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
-import 'package:kurztrip_ma/src/presentation/bloc/account_page_bloc/account_page_bloc.dart';
-import 'package:kurztrip_ma/src/presentation/bloc/account_page_bloc/account_page_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/edit_account_bloc/edit_account_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/edit_account_bloc/edit_account_event.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/edit_account_bloc/edit_account_state.dart';
@@ -42,14 +40,15 @@ class _EditAccountState extends State<EditAccountPage> {
         child: BlocBuilder<EditAccountBloc, EditAccountState>(
           builder: (context, state) {
             if (state is EditShowing) {
-              EditShowing fields = state as EditShowing;
+              EditShowing fields = state;
               return SingleChildScrollView(
                 child: Form(
                   key: _formKey,
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.1),
+                        padding: EdgeInsets.all(
+                            MediaQuery.of(context).size.width * 0.1),
                         child: Text(
                           'Editar datos de cuenta',
                           style: Theme.of(context).textTheme.headline3,

@@ -34,8 +34,8 @@ class PackageListBloc extends Bloc<PackageListEvent, PackageListState> {
       yield* (await getPackagesUseCase!()).fold((error) async* {
         yield PackagelistError(error.error);
       }, (packages) async* {
-        yield PackagelistShowing(packages);
-      } as Stream<PackageListState> Function(List<Package>?));
+        yield PackagelistShowing(packages!);
+      });
     } else if (event is PackageListRefresh) {
       yield PackagelistLoading();
     } else {}

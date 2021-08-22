@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class MainPageState extends Equatable {
-  MainPageState([this.properties = const <dynamic>[]]) : super();
+  MainPageState([this.properties = const <Object>[]]) : super();
 
   final List properties;
 

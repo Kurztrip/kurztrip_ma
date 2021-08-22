@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 class TimeSchedule {
   const TimeSchedule({
     required this.id,

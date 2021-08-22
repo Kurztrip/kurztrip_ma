@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 class DistributionCenter {
   const DistributionCenter({
     required this.id,

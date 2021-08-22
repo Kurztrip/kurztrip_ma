@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 class TrackingPackage {
   const TrackingPackage(
       {required this.id,
@@ -17,6 +15,12 @@ class TrackingPackage {
   final String? estimated_time;
 
   static TrackingPackage createEmpty() {
-    return TrackingPackage(id: 0, id_truck: null, destination_long: 0, destination_lat: null, state: null, estimated_time: null);
+    return TrackingPackage(
+        id: 0,
+        id_truck: null,
+        destination_long: 0,
+        destination_lat: null,
+        state: null,
+        estimated_time: null);
   }
 }

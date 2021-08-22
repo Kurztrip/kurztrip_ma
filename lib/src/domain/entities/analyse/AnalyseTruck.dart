@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 
 //Type Truck de GraphQL

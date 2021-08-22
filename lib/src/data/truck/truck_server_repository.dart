@@ -94,21 +94,21 @@ class TruckServerRepository implements TruckRepository {
     if (result.hasException) {
       throw result.exception!;
     }
-    final TruckResult = result.data!['getTruck'];
+    final truckResult = result.data!['getTruck'];
 
-    debugPrint(TruckResult['registration'].toString()); //LINEA DEBUG
+    debugPrint(truckResult['registration'].toString()); //LINEA DEBUG
 
     return Truck(
-        id: int.parse(TruckResult['id'].toString()),
-        registration: TruckResult['registration'].toString(),
-        status: TruckResult['status'].toString(),
-        weight_capacity: TruckResult['weight_capacity'].toDouble(),
-        volume_capacity: TruckResult['volume_capacity'].toDouble(),
-        fuel_type: TruckResult['fuel_type'].toString(),
-        fuel_capacity: TruckResult['weight_capacity'].toDouble(),
-        fuel_by_kilometer: TruckResult['volume_capacity'].toDouble(),
-        fuel: TruckResult['fuel'].toDouble(),
-        warehouse: int.parse(TruckResult['warehouse'].toString()));
+        id: int.parse(truckResult['id'].toString()),
+        registration: truckResult['registration'].toString(),
+        status: truckResult['status'].toString(),
+        weight_capacity: truckResult['weight_capacity'].toDouble(),
+        volume_capacity: truckResult['volume_capacity'].toDouble(),
+        fuel_type: truckResult['fuel_type'].toString(),
+        fuel_capacity: truckResult['weight_capacity'].toDouble(),
+        fuel_by_kilometer: truckResult['volume_capacity'].toDouble(),
+        fuel: truckResult['fuel'].toDouble(),
+        warehouse: int.parse(truckResult['warehouse'].toString()));
     // return Future.delayed(const Duration(milliseconds: 100), () => truck);
   }
 
@@ -146,7 +146,8 @@ class TruckServerRepository implements TruckRepository {
 
   @override
   Future<List<Truck>> getAll() async {
-    final QueryOptions options = QueryOptions(document: gql(getTrucksMA) //NOMBRE DEL STRING QUERY O MUTATION
+    final QueryOptions options = QueryOptions(
+        document: gql(getTrucksMA) //NOMBRE DEL STRING QUERY O MUTATION
 
         );
     final result = await getGraphQLClient().query(options);
@@ -154,23 +155,23 @@ class TruckServerRepository implements TruckRepository {
       throw result.exception!;
     }
 
-    List<Truck> trucks_to_return = result.data!['getTrucks']
-        .map<Truck>((TrucksResult) => Truck(
-            id: int.parse(TrucksResult['id'].toString()),
-            registration: TrucksResult['registration'].toString(),
-            status: TrucksResult['status'].toString(),
-            weight_capacity: TrucksResult['weight_capacity'].toDouble(),
-            volume_capacity: TrucksResult['volume_capacity'].toDouble(),
-            fuel_type: TrucksResult['fuel_type'].toString(),
-            fuel_capacity: TrucksResult['weight_capacity'].toDouble(),
-            fuel_by_kilometer: TrucksResult['volume_capacity'].toDouble(),
-            fuel: TrucksResult['fuel'].toDouble(),
-            warehouse: int.parse(TrucksResult['warehouse'].toString())))
+    List<Truck> trucksToReturn = result.data!['getTrucks']
+        .map<Truck>((trucksResult) => Truck(
+            id: int.parse(trucksResult['id'].toString()),
+            registration: trucksResult['registration'].toString(),
+            status: trucksResult['status'].toString(),
+            weight_capacity: trucksResult['weight_capacity'].toDouble(),
+            volume_capacity: trucksResult['volume_capacity'].toDouble(),
+            fuel_type: trucksResult['fuel_type'].toString(),
+            fuel_capacity: trucksResult['weight_capacity'].toDouble(),
+            fuel_by_kilometer: trucksResult['volume_capacity'].toDouble(),
+            fuel: trucksResult['fuel'].toDouble(),
+            warehouse: int.parse(trucksResult['warehouse'].toString())))
         .toList();
 
     //debugPrint(centers.length.toString());
-    debugPrint(trucks_to_return.length.toString()); //LINEA DEBUG
-    return trucks_to_return;
+    debugPrint(trucksToReturn.length.toString()); //LINEA DEBUG
+    return trucksToReturn;
   }
 
   /*
@@ -189,36 +190,38 @@ class TruckServerRepository implements TruckRepository {
   */
   @override
   Future<Truck> add(Truck truck) async {
-    final MutationOptions options = MutationOptions(document: gql(createTruckMA), variables: <String, dynamic>{
-      'truck': {
-        //'id': truck.id,
-        'registration': truck.registration,
-        'status': truck.status,
-        'weight_capacity': truck.weight_capacity,
-        'volume_capacity': truck.volume_capacity,
-        'fuel_type': truck.fuel_type,
-        'fuel_capacity': truck.fuel_capacity,
-        'fuel_by_kilometer': truck.fuel_by_kilometer,
-        'fuel': truck.fuel,
-        'warehouse': truck.warehouse
-      }
-    });
+    final MutationOptions options = MutationOptions(
+        document: gql(createTruckMA),
+        variables: <String, dynamic>{
+          'truck': {
+            //'id': truck.id,
+            'registration': truck.registration,
+            'status': truck.status,
+            'weight_capacity': truck.weight_capacity,
+            'volume_capacity': truck.volume_capacity,
+            'fuel_type': truck.fuel_type,
+            'fuel_capacity': truck.fuel_capacity,
+            'fuel_by_kilometer': truck.fuel_by_kilometer,
+            'fuel': truck.fuel,
+            'warehouse': truck.warehouse
+          }
+        });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception!;
     }
-    final TruckResult = result.data!['createTruck'];
+    final truckResult = result.data!['createTruck'];
     return Truck(
-        id: int.parse(TruckResult['id'].toString()),
-        registration: TruckResult['registration'].toString(),
-        status: TruckResult['status'].toString(),
-        weight_capacity: TruckResult['weight_capacity'].toDouble(),
-        volume_capacity: TruckResult['volume_capacity'].toDouble(),
-        fuel_type: TruckResult['fuel_type'].toString(),
-        fuel_capacity: TruckResult['weight_capacity'].toDouble(),
-        fuel_by_kilometer: TruckResult['volume_capacity'].toDouble(),
-        fuel: TruckResult['fuel'].toDouble(),
-        warehouse: int.parse(TruckResult['warehouse'].toString()));
+        id: int.parse(truckResult['id'].toString()),
+        registration: truckResult['registration'].toString(),
+        status: truckResult['status'].toString(),
+        weight_capacity: truckResult['weight_capacity'].toDouble(),
+        volume_capacity: truckResult['volume_capacity'].toDouble(),
+        fuel_type: truckResult['fuel_type'].toString(),
+        fuel_capacity: truckResult['weight_capacity'].toDouble(),
+        fuel_by_kilometer: truckResult['volume_capacity'].toDouble(),
+        fuel: truckResult['fuel'].toDouble(),
+        warehouse: int.parse(truckResult['warehouse'].toString()));
   }
 
   /*
@@ -230,21 +233,23 @@ class TruckServerRepository implements TruckRepository {
   */
   @override
   Future<int?> update(int? id, Truck truck) async {
-    final MutationOptions options = MutationOptions(document: gql(updateTruckMA), variables: <String, dynamic>{
-      'id': id,
-      'truck': {
-        'id': truck.id,
-        'registration': truck.registration,
-        'status': truck.status,
-        'weight_capacity': truck.weight_capacity,
-        'volume_capacity': truck.volume_capacity,
-        'fuel_type': truck.fuel_type,
-        'fuel_capacity': truck.fuel_capacity,
-        'fuel_by_kilometer': truck.fuel_by_kilometer,
-        'fuel': truck.fuel,
-        'warehouse': truck.warehouse
-      }
-    });
+    final MutationOptions options = MutationOptions(
+        document: gql(updateTruckMA),
+        variables: <String, dynamic>{
+          'id': id,
+          'truck': {
+            'id': truck.id,
+            'registration': truck.registration,
+            'status': truck.status,
+            'weight_capacity': truck.weight_capacity,
+            'volume_capacity': truck.volume_capacity,
+            'fuel_type': truck.fuel_type,
+            'fuel_capacity': truck.fuel_capacity,
+            'fuel_by_kilometer': truck.fuel_by_kilometer,
+            'fuel': truck.fuel,
+            'warehouse': truck.warehouse
+          }
+        });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception!;
@@ -262,7 +267,8 @@ class TruckServerRepository implements TruckRepository {
   */
   @override
   Future<bool> delete(int id) async {
-    final MutationOptions options = MutationOptions(document: gql(deleteTruckMA), variables: <String, dynamic>{'id': id});
+    final MutationOptions options = MutationOptions(
+        document: gql(deleteTruckMA), variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception!;
