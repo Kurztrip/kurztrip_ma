@@ -50,7 +50,7 @@ import 'package:kurztrip_ma/src/presentation/bloc/truck_list_bloc/truck_list_blo
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
-final String mapsApiKey = "AIzaSyAFCcyGgadxT2LaaQjcTRl0cGhPQSY9lBk";
+final String mapsApiKey = "AIzaSyCDwjJwqqIbUnvIl1jfpw0b_0r4ik7m1sg";
 
 void init() {
   registerUserService();
