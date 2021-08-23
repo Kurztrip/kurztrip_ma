@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class PushNotificationsService {
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -10,6 +11,7 @@ class PushNotificationsService {
 
   static String notification_title = '';
   static String notification_body = '';
+  static String message_to_show_on_toast = '';
 
   static Future _backgroundHandler(RemoteMessage message) async {
     print('onBackground Handler ${message.messageId}');
@@ -25,6 +27,9 @@ class PushNotificationsService {
     notification_body = message.notification?.body ?? 'Sin Cuerpo';
     print(notification_title);
     print(notification_body);
+    message_to_show_on_toast = notification_title + ": " + notification_body;
+
+    Fluttertoast.showToast(msg: message_to_show_on_toast, toastLength: Toast.LENGTH_LONG, gravity: ToastGravity.BOTTOM);
   }
 
   static Future _onMessageOpenApp(RemoteMessage message) async {
