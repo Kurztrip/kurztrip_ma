@@ -49,6 +49,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             textAlign: TextAlign.center,
                           ),
                         ),
+                        state is SignupShowing && state.error != null
+                            ? Text(
+                                state.error!,
+                                style: TextStyle(color: Colors.red),
+                              )
+                            : Container(),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: 'Nombre',
@@ -60,7 +66,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           icon: KurztripIcons.id_card,
                           iconColor: Theme.of(context).accentColor,
                           hintText: 'Apellido',
-                          onChanged: (value) => bloc!.add(UpdateLastName(value)),
+                          onChanged: (value) =>
+                              bloc!.add(UpdateLastName(value)),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
@@ -83,24 +90,30 @@ class _SignUpPageState extends State<SignUpPage> {
                           hintText: "Celular",
                           icon: Icons.phone,
                           textInputType: TextInputType.phone,
-                          onChanged: (value) => bloc!.add(UpdateCellphone(value)),
+                          onChanged: (value) =>
+                              bloc!.add(UpdateCellphone(value)),
                         ),
                         RoundedDropdown(
                           hint: "Elije tu rol",
                           iconColor: Theme.of(context).accentColor,
                           value: (state as SignupShowing).rol,
-                          items: <String, IconData>{'Administrador': Icons.supervisor_account, 'Conductor': Icons.directions_bus},
+                          items: <String, IconData>{
+                            'Administrador': Icons.supervisor_account,
+                            'Conductor': Icons.directions_bus
+                          },
                           onChanged: (value) => bloc!.add(UpdateRol(value!)),
                         ),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: "Usuario",
-                          onChanged: (value) => bloc!.add(UpdateUsername(value)),
+                          onChanged: (value) =>
+                              bloc!.add(UpdateUsername(value)),
                         ),
                         RoundedPasswordField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: "Contraseña",
-                          onChanged: (value) => bloc!.add(UpdatePassword(value)),
+                          onChanged: (value) =>
+                              bloc!.add(UpdatePassword(value)),
                         ),
                         RoundedPasswordField(
                           iconColor: Theme.of(context).accentColor,
@@ -115,8 +128,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child:
-                              RoundedButton(horizontalPadding: 30, verticalPadding: 10, onPressed: _submit, text: 'Crear cuenta'),
+                          child: RoundedButton(
+                              horizontalPadding: 30,
+                              verticalPadding: 10,
+                              onPressed: _submit,
+                              text: 'Crear cuenta'),
                         )
                       ],
                     ),
@@ -131,7 +147,8 @@ class _SignUpPageState extends State<SignUpPage> {
   void _submit() {
     bloc!.add(Submit());
     if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Processing Data')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Processing Data')));
     }
     Navigator.pushReplacement(context, _createRoute(MainPage()));
   }
@@ -144,7 +161,8 @@ class _SignUpPageState extends State<SignUpPage> {
         var end = Offset.zero;
         var curve = Curves.ease;
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),
