@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:graphql/client.dart';
+import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/data/client_config.dart';
+import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
 import 'package:kurztrip_ma/src/domain/entities/package/Package.dart';
 import 'package:kurztrip_ma/src/domain/repositories/package_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../client_config.dart';
 
@@ -24,8 +29,8 @@ class PackageServerRepository implements PackageRepository {
   ''';
 
   final String getPackages = r'''
-    query getAllPackages(){
-      getPackages{
+    query getAllPackages($token:String!){
+      getPackages(token:$token){
         id
         storeId
         weight
@@ -109,20 +114,18 @@ class PackageServerRepository implements PackageRepository {
 
   @override
   Future<Package> add(Package package) async {
-    final MutationOptions options = MutationOptions(
-        document: gql(createPackage),
-        variables: <String, dynamic>{
-          'new_package': {
-            'address': package.address,
-            'weight': package.weight,
-            'volume': package.volume,
-            'longitude': package.longitude,
-            'latitude': package.latitude,
-            'storeId': package.storeId,
-            'receiver': package.receiver,
-            'idReceiver': package.idReceiver
-          }
-        });
+    final MutationOptions options = MutationOptions(document: gql(createPackage), variables: <String, dynamic>{
+      'new_package': {
+        'address': package.address,
+        'weight': package.weight,
+        'volume': package.volume,
+        'longitude': package.longitude,
+        'latitude': package.latitude,
+        'storeId': package.storeId,
+        'receiver': package.receiver,
+        'idReceiver': package.idReceiver
+      }
+    });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception!;
@@ -142,10 +145,13 @@ class PackageServerRepository implements PackageRepository {
 
   @override
   Future<List<Package>?> getAll() async {
-    final QueryOptions options = QueryOptions(document: gql(getPackages));
+    SharedPreferences treps = getIt();
+    User usuario = User.fromJson(jsonDecode(treps.getString("user")!));
+    final QueryOptions options = QueryOptions(document: gql(getPackages), variables: <String, dynamic>{'token': usuario.token});
     final result = await getGraphQLClient().query(options);
     if (result.hasException) {
-      throw result.exception!;}
+      throw result.exception!;
+    }
 
     List<Package>? packages = result.data!['getPackages']
         .map<Package>((packageResult) => Package(
@@ -164,21 +170,19 @@ class PackageServerRepository implements PackageRepository {
 
   @override
   Future<Package> update(int? id, Package package) async {
-    final MutationOptions options = MutationOptions(
-        document: gql(updatePackage),
-        variables: <String, dynamic>{
-          'id': id,
-          'package': {
-            'address': package.address,
-            'weight': package.weight,
-            'volume': package.volume,
-            'longitude': package.longitude,
-            'latitude': package.latitude,
-            'storeId': package.storeId,
-            'receiver': package.receiver,
-            'idReceiver': package.idReceiver
-          }
-        });
+    final MutationOptions options = MutationOptions(document: gql(updatePackage), variables: <String, dynamic>{
+      'id': id,
+      'package': {
+        'address': package.address,
+        'weight': package.weight,
+        'volume': package.volume,
+        'longitude': package.longitude,
+        'latitude': package.latitude,
+        'storeId': package.storeId,
+        'receiver': package.receiver,
+        'idReceiver': package.idReceiver
+      }
+    });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception!;
@@ -198,8 +202,7 @@ class PackageServerRepository implements PackageRepository {
 
   @override
   Future<bool> delete(int id) async {
-    final MutationOptions options = MutationOptions(
-        document: gql(deletePackage), variables: <String, dynamic>{'id': id});
+    final MutationOptions options = MutationOptions(document: gql(deletePackage), variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception!;
