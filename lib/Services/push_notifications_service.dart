@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kurztrip_ma/services_provider.dart';
 
 class PushNotificationsService {
   static FirebaseMessaging messaging = FirebaseMessaging.instance;
-  static String? token;
+
   static StreamController<String> _messageStreamController = new StreamController.broadcast();
 
   static String notification_title = '';
@@ -43,9 +44,9 @@ class PushNotificationsService {
   static Future initializeApp() async {
     //PUSH NOTIFICATIONS
     await Firebase.initializeApp();
-    token = await FirebaseMessaging.instance.getToken();
+    device_id = await FirebaseMessaging.instance.getToken() ?? "error at setting device ID";
 
-    print('token: $token');
+    print('token: $device_id');
 
     //Handlers
 
