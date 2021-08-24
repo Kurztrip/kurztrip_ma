@@ -68,8 +68,10 @@ void registerUserService() {
   getIt.registerFactory(
     () => MainPageBloc(),
   );
-  getIt.registerFactoryParam<TruckformBloc, int?, void>((param1, param2) => TruckformBloc(edit: param1));
-  getIt.registerFactoryParam<PackageformBloc, int?, void>((param1, param2) => PackageformBloc(edit: param1));
+  getIt.registerFactoryParam<TruckformBloc, int?, void>(
+      (param1, param2) => TruckformBloc(edit: param1));
+  getIt.registerFactoryParam<PackageformBloc, int?, void>(
+      (param1, param2) => PackageformBloc(edit: param1));
   getIt.registerFactory(
     () => DBCenterFormBloc(),
   );
@@ -87,14 +89,19 @@ void registerUserService() {
   getIt.registerFactory(
     () => RoutesListBloc(),
   );
-  getIt.registerFactoryParam<EditAccountBloc, User, void>((param1, param2) => EditAccountBloc(param1!));
+  getIt.registerFactoryParam<EditAccountBloc, User, void>(
+      (param1, param2) => EditAccountBloc(param1));
   //Repositories
   getIt.registerLazySingleton<TruckRepository>(() => TruckServerRepository());
-  getIt.registerLazySingleton<PackageRepository>(() => PackageServerRepository());
+  getIt.registerLazySingleton<PackageRepository>(
+      () => PackageServerRepository());
   getIt.registerLazySingleton<UserRepository>(() => UserServerRepository());
-  getIt.registerLazySingleton<AnalyseRepository>(() => AnalyseTruckServerRepository());
-  getIt.registerLazySingleton<TrackingRepository>(() => TrackingServerRepository());
-  getIt.registerLazySingleton<DistributionCenterRepository>(() => DistributionCenterServerRepository());
+  getIt.registerLazySingleton<AnalyseRepository>(
+      () => AnalyseTruckServerRepository());
+  getIt.registerLazySingleton<TrackingRepository>(
+      () => TrackingServerRepository());
+  getIt.registerLazySingleton<DistributionCenterRepository>(
+      () => DistributionCenterServerRepository());
   //Usecases
   getIt.registerSingleton(GetPackageUseCase());
   getIt.registerSingleton(GetPackagesUseCase());
@@ -115,7 +122,8 @@ void registerUserService() {
   getIt.registerSingleton(CreateRouteUseCase());
   getIt.registerSingleton(CreateDistributionCenterUseCase());
   getIt.registerSingleton(GetDistributionCentersUseCase());
-  getIt.registerLazySingleton<LocationsRepository>(() => DriverServerRepository());
+  getIt.registerLazySingleton<LocationsRepository>(
+      () => DriverServerRepository());
   //shared preferences
   getIt.registerSingletonAsync<SharedPreferences>(() async {
     WidgetsFlutterBinding.ensureInitialized();
