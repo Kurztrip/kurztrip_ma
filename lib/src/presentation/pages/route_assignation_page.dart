@@ -17,7 +17,7 @@ class RouteAssignationPage extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
             child: Text(
-              'Crear ruta',
+              'Tomar ruta',
               style: Theme.of(context).textTheme.headline3,
               textAlign: TextAlign.center,
             ),
@@ -33,7 +33,7 @@ class RouteAssignationPage extends StatelessWidget {
                     return Column(
                       children: [
                         Text(
-                          'Seleccionar un centro de distribución',
+                          'Selecciona la ruta',
                           style: Theme.of(context).textTheme.headline4,
                           textAlign: TextAlign.center,
                         ),
@@ -42,15 +42,16 @@ class RouteAssignationPage extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.4,
                           child: SingleChildScrollView(
                             child: Column(
-                              children: state.distributionCenters!
+                              children: state.routes!
                                   .asMap()
                                   .map((index, value) => MapEntry(
                                         index,
                                         ListTile(
-                                          title: Text(value.address!),
+                                          title: Text('ruta ' +
+                                              value.truck_id!.toString()),
                                           leading: Radio<int>(
                                             value: index,
-                                            groupValue: state.dcIndex,
+                                            groupValue: state.index,
                                             onChanged: (int? newIndex) => context
                                                 .read<
                                                     RouteAssignationPageBloc>()
@@ -71,9 +72,9 @@ class RouteAssignationPage extends StatelessWidget {
                               verticalPadding: 10,
                               onPressed: () => context
                                   .read<RouteAssignationPageBloc>()
-                                  .add(AssignButtonPressed(state
-                                      .routes![state.routeIndex].truck_id!)),
-                              text: 'Crear Ruta'),
+                                  .add(AssignButtonPressed(
+                                      state.routes![state.index].truck_id!)),
+                              text: 'Tomar Ruta'),
                         ),
                       ],
                     );
@@ -98,7 +99,7 @@ class RouteAssignationPage extends StatelessWidget {
                       Navigator.of(context).pop();
                     });
                     return Center(
-                        child: Text('Ruta ha sido creada exitosamente'));
+                        child: Text('Ruta ha sido asignada exitosamente'));
                   } else {
                     if (state is RouteassignationpageInitial)
                       context

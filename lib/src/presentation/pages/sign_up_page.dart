@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
+import 'package:kurztrip_ma/src/presentation/bloc/route_addition_bloc/route_addition_state.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
 import 'package:kurztrip_ma/src/presentation/pages/main_page.dart';
@@ -32,6 +33,19 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocProvider<SignupBloc>(
         create: (context) => bloc!,
         child: BlocBuilder<SignupBloc, SignupState>(builder: (context, state) {
+          if (state is Success) {
+            Future.delayed(Duration(seconds: 2), () async {
+              Navigator.pushReplacement(context, _createRoute(MainPage()));
+            });
+            return Center(
+                child: Column(
+              children: [Text('Usuario Registrado Correctamente')],
+            ));
+          }
+          if ((state as SignupShowing).error != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Error al registrar usuario')));
+          }
           return Scaffold(
             body: Center(
               child: SingleChildScrollView(
@@ -145,12 +159,11 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void _submit() {
-    bloc!.add(Submit());
     if (_formKey.currentState!.validate()) {
+      bloc!.add(Submit());
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Processing Data')));
     }
-    Navigator.pushReplacement(context, _createRoute(MainPage()));
   }
 
   Route _createRoute(Widget widget) {

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -8,6 +9,7 @@ import 'package:kurztrip_ma/src/core/error/faliures.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/use_cases/create_user_use_case.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/use_cases/login_use_case.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'signup_event.dart';
 part 'signup_state.dart';
@@ -15,13 +17,14 @@ part 'signup_state.dart';
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   SignupBloc() : super(SignupShowing());
   CreateUserUseCase? createUserUseCase = getIt();
+  SharedPreferences prefs = getIt();
   LoginUseCase? loginUseCase = getIt();
   List<String> roles = ['Administrador', 'Conductor'];
   @override
   Stream<SignupState> mapEventToState(
     SignupEvent event,
   ) async* {
-    if(state is SignupShowing) {
+    if (state is SignupShowing) {
       SignupShowing old = state as SignupShowing;
       if (event is UpdateCellphone) {
         yield old.copyWith(cellphone: event.cellphone);
@@ -40,12 +43,22 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       } else if (event is Submit) {
         SignupShowing signUp = state as SignupShowing;
         print(signUp);
-        User user = User(id: '', name: signUp.name, lastName: signUp.lastname, email: signUp.email, cellphone: signUp.cellphone, rol: signUp.rol, createAt: DateTime.now(), password: signUp.password, organization: '', notifications: []);
-        Either<Failure, User> result =
-        await createUserUseCase!(Params(user));
+        User user = User(
+            id: '',
+            name: signUp.name,
+            lastName: signUp.lastname,
+            email: signUp.email,
+            cellphone: signUp.cellphone,
+            rol: signUp.rol,
+            createAt: DateTime.now(),
+            password: signUp.password,
+            organization: '',
+            notifications: []);
+        Either<Failure, User> result = await createUserUseCase!(Params(user));
         yield* result.fold((failure) async* {
           yield signUp.copyWith(error: failure.error);
         }, (user) async* {
+          prefs.setString('user', jsonEncode(user.toJson()));
           yield SignUpSuccess();
         });
       }

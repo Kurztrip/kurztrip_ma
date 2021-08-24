@@ -65,6 +65,18 @@ class TrackingServerRepository extends TrackingRepository {
       deletePackage(id: $id)
     }
   ''';
+  final String getFreeRoutesMA = r'''
+    query getFreeRoutesMA(){
+        getFreeRoutes()
+    }
+  ''';
+  final String createDriverRouteLinkMA = r'''
+    mutation createDriverRouteLinkMA($id: String!, $route: Int!){
+      createDriverRouteLink(new_link:{driver_id: $id, route_id: $route}){
+        route_id
+      }
+    }
+  ''';
 
   /*
 
@@ -185,7 +197,7 @@ class TrackingServerRepository extends TrackingRepository {
 
 
 */
-  // @override
+  @override
   Future<bool> delete(int id) async {
     final MutationOptions options = MutationOptions(
         document: gql(deleteRouteMA), variables: <String, dynamic>{'id': id});
@@ -230,5 +242,36 @@ class TrackingServerRepository extends TrackingRepository {
 
     debugPrint(routesToReturn.length.toString()); //LINEA DEBUG
     return routesToReturn;
+  }
+
+  @override
+  Future<List<int>> getFree() async {
+    final QueryOptions options = QueryOptions(
+        document: gql(getFreeRoutesMA) //NOMBRE DEL STRING QUERY O MUTATION
+
+        );
+    final result = await getGraphQLClient().query(options);
+    if (result.hasException) {
+      throw result.exception!;
+    }
+
+    List<int> routesToReturn = result.data!['getFreeRoutes']
+        .map<int>((routesResult) => int.parse(routesResult.toString()))
+        .toList();
+
+    debugPrint(routesToReturn.length.toString()); //LINEA DEBUG
+    return routesToReturn;
+  }
+
+  // @override
+  Future<bool> assign(String id, int route) async {
+    final MutationOptions options = MutationOptions(
+        document: gql(createDriverRouteLinkMA),
+        variables: <String, dynamic>{'id': id, 'route': route});
+    final result = await getGraphQLClient().mutate(options);
+    if (result.hasException) {
+      throw result.exception!;
+    }
+    return true;
   }
 }
