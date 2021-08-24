@@ -115,7 +115,8 @@ class TruckformBloc extends Bloc<TruckformEvent, TruckformState> {
       yield TruckformLoading();
 
       if (truck.id == null) {
-        Either<Failure, Truck> result = await createTruckUseCase!(Params(truck));
+        Either<Failure, Truck> result =
+            await createTruckUseCase!(Params(truck));
         yield* result.fold((failure) async* {
           yield current.copyWith(
               error: "operación fallida, por favor revisa tu conexión");
@@ -124,7 +125,7 @@ class TruckformBloc extends Bloc<TruckformEvent, TruckformState> {
         });
       } else {
         Either<Failure, int> result =
-            await (updateTruckUseCase!(UpdateParams(truck)) as FutureOr<Either<Failure, int>>);
+            await (updateTruckUseCase!(UpdateParams(truck)));
         yield* result.fold((failure) async* {
           yield current.copyWith(
               error: "operación fallida, por favor revisa tu conexión");

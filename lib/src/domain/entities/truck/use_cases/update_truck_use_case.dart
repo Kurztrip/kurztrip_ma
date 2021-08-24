@@ -5,14 +5,14 @@ import 'package:kurztrip_ma/src/core/usecases/usecases.dart';
 import 'package:kurztrip_ma/src/domain/entities/truck/Truck.dart';
 import 'package:kurztrip_ma/src/domain/repositories/truck_repository.dart';
 
-class UpdateTruckUseCase extends UseCase<int?, UpdateParams> {
+class UpdateTruckUseCase extends UseCase<int, UpdateParams> {
   final TruckRepository? _truckRepository = getIt();
 
   @override
-  Future<Either<Failure, int?>> call(UpdateParams params) async {
+  Future<Either<Failure, int>> call(UpdateParams params) async {
     try {
       return Right(
-          await _truckRepository!.update(params.truck.id, params.truck));
+          await _truckRepository!.update(params.truck.id!, params.truck));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
