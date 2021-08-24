@@ -3,10 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kurztrip_ma/services_provider.dart';
 import 'package:kurztrip_ma/src/domain/entities/count/User.dart';
-import 'package:kurztrip_ma/src/presentation/bloc/route_addition_bloc/route_addition_state.dart';
 import 'package:kurztrip_ma/src/presentation/bloc/sign_up_bloc/signup_bloc.dart';
 import 'package:kurztrip_ma/src/presentation/kurztrip_icons_icons.dart';
-import 'package:kurztrip_ma/src/presentation/pages/main_page.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedButton.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedDropdown.dart';
 import 'package:kurztrip_ma/src/presentation/widgets/RoundedInputField.dart';
@@ -33,13 +31,20 @@ class _SignUpPageState extends State<SignUpPage> {
     return BlocProvider<SignupBloc>(
         create: (context) => bloc!,
         child: BlocBuilder<SignupBloc, SignupState>(builder: (context, state) {
-          if (state is Success) {
+          if (state is SignUpSuccess) {
             Future.delayed(Duration(seconds: 2), () async {
-              Navigator.pushReplacement(context, _createRoute(MainPage()));
+              Navigator.pop(context);
             });
-            return Center(
-                child: Column(
-              children: [Text('Usuario Registrado Correctamente')],
+            return Scaffold(
+                body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Usuario Registrado Correctamente"),
+                  Icon(Icons.check),
+                ],
+              ),
+              key: ValueKey(0),
             ));
           }
           if ((state as SignupShowing).error != null) {
@@ -63,12 +68,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             textAlign: TextAlign.center,
                           ),
                         ),
-                        state is SignupShowing && state.error != null
-                            ? Text(
-                                state.error!,
-                                style: TextStyle(color: Colors.red),
-                              )
-                            : Container(),
                         RoundedInputField(
                           iconColor: Theme.of(context).accentColor,
                           hintText: 'Nombre',

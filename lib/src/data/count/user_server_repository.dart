@@ -128,10 +128,8 @@ class UserServerRepository extends UserRepository {
         email: userResult['email'].toString(),
         cellphone: userResult['cellphone'].toString(),
         rol: userResult['rol'].toString(),
-        createAt: userResult['createAt'],
         password: userResult['password'].toString(),
-        organization: userResult['organization'].toString(),
-        notifications: userResult['notifications']);
+        organization: userResult['organization'].toString());
   }
 
   @override
