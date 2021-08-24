@@ -232,7 +232,7 @@ class TruckServerRepository implements TruckRepository {
 
   */
   @override
-  Future<int?> update(int? id, Truck truck) async {
+  Future<int> update(int? id, Truck truck) async {
     final MutationOptions options = MutationOptions(
         document: gql(updateTruckMA),
         variables: <String, dynamic>{
@@ -255,7 +255,7 @@ class TruckServerRepository implements TruckRepository {
       throw result.exception!;
     }
 
-    return truck.id;
+    return truck.id!;
   }
 
   /*
