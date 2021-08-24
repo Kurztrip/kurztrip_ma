@@ -3,6 +3,8 @@ import 'package:kurztrip_ma/src/domain/repositories/user_repository.dart';
 import 'package:graphql/client.dart';
 import 'package:kurztrip_ma/src/data/client_config.dart';
 import '../client_config.dart';
+import 'package:kurztrip_ma/services/push_notifications_service.dart';
+import 'package:kurztrip_ma/services_provider.dart';
 
 class UserServerRepository extends UserRepository {
   User user = User.createEmpty();
@@ -105,8 +107,7 @@ class UserServerRepository extends UserRepository {
 
   @override
   Future<User> add(User user) async {
-    final MutationOptions options =
-        MutationOptions(document: gql(createUser), variables: <String, dynamic>{
+    final MutationOptions options = MutationOptions(document: gql(createUser), variables: <String, dynamic>{
       'user': {
         'name': user.name,
         'lastName': user.lastName,
@@ -134,8 +135,7 @@ class UserServerRepository extends UserRepository {
 
   @override
   Future<User> delete(String id) async {
-    final MutationOptions options = MutationOptions(
-        document: gql(deleteUser), variables: <String, dynamic>{'id': id});
+    final MutationOptions options = MutationOptions(document: gql(deleteUser), variables: <String, dynamic>{'id': id});
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {
       throw result.exception!;
@@ -155,8 +155,7 @@ class UserServerRepository extends UserRepository {
   }
 
   Future<String> sendMailTo(String mail) async {
-    final MutationOptions options =
-        MutationOptions(document: gql(sendMail), variables: <String, dynamic>{
+    final MutationOptions options = MutationOptions(document: gql(sendMail), variables: <String, dynamic>{
       'mail': {'email': mail}
     });
     final result = await getGraphQLClient().mutate(options);
@@ -168,9 +167,8 @@ class UserServerRepository extends UserRepository {
   }
 
   Future<User> login(String? email, String? password) async {
-    final MutationOptions options =
-        MutationOptions(document: gql(loginUser), variables: <String, dynamic>{
-      'login': {'email': email, 'password': password}
+    final MutationOptions options = MutationOptions(document: gql(loginUser), variables: <String, dynamic>{
+      'login': {'email': email, 'password': password, 'device_id': device_id}
     });
     final result = await getGraphQLClient().mutate(options);
     if (result.hasException) {

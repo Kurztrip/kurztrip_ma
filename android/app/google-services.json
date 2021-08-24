@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "448472545863",
+    "project_id": "kurztriplogisticsapp",
+    "storage_bucket": "kurztriplogisticsapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448472545863:android:6b4b366eb3901c0faf0f62",
+        "android_client_info": {
+          "package_name": "com.kurztrip.kurztrip_ma"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448472545863-ejoiujc9c57kaif24g93e0qicpp4esev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kurztrip.kurztrip_ma",
+            "certificate_hash": "0ec1389bbac242cc9870b0b06e973b08acfc3e96"
+          }
+        },
+        {
+          "client_id": "448472545863-j9tr49pj4i9p0ninlan4c4hjfs2iic1f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmrKld5y7FuNdNdBTuM4YCNVX5NCNnNJ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448472545863-j9tr49pj4i9p0ninlan4c4hjfs2iic1f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
